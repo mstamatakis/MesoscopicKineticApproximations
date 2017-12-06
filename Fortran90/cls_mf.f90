@@ -196,7 +196,7 @@
 	part=0.d0
         do i=1,2**cls
          call confs(state,cls,i)
-         part=part+exp(chemp*sum(state)-hamiltonian(lev,cls,x,y,latcon,h,j,g,state)/kb)
+         part=part+exp((chemp*sum(state)-hamiltonian(lev,cls,x,y,latcon,h,j,g,state))/kb)
         end do
 	end function
 
@@ -219,7 +219,7 @@
 	 do k=1,n
 	  s=s*state(vec(k))
 	 end do
-         corr=corr+s*exp(chemp*sum(state)-hamiltonian(lev,cls,x,y,latcon,h,j,g,state)/kb)
+         corr=corr+s*exp((chemp*sum(state)-hamiltonian(lev,cls,x,y,latcon,h,j,g,state))/kb)
         end do
         end function
 	
