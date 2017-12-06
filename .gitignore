@@ -1,0 +1,12 @@
+build
+Debug
+Release
+.DS_Store
+*.u2d
+*.suo
+*.vfproj
+*.zip
+.*.swp
+*.sln
+*.lnk
+fort.*
