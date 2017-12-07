@@ -191,7 +191,7 @@
 	real*8 hamiltonian, chemp, kb, temp
 
 	state=0
-	kb=8.6173303d0*10E-5
+	kb=8.6173303d0*1E-5
 	kb=kb*temp
 	part=0.d0
         do i=1,2**cls
@@ -210,7 +210,7 @@
         real*8 hamiltonian, chemp, kb, temp
 
         state=0
-        kb=8.6173303d0*10E-5
+        kb=8.6173303d0*1E-5
         kb=kb*temp
         corr=0.d0
         do i=1,2**cls
