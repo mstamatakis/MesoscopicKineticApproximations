@@ -46,7 +46,7 @@
 	allocate(v1(1),v2(1))
 	v1=c
 	v2=cls
-	call bisec(v1,v2,1,1,lev,cls,h,j,g,x,y,latcon,chemp,temp)	
+	call newton(v1,v2,1,1,lev,cls,h,j,g,x,y,latcon,chemp,temp)	
 	write(*,*) g
 	
 	! Calculating the coverage
@@ -94,6 +94,30 @@
 	  end if
 	 end do
 	end if
+	end subroutine
+
+	subroutine newton(v1,v2,n1,n2,lev,cls,h,j,g,x,y,latcon,chemp,temp)
+        ! Newton-Raphson method to solve for g
+        implicit none
+        integer i, cls, lev, n1, n2, sgn
+        real*8 latcon, h, j, g
+        real*8, dimension(cls) :: x, y
+        integer, dimension(n1) :: v1
+        integer, dimension(n2) :: v2
+        integer, dimension(cls) :: state
+        real*8 hamiltonian, chemp, temp, func
+        real*8 f, df, dg
+
+	g=1.d0
+	f=func(v1,v2,n1,n2,lev,cls,h,j,g,x,y,latcon,chemp,temp)
+	do while(abs(f).gt.0.0000001d0)
+	 dg=sqrt(2.2d0*1E-16)*g
+	 df=func(v1,v2,n1,n2,lev,cls,h,j,g+dg,x,y,latcon,chemp,temp)
+	 df=df-func(v1,v2,n1,n2,lev,cls,h,j,g-dg,x,y,latcon,chemp,temp)
+	 df=df/dg
+	 g=g-(f/df)
+	 f=func(v1,v2,n1,n2,lev,cls,h,j,g,x,y,latcon,chemp,temp)
+	end do
 	end subroutine
 
         subroutine lat_gen(lev,x,y,cls,latcon,c)
