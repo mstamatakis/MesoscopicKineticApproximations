@@ -111,10 +111,10 @@
 	g=1.d0
 	f=func(v1,v2,n1,n2,lev,cls,h,j,g,x,y,latcon,chemp,temp)
 	do while(abs(f).gt.0.0000001d0)
-	 dg=sqrt(2.2d0*1E-16)*g
+	 dg=sqrt(2.2d-16)*g
 	 df=func(v1,v2,n1,n2,lev,cls,h,j,g+dg,x,y,latcon,chemp,temp)
 	 df=df-func(v1,v2,n1,n2,lev,cls,h,j,g-dg,x,y,latcon,chemp,temp)
-	 df=df/dg
+	 df=df/(2.d0*dg)
 	 g=g-(f/df)
 	 f=func(v1,v2,n1,n2,lev,cls,h,j,g,x,y,latcon,chemp,temp)
 	end do
@@ -215,7 +215,7 @@
 	real*8 hamiltonian, chemp, kb, temp
 
 	state=0
-	kb=8.6173303d0*1E-5
+	kb=8.6173303d-5
 	kb=kb*temp
 	part=0.d0
         do i=1,2**cls
@@ -234,7 +234,7 @@
         real*8 hamiltonian, chemp, kb, temp
 
         state=0
-        kb=8.6173303d0*1E-5
+        kb=8.6173303d-5
         kb=kb*temp
         corr=0.d0
         do i=1,2**cls
