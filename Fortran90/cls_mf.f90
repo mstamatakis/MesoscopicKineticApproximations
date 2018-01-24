@@ -5,7 +5,7 @@
 	real*8, allocatable, dimension(:) :: x, y 
 	integer, allocatable, dimension(:) :: state, v1, v2
 	real*8 h, j, g, hamiltonian, part, corr
-	real*8 temp, chemp, kb
+	real*8 temp, chemp, kb, testvar
 	integer c
 
 	! Initialisation
