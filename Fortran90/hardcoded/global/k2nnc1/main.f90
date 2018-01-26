@@ -2,7 +2,7 @@
 	use constants
 	implicit none
 	logical check
-	integer i
+	integer i, j
 	integer, dimension(13) :: state
 	integer, allocatable, dimension(:) :: vec
 	real*8 hamiltonian, part, corr
@@ -11,21 +11,25 @@
 
 	! Calculating the MF correction parameters
 	check=.false.
+	allocate(vec(1))
 	x(1)=0.d0
 	x(2)=0.d0
 	x(3)=0.d0
 	x(4)=0.d0
-	call solver(x,4,check) 
-	write(*,*) 'Fields=', x(1), x(2), x(3), x(4)
-	! Calculating the coverage
-	cov=0.d0
-	allocate(vec(1))
-	do i=1,13
-	 vec(1)=i
-	 cov=cov+corr(vec,1,1,x)/part(4,x)
+	chemp=-1.4d0
+	do i=1,240
+	 chemp=chemp+0.01d0
+	 call solver(x,4,check) 
+	 ! Calculating the coverage
+	 cov=0.d0
+	 do j=1,13
+	  vec(1)=j
+	  cov=cov+corr(vec,1,1,x)/part(4,x)
+	 end do
+	 cov=cov/13.d0
+	 write(16,*) chemp, cov
+	 write(*,*) i
 	end do
-	cov=cov/13.d0
-	write(*,*) 'Coverage=', cov
 	end program
 
 	subroutine solver(x,n,check)
@@ -193,7 +197,6 @@
 	 x(j)=temp
 	 do i=1,n
 	  df(i,j)=(f(i)-fvec(i))/h
-	  write(*,*) df(i,j)
 	 end do
 	end do
 	end subroutine fdjac	
@@ -223,7 +226,6 @@
 	v2(1)=2
 	v2(2)=8
 	fvec(4)=fvec(4)-log(corr(v2,2,n,x))
-	write(*,*) fvec(1), fvec(2), fvec(3), fvec(4)
 	end subroutine funcv
 
 	subroutine confs(state,l)
@@ -280,7 +282,7 @@
         do i=1,2**13
          call confs(state,i)
 	 s=1
-	 do k=1,n
+	 do k=1,m
 	  s=s*state(v(k))
 	 end do
          corr=corr+s*exp((chemp*sum(state)-hamiltonian(n,x,state))/(kb*temp))

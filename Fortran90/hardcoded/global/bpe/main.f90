@@ -2,8 +2,8 @@
 	use constants
 	implicit none
 	logical check
-	integer i
-	integer, dimension(13) :: state
+	integer i, j
+	integer, dimension(7) :: state
 	integer, allocatable, dimension(:) :: vec
 	real*8 hamiltonian, part, corr
 	real*8 cov
@@ -11,18 +11,22 @@
 
 	! Calculating the MF correction parameters
 	check=.false.
-	x=1.d0
-	call solver(x,1,check) 
-	write(*,*) 'Field=', x(1)	
-	! Calculating the coverage
-	cov=0.d0
+	x=0.d0
+	state=0
+	chemp=-1.40d0
 	allocate(vec(1))
-	do i=1,7
-	 vec(1)=i
-	 cov=cov+corr(vec,1,1,x)/part(1,x)
+	do i=1,240
+	 chemp=chemp+0.01d0
+	 call solver(x,1,check) 
+	 ! Calculating the coverage
+	 cov=0.d0
+	 do j=1,7
+	  vec(1)=j
+	  cov=cov+corr(vec,1,1,x)/part(1,x)
+	 end do
+	 cov=cov/7.d0
+	 write(16,*) chemp, cov
 	end do
-	cov=cov/7.d0
-	write(*,*) 'Coverage=', cov
 	end program
 
 	subroutine solver(x,n,check)
@@ -259,7 +263,7 @@
         do i=1,2**7
          call confs(state,i)
 	 s=1
-	 do k=1,n
+	 do k=1,m
 	  s=s*state(v(k))
 	 end do
          corr=corr+s*exp((chemp*sum(state)-hamiltonian(n,x,state))/(kb*temp))

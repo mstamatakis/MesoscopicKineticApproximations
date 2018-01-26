@@ -2,8 +2,8 @@
 	use constants
 	implicit none
 	logical check
-	integer i
-	integer, dimension(13) :: state
+	integer i, j
+	integer, dimension(7) :: state
 	integer, allocatable, dimension(:) :: vec
 	real*8 hamiltonian, part, corr
 	real*8 cov
@@ -11,19 +11,22 @@
 
 	! Calculating the MF correction parameters
 	check=.false.
-	x(1)=3.0d0
-	x(2)=3.0d0
-	call solver(x,2,check) 
-	write(*,*) 'Fields=', x(1), x(2)
-	! Calculating the coverage
-	cov=0.d0
+	x(1)=0.0d0
+	x(2)=0.1d0
+	chemp=-1.40
+	state=0
 	allocate(vec(1))
-	do i=1,7
-	 vec(1)=i
-	 cov=cov+corr(vec,1,1,x)/part(2,x)
+	do i=1,240
+	 chemp=chemp+0.01d0
+	 call solver(x,2,check) 
+	 cov=0.d0
+	 do j=1,7
+	  vec(1)=j
+	  cov=cov+corr(vec,1,1,x)/part(2,x)
+	 end do
+	 cov=cov/7.d0
+	 write(16,*) chemp, cov
 	end do
-	cov=cov/7.d0
-	write(*,*) 'Coverage=', cov
 	end program
 
 	subroutine solver(x,n,check)
@@ -74,7 +77,6 @@
 	 call lubksb(fjac,n,indx,p)
 	 call lnsrch(n,xold,fold,g,p,x,f,stpmax,check,fmin)
 	 test=0.d0
-	 write(*,*) f ! To be commented out
 	 do i=1,n
 	  if(abs(fvec(i)).gt.test)test=abs(fvec(i))
 	 end do
@@ -201,18 +203,16 @@
 	integer n, v1(1), v2(2)
 	real*8 x(n), fvec(n), corr	
 	
-	!v1=1
-	!fvec(1)=log(corr(v1,1,n,x))
-	!v1=2
-	!fvec(1)=fvec(1)-log(corr(v1,1,n,x))
-	!v2(1)=1
-	!v2(2)=2
-	!fvec(2)=log(corr(v2,2,n,x))
-	!v2(1)=2
-	!v2(2)=3
-	!fvec(2)=fvec(2)-log(corr(v2,2,n,x))
-	fvec(1)=x(1)**2+x(2)**2-25.d0
-	fvec(2)=x(2)-x(1)
+	v1=1
+	fvec(1)=log(corr(v1,1,n,x))
+	v1=2
+	fvec(1)=fvec(1)-log(corr(v1,1,n,x))
+	v2(1)=1
+	v2(2)=2
+	fvec(2)=log(corr(v2,2,n,x))
+	v2(1)=2
+	v2(2)=3
+	fvec(2)=fvec(2)-log(corr(v2,2,n,x))
 	end subroutine funcv
 
 	subroutine confs(state,l)
@@ -269,7 +269,7 @@
         do i=1,2**7
          call confs(state,i)
 	 s=1
-	 do k=1,n
+	 do k=1,m
 	  s=s*state(v(k))
 	 end do
          corr=corr+s*exp((chemp*sum(state)-hamiltonian(n,x,state))/(kb*temp))
