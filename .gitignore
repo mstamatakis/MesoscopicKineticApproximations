@@ -10,3 +10,5 @@ Release
 *.sln
 *.lnk
 fort.*
+*.o
+*.mod
