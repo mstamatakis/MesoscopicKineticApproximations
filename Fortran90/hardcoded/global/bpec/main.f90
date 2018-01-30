@@ -7,14 +7,25 @@
 	integer, allocatable, dimension(:) :: vec
 	real*8 hamiltonian, part, corr
 	real*8 cov
-	real*8, dimension(2) :: x
+	real*8, dimension(2) :: x, fvec
 
+    !do i = 1,2**7
+    !    call confs(state,i)
+    !    write(*,'(7I3)') (state(j),j=1,7)
+    !enddo
+    !pause
+    !stop
+    
 	! Calculating the MF correction parameters
 	check=.false.
-	x(1)=0.0d0
-	x(2)=0.1d0
-	chemp=-1.40
+	x(1)=0.86d0
+	x(2)=-0.03d0
+	chemp=-1.40 !0.5
 	state=0
+    
+    call funcv(2,x,fvec)
+    continue
+    
 	allocate(vec(1))
 	do i=1,240
 	 chemp=chemp+0.01d0
@@ -22,7 +33,7 @@
 	 cov=0.d0
 	 do j=1,7
 	  vec(1)=j
-	  cov=cov+corr(vec,1,1,x)/part(2,x)
+	  cov=cov+corr(vec,1,2,x)/part(2,x)
 	 end do
 	 cov=cov/7.d0
 	 write(16,*) chemp, cov
@@ -34,7 +45,7 @@
 	integer n, nn, np, maxits, d, c
 	logical check
 	real*8 x(n), fvec, tolf, tolmin, tolx, stpmx
-	parameter(np=40,maxits=200,tolf=1.0d-4,tolmin=1.0d-6,tolx=1.0d-7,stpmx=100.d0)
+	parameter(np=40,maxits=200,tolf=1.0d-10,tolmin=1.0d-6,tolx=1.0d-7,stpmx=100.d0)
 	common /newtv/fvec(np),nn
 	save /newtv/
 	integer i, its, j, indx(np)
@@ -73,8 +84,10 @@
 	 do i=1,n
 	  p(i)=-fvec(i)
 	 end do
-	 call ludcmp(fjac,n,indx,d,c)
-	 call lubksb(fjac,n,indx,p)
+	 !call ludcmp(fjac,n,indx,d,c)
+	 !call lubksb(fjac,n,indx,p)
+     call gelim(fjac,-fvec,n,np,p)
+     write(*,*) sqrt(fvec(1)**2+fvec(2)**2)
 	 call lnsrch(n,xold,fold,g,p,x,f,stpmax,check,fmin)
 	 test=0.d0
 	 do i=1,n
@@ -186,10 +199,10 @@
 
 	do j=1,n
 	 temp=x(j)
-	 h=eps*abs(temp)
+	 h=0.1d0*eps*abs(temp)
 	 if(h.eq.0)h=eps
 	 x(j)=temp+h
-	 h=x(j)-temp
+	 !h=x(j)-temp
 	 call funcv(n,x,f)
 	 x(j)=temp
 	 do i=1,n
@@ -213,6 +226,11 @@
 	v2(1)=2
 	v2(2)=3
 	fvec(2)=fvec(2)-log(corr(v2,2,n,x))
+    
+    fvec(1) = ((x(1)+5.d0)/4.d0)**2 + x(2)**2 - 8
+    fvec(2) = x(2)+8*x(1)
+    
+    
 	end subroutine funcv
 
 	subroutine confs(state,l)

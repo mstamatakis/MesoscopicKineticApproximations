@@ -4,5 +4,5 @@
 	real*8, parameter :: jint=0.3d0
 	real*8 chemp
         real*8, parameter :: temp=480.d0
-	real*8, parameter :: kb=8.6173303d-5
+	real*8, parameter :: kb=8.617342430749592e-05
 	end module
