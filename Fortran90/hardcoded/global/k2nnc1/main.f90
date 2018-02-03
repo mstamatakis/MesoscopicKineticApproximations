@@ -12,10 +12,10 @@
 	! Calculating the MF correction parameters
 	check=.false.
 	allocate(vec(1))
-	x(1)=0.d0
-	x(2)=0.d0
-	x(3)=0.d0
-	x(4)=0.d0
+	x(1)=0.1d0
+	x(2)=0.1d0
+	x(3)=0.1d0
+	x(4)=0.1d0
 	chemp=-1.4d0
 	do i=1,240
 	 chemp=chemp+0.01d0
@@ -28,7 +28,6 @@
 	 end do
 	 cov=cov/13.d0
 	 write(16,*) chemp, cov
-	 write(*,*) i
 	end do
 	end program
 
@@ -37,7 +36,7 @@
 	integer n, nn, np, maxits, d, c
 	logical check
 	real*8 x(n), fvec, tolf, tolmin, tolx, stpmx
-	parameter(np=40,maxits=200,tolf=1.0d-4,tolmin=1.0d-6,tolx=1.0d-7,stpmx=100.d0)
+	parameter(np=40,maxits=200,tolf=1.0d-10,tolmin=1.0d-6,tolx=1.0d-7,stpmx=100.d0)
 	common /newtv/fvec(np),nn
 	save /newtv/
 	integer i, its, j, indx(np)
@@ -47,7 +46,7 @@
 
 	nn=n
 	f=fmin(x)
-	test=-1.d0
+	test=0.d0
 	do i=1,n
 	 if(abs(fvec(i)).gt.test)test=abs(fvec(i))
 	end do
@@ -76,8 +75,10 @@
 	 do i=1,n
 	  p(i)=-fvec(i)
 	 end do
-	 call ludcmp(fjac,n,indx,d,c)
-	 call lubksb(fjac,n,indx,p)
+	 !call ludcmp(fjac,n,indx,d,c)
+	 !call lubksb(fjac,n,indx,p)
+         call gelim(fjac,-fvec,n,np,p)
+         write(*,*) sqrt(fvec(1)**2+fvec(2)**2)
 	 call lnsrch(n,xold,fold,g,p,x,f,stpmax,check,fmin)
 	 test=0.d0
 	 do i=1,n
@@ -189,10 +190,10 @@
 
 	do j=1,n
 	 temp=x(j)
-	 h=eps*abs(temp)
+	 h=0.1d0*eps*abs(temp)
 	 if(h.eq.0)h=eps
 	 x(j)=temp+h
-	 h=x(j)-temp
+	 !h=x(j)-temp
 	 call funcv(n,x,f)
 	 x(j)=temp
 	 do i=1,n
@@ -200,6 +201,134 @@
 	 end do
 	end do
 	end subroutine fdjac	
+
+	!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+	subroutine gelim(a,b,n,n0,x)	
+
+	!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+								
+	! Subroutine for solving system the linear system A*x = b
+	! with Gauss Elimination
+
+	! Input variables:
+	! a = matrix A
+	! b = vector b
+	! n = order of the system
+
+	! Output variables:
+	! x = vector, solution of the system 
+
+	! Other variables:
+	! sa, sb = helping variables that are used in interchanging
+	!          the rows (for pivoting)
+	! fa = variable that contains the value of the 1st non-zero 
+	!	   element of every row, used in elimination procedure
+	! amax = value of the max element of the current row
+	! imax = s/n (index) of the row that contains the max element
+	!        of the current column
+	! prs = variable used in back substitution
+
+	! Parameters:
+	! n0 = maximum allowed order of system
+
+	! Subroutines called by gelim:
+	! augmprnt (for printing the augmented matrix)
+
+	! BEWARE: n0 should be the same in the main program and this 
+	!         subroutine otherwise errors occur.
+
+	!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+	implicit none
+	Integer n0
+	Double Precision a(n0,n0), b(n0), sa(n0), x(n0), fa, amax, sb, prs
+	Integer i, j, k, n, imax
+
+	!write(*,*) '[gelim] Matrix as given from main.'
+	!call augmprnt(a,b,n,n0)
+	!pause
+ 
+	do i = 1,n					   
+
+	! Find max element for correct pivoting
+	 amax = 0.D0					   
+ 	imax = 0.D0
+ 	do j = i,n
+ 	 if ((abs(a(j,i))).gt.(amax)) then
+  	 amax = abs(a(j,i))
+	   imax = j
+  	endif
+ 	enddo
+
+	!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+	! Check for singularity: If all elements of a column = 0 then STOP!
+	! (Practically " = 0" means " < threshold" = 1e-40 here)
+	 if (amax.lt.1D-40) then	   
+	   write(*,*) "[gelim] Singular or ill-conditioned matrix. EXITING!"
+	!  pause
+	   stop
+	 endif
+
+	!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+	! Pivoting: Interchange rows so as max element is used in elimination
+	! The row that has the desired pivotal element is temporarily stored in sa
+	! so that the interchange can be performed.
+ 	if (imax.ne.i) then
+  	 do j = 1,n					  
+   	  sa(j) = a(imax,j)
+   	  a(imax,j) = a(i,j)
+   	  a(i,j) = sa(j)
+  	 enddo
+   	 sb = b(imax)
+   	 b(imax) = b(i)
+   	 b(i) = sb
+ 	endif
+
+	! write(*,*) '[gelim] Matrix after pivoting.'
+	! call augmprnt(a,b,n,n0)
+	! pause
+
+	!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+	! Elimination Proccess for the next rows. fa is the first non zero element of each
+	! row. 
+ 	do j = i+1,n			! j = Row counter
+  	 fa = a(j,i)												
+  	 do k = i,n			! k = column counter
+   	  a(j,k) = a(j,k)-(fa/(a(i,i)))*a(i,k)
+  	 enddo
+   	 b(j) = b(j)-(fa/(a(i,i)))*b(i)
+ 	enddo
+
+	! write(*,*) '[gelim] matrix after elimination]'
+	! call augmprnt(a,b,n,n0)
+	! pause
+
+	!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+	enddo
+ 
+	! Perform back substitution
+	x(n) = b(n)/a(n,n)
+	do i = 1,n-1
+ 	 k = n-i
+ 	 prs = 0.D0
+ 	 do j = k+1,n
+  	  prs = prs+a(k,j)*x(j)
+ 	 enddo
+ 	 x(k) = (b(k)-prs)/a(k,k)
+	enddo
+
+	!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+	return
+	end subroutine ! End of subroutine gelim
+
+
+	!###################################################################################
 
 	subroutine funcv(n,x,fvec)
 	implicit none
