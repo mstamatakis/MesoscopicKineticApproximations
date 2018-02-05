@@ -1,4 +1,7 @@
 	real*8 function hamiltonian(n,x,state)
+        ! Kikuchi 2nn C1 Hamiltonian
+        ! Input: the number of parameters "n"; the vector of parameters
+        ! "x"; and the state vector "state".
 	use constants
 	implicit none
 	integer i, k, n

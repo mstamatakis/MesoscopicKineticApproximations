@@ -1,5 +1,6 @@
 	real*8 function part(n,x)
-	! This calculates the partition function the brute-force way
+	! This calculates the partition function the brute-force way.
+        ! Input: number of parameters, vector of parameters
 	use constants
 	implicit none
 	integer i, n

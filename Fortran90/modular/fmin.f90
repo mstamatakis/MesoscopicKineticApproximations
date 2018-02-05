@@ -1,4 +1,5 @@
 	real*8 function fmin(x)
+	! See chapter 9 of Numerical Recipes in Fortran by Press et al.
 	integer n, np
 	real*8 x(*), fvec
 	parameter(np=40)

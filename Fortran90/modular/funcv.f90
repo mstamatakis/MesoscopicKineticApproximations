@@ -1,4 +1,9 @@
 	subroutine funcv(n,x,fvec)
+        ! This subroutine applies self-consistent constraints to the
+        ! parameters. Its input are the number of parameters "n" and the
+        ! vector of parameters "x", while "fvec" is the output. "fvec"
+        ! is a function to be zeroed by the solver, which will find the
+        ! self-consistent parameters this way.
 	implicit none
 	integer n, v1(1), v2(2)
 	real*8 x(n), fvec(n), corr	
