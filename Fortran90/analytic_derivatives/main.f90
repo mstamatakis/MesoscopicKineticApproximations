@@ -24,7 +24,7 @@
 	do i=1,2
 	 write(*,*) (jac(i,j),j=1,2)
 	end do
-stop
+
 	check=.false.
 	state=0
 	allocate(vec(1))
@@ -63,8 +63,13 @@ stop
 	tol=sqrt(tol)
 	write(*,*) 'TOLERANCE:', tol
 	do while(tol.gt.0.001d0)
+	 call jacobian(p,x,jac)
+	 write(*,*) 'NUMERICAL JACOBIAN'
+	 do i=1,p	
+	  write(*,*) (jac(i,k),k=1,p)
+	 end do
 	 call jbn(p,x,jac)
-	 write(*,*) 'JACOBIAN'
+	 write(*,*) 'ANALYTIC JACOBIAN'
 	 do i=1,p	
 	  write(*,*) (jac(i,k),k=1,p)
 	 end do

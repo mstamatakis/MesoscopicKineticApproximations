@@ -1,0 +1,38 @@
+	module data
+	implicit none
+	type :: original
+	 integer term(2**nsites,nsites)
+	 real*8 value(2**nsites) 
+	end type 
+	type :: correction
+	 integer term(2**nsites,nsites)
+	 integer intmap(2**nsites)
+	 real*8 value(npar) 
+	end type 
+	type :: eqn
+	 integer lhs(npar)
+	 real*8 rhs(npar) 
+	end type 
+	type :: hamiltonian
+	 type (original) :: list1 
+	 type (correction) :: list2
+	end type
+	real*8, parameter :: hads=-1.171955613174250d0 
+	real*8, parameter :: jint=0.3d0
+        real*8, parameter :: temp=480.d0
+	real*8, parameter :: kb=8.6173303d-5
+	integer, parameter :: nsites=7 
+	integer, parameter :: npar=2 
+	real*8 chemp
+
+	hamiltonian%list1%term=0
+	hamiltonian%list1%term(1,1)=1
+	hamiltonian%list1%term(2,1)=2
+	hamiltonian%list1%term(3,1)=3
+	hamiltonian%list1%term(4,1)=4
+	hamiltonian%list1%term(5,1)=5
+	hamiltonian%list1%term(6,1)=6
+	hamiltonian%list1%term(7,1)=7
+	hamiltonian%list1%term(8,1)=1
+	hamiltonian%list1%term(8,2)=2
+	end module
