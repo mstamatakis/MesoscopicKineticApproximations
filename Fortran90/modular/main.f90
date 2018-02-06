@@ -21,6 +21,8 @@
 	chemp=-1.4d0
 	do i=1,240
 	 chemp=chemp+0.01d0
+     write(*,*) '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'
+     write(*,*) 'Chemical potential', chemp
 	 call solver(x,4,check) 
 	 ! Calculating the coverage
 	 cov=0.d0
