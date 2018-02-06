@@ -8,12 +8,12 @@
 	real*8 hamiltonian, part, corr
 	real*8 cov, k
 	real*8, dimension(2) :: x, fvec, tmp
-	real*8 jac(4,4)
+	real*8 jac(2,2)
 
-	x(1)=0.1d0
-	x(2)=0.1d0
+	x(1)=0.72657562404266485d0
+	x(2)=-9.4768471953067229d-2
 	jac=0.d0
-	chemp=-1.4d0
+	chemp=0.07d0
 	call jacobian(2,x,jac)
 	do i=1,2
 	 write(*,*) (jac(i,j),j=1,2)
@@ -115,17 +115,30 @@ stop
 	implicit none
 	integer n, v1(1), v2(2)
 	real*8 x(n), fvec(n), corr	
-	
+
+    
 	v1=1
-	fvec(1)=corr(v1,1,n,x)
+	fvec(1)=log(corr(v1,1,n,x))
 	v1=2
-	fvec(1)=fvec(1)-corr(v1,1,n,x)
+	fvec(1)=fvec(1)-log(corr(v1,1,n,x))
 	v2(1)=1
 	v2(2)=2
-	fvec(2)=corr(v2,2,n,x)
+	fvec(2)=log(corr(v2,2,n,x))
 	v2(1)=2
 	v2(2)=3
-	fvec(2)=fvec(2)-corr(v2,2,n,x)
+	fvec(2)=fvec(2)-log(corr(v2,2,n,x))
+    
+    
+	!v1=1
+	!fvec(1)=corr(v1,1,n,x)
+	!v1=2
+	!fvec(1)=fvec(1)-corr(v1,1,n,x)
+	!v2(1)=1
+	!v2(2)=2
+	!fvec(2)=corr(v2,2,n,x)
+	!v2(1)=2
+	!v2(2)=3
+	!fvec(2)=fvec(2)-corr(v2,2,n,x)
 	end subroutine funcv
 
 	subroutine confs(state,l)
@@ -320,16 +333,16 @@ stop
 	 v2(2)=i
 	 t1=t1+corr(v2,2,n,x)
 	end do
-	!v1=1
-	t1=-t1/(kb*temp) !*corr(v1,1,n,x))
+	v1=1
+	t1=-t1/((kb*temp)*corr(v1,1,n,x))
 	t2=0.0d0
 	do i=2,7
 	 v2(1)=2
 	 v2(2)=i
 	 t2=t2+corr(v2,2,n,x)
 	end do
-	!v1=2
-	t2=-t2/(kb*temp) !*corr(v1,1,n,x))
+	v1=2
+	t2=-t2/((kb*temp)*corr(v1,1,n,x))
 	jac(1,1)=t1-t2
 	
         t1=0.0d0
@@ -343,8 +356,8 @@ stop
         v3(2)=2
         v3(3)=7
         t1=t1+corr(v3,3,n,x)
-        !v1=1
-        t1=-t1/(kb*temp) !*corr(v1,1,n,x))
+        v1=1
+        t1=-t1/((kb*temp)*corr(v1,1,n,x))
         t2=0.0d0
         do i=2,6
          v3(1)=2
@@ -356,8 +369,8 @@ stop
         v3(2)=2
         v3(3)=7
         t2=t2+corr(v3,3,n,x)
-        !v1=2
-        t2=-t2/(kb*temp) !*corr(v1,1,n,x))
+        v1=2
+        t2=-t2/((kb*temp)*corr(v1,1,n,x))
         jac(1,2)=t1-t2
 
 	t1=0.0d0
@@ -367,9 +380,9 @@ stop
 	 v3(3)=i
 	 t1=t1+corr(v3,3,n,x)
 	end do
-	!v2(1)=1
-	!v2(2)=2
-	t1=-t1/(kb*temp) !*corr(v2,2,n,x))
+	v2(1)=1
+	v2(2)=2
+	t1=-t1/((kb*temp)*corr(v2,2,n,x))
 	t2=0.0d0
 	do i=2,7
 	 v3(1)=2
@@ -377,9 +390,9 @@ stop
 	 v3(3)=i
 	 t2=t2+corr(v3,3,n,x)
 	end do
-	!v2(1)=2
-	!v2(2)=3
-	t2=-t2/(kb*temp) !*corr(v2,2,n,x))
+	v2(1)=2
+	v2(2)=3
+	t2=-t2/((kb*temp)*corr(v2,2,n,x))
 	jac(2,1)=t1-t2
 
 	t1=0.d0
@@ -392,12 +405,12 @@ stop
 	end do
 	v4(1)=1
 	v4(2)=2
-	v4(3)=3
+	v4(3)=2
 	v4(4)=7
 	t1=t1+corr(v4,4,n,x)
-        !v2(1)=1
-        !v2(2)=2
-        t1=-t1/(kb*temp) !*corr(v2,2,n,x))
+        v2(1)=1
+        v2(2)=2
+        t1=-t1/((kb*temp)*corr(v2,2,n,x))
         t2=0.d0
         do i=2,6
          v4(1)=2
@@ -410,9 +423,9 @@ stop
         v4(2)=3
         v4(3)=2
         v4(4)=7
-        t1=t1+corr(v4,4,n,x)
-        !v2(1)=2
-        !v2(2)=3
-        t1=-t1/(kb*temp) !*corr(v2,2,n,x))
+        t2=t2+corr(v4,4,n,x)
+        v2(1)=2
+        v2(2)=3
+        t2=-t2/((kb*temp)*corr(v2,2,n,x))
 	jac(2,2)=t1-t2
 	end subroutine
