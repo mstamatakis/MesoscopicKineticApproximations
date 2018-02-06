@@ -13,7 +13,7 @@
 !*******************************************************
 module lu
 
-contains
+    contains
 
 !  ***************************************************************
 !  * Given an N x N matrix A, this routine replaces it by the LU *
@@ -25,10 +25,13 @@ contains
 !  * in combination with LUBKSB to solve linear equations or to  *
 !  * invert a matrix. Return code is 1, if matrix is singular.   *
 !  ***************************************************************
- subroutine ludcmp(a,n,indx,d,code)
- parameter(nmax=100,tiny=1.5d-16)
- real*8  amax,dum, sum, a(n,n),vv(nmax)
- integer code, d, indx(n)
+!  MS 2018-02-06: Defined matrix and vectors to have max dimension
+!  of n0. However, only the first n elements are manipulated by the
+!  algorithm.
+ subroutine ludcmp(a,n,n0,indx,d,code)
+ parameter(tiny=1.5d-16)
+ real*8  amax,dum, sum, a(n0,n0),vv(n0)
+ integer code, d, indx(n0)
 
  d=1; code=0
 
@@ -101,9 +104,9 @@ contains
 !  * cessive calls with different right-hand sides. This routine is *
 !  * also efficient for plain matrix inversion.                     *
 !  ******************************************************************
- subroutine lubksb(a,n,indx,b)
- real*8  sum, a(n,n),b(n)
- integer indx(n)
+ subroutine lubksb(a,n,n0,indx,b)
+ real*8  sum, a(n0,n0),b(n0)
+ integer indx(n0)
 
  ii = 0
 

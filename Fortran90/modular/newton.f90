@@ -1,4 +1,9 @@
 	subroutine solver(x,n,check)
+    
+    use lu
+    
+    implicit none
+    
 	! See chapter 9 of Numerical Recipes in Fortran by Press et al.
 	integer n, nn, np, maxits, d, c
 	logical check
@@ -42,9 +47,9 @@
 	 do i=1,n
 	  p(i)=-fvec(i)
 	 end do
-	 !call ludcmp(fjac,n,indx,d,c)
-	 !call lubksb(fjac,n,indx,p)
-         call gelim(fjac,-fvec,n,np,p)
+	 call ludcmp(fjac,n,np,indx,d,c)
+	 call lubksb(fjac,n,np,indx,p)
+         !call gelim(fjac,-fvec,n,np,p)
          write(*,*) its, sqrt(fvec(1)**2+fvec(2)**2+fvec(3)**2+fvec(4)**2)
 	 call lnsrch(n,xold,fold,g,p,x,f,stpmax,check,fmin)
 	 test=0.d0
