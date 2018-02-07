@@ -24,13 +24,31 @@
          type (correction) :: corr
         end type
         
-        type :: approximation_type
+        type, public :: approximation_type
          character*10 :: approx
          type (hamiltonian) :: hamilt
          type (equation) :: eqn
+        contains
+         procedure :: init => approx_initialisation
         end type
 
-        
+    contains
+    
+    subroutine approx_initialisation(this)
+    
+    class(approximation_type), intent(inout) :: this
+
+    this%approx = ''
+    this%hamilt%orig%term = 0
+    this%hamilt%orig%value = 0.d0
+    this%hamilt%corr%term = 0
+    this%hamilt%corr%intmap = 0
+    this%hamilt%corr%value = 0.d0
+    
+    return
+    
+    end subroutine approx_initialisation
+    
         
         !odel%list1%term=0
         !odel%list1%value=0.d0
