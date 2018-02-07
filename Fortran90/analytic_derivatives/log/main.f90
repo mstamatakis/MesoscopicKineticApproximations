@@ -13,7 +13,7 @@
 	x(1)=0.2d0
 	x(2)=0.2d0
 	jac=0.d0
-	chemp=1.0d0
+	chemp=-1.4d0
 	call jacobian(2,x,jac)
 	do i=1,2
 	 write(*,*) (jac(i,j),j=1,2)
@@ -24,6 +24,7 @@
 	do i=1,2
 	 write(*,*) (jac(i,j),j=1,2)
 	end do
+stop
 	check=.false.
 	state=0
 	allocate(vec(1))
