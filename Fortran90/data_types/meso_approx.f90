@@ -1,8 +1,10 @@
         module meso_approx
         implicit none
-        !character approx
+
         integer, parameter :: nsites=7
-        integer, parameter :: npar=2 
+        integer, parameter :: npar=2
+        
+        
         type :: original
          integer term(2**nsites,nsites)
          real*8 value(2**nsites) 
@@ -12,16 +14,18 @@
          integer intmap(2**nsites)
          real*8 value(npar) 
         end type 
-        type :: eqn
+        type :: equation
          integer lhs(npar,nsites)
          integer rhs(npar,nsites) 
         end type 
         type :: hamiltonian
-         type (original) :: list1 
-         type (correction) :: list2
+         type (original) :: orig
+         type (correction) :: corr
         end type
-        type (hamiltonian) :: model
-        type (eqn) :: syst_eqn
+        type approximation_type
+         character*10 :: approx
+         type (hamiltonian) :: hamilt
+         type (equation) :: eqn
         real*8, parameter :: hads=-1.171955613174250d0 
         real*8, parameter :: jint=0.3d0
         real*8, parameter :: kb=8.6173303d-5
