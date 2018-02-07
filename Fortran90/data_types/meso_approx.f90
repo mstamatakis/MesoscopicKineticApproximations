@@ -1,10 +1,11 @@
         module meso_approx
+    
         implicit none
+        private
 
         integer, parameter :: nsites=7
         integer, parameter :: npar=2
-        
-        
+                
         type :: original
          integer term(2**nsites,nsites)
          real*8 value(2**nsites) 
@@ -22,16 +23,15 @@
          type (original) :: orig
          type (correction) :: corr
         end type
-        type approximation_type
+        
+        type :: approximation_type
          character*10 :: approx
          type (hamiltonian) :: hamilt
          type (equation) :: eqn
-        real*8, parameter :: hads=-1.171955613174250d0 
-        real*8, parameter :: jint=0.3d0
-        real*8, parameter :: kb=8.6173303d-5
-        real*8 chemp, temp
-        integer i
+        end type
 
+        
+        
         !odel%list1%term=0
         !odel%list1%value=0.d0
         !odel%list2%term=0
@@ -156,4 +156,4 @@
         ! energy=energy+approx%list2%value(approx%list2%intmap(i))
         !end do
         !end function 
-        end module
+        end module meso_approx
