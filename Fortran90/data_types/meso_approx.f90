@@ -3,21 +3,21 @@
         implicit none
         private
 
-        integer, parameter :: nsites=7
-        integer, parameter :: npar=2
+        integer :: nsites
+        integer :: npar
                 
         type :: original
-         integer term(2**nsites,nsites)
-         real*8 value(2**nsites) 
+         integer, allocatable, dimension(:,:) :: term
+         real*8, allocatable, dimension(:) :: value 
         end type 
         type :: correction
-         integer term(2**nsites,nsites)
-         integer intmap(2**nsites)
-         real*8 value(npar) 
+         integer, allocatable, dimension(:,:) :: term
+         integer, allocatable, dimension(:) :: intmap
+         real*8, allocatable, dimension(:) :: value 
         end type 
         type :: equation
-         integer lhs(npar,nsites)
-         integer rhs(npar,nsites) 
+         integer, allocatable, dimension(:,:) :: lhs
+         integer, allocatable, dimension(:,:) :: rhs 
         end type 
         type :: hamiltonian
          type (original) :: orig
@@ -34,144 +34,124 @@
 
     contains
     
-    subroutine approx_initialisation(this)
-    
-    class(approximation_type), intent(inout) :: this
+    subroutine approx_initialisation(appr)
 
-    this%approx = ''
-    this%hamilt%orig%term = 0
-    this%hamilt%orig%value = 0.d0
-    this%hamilt%corr%term = 0
-    this%hamilt%corr%intmap = 0
-    this%hamilt%corr%value = 0.d0
+    use commons
     
+    class(approximation_type), intent(inout) :: appr
+    integer i
+
+    if(appr%approx.eq.'bpec') then
+     nsites=7
+     npar=2
+     allocate(appr%hamilt%orig%term(2**nsites,nsites))
+     allocate(appr%hamilt%orig%value(2**nsites))
+     allocate(appr%hamilt%corr%term(2**nsites,nsites))
+     allocate(appr%hamilt%corr%intmap(2**nsites))
+     allocate(appr%hamilt%corr%value(npar))
+     allocate(appr%eqn%lhs(npar,nsites))
+     allocate(appr%eqn%rhs(npar,nsites))
+     appr%hamilt%orig%term=0
+     appr%hamilt%orig%value=0.d0
+     appr%hamilt%corr%term=0
+     appr%hamilt%corr%intmap=0
+     appr%hamilt%corr%value=0.d0
+     appr%eqn%lhs=0
+     appr%eqn%rhs=0
+
+     do i=1,7
+      appr%hamilt%orig%term(i,1)=1
+     end do
+     appr%hamilt%orig%term(8,1)=1
+     appr%hamilt%orig%term(8,2)=2
+     appr%hamilt%orig%term(9,1)=1
+     appr%hamilt%orig%term(9,2)=3
+     appr%hamilt%orig%term(10,1)=1
+     appr%hamilt%orig%term(10,2)=4
+     appr%hamilt%orig%term(11,1)=1
+     appr%hamilt%orig%term(11,2)=5
+     appr%hamilt%orig%term(12,1)=1
+     appr%hamilt%orig%term(12,2)=6
+     appr%hamilt%orig%term(13,1)=1
+     appr%hamilt%orig%term(13,2)=7
+     appr%hamilt%orig%term(14,1)=2
+     appr%hamilt%orig%term(14,2)=3
+     appr%hamilt%orig%term(15,1)=3
+     appr%hamilt%orig%term(15,2)=4
+     appr%hamilt%orig%term(16,1)=4
+     appr%hamilt%orig%term(16,2)=5
+     appr%hamilt%orig%term(17,1)=5
+     appr%hamilt%orig%term(17,2)=6
+     appr%hamilt%orig%term(18,1)=6
+     appr%hamilt%orig%term(18,2)=7
+     appr%hamilt%orig%term(19,1)=2
+     appr%hamilt%orig%term(19,2)=7
+
+     appr%hamilt%orig%value(1)=hads
+     appr%hamilt%orig%value(2)=hads
+     appr%hamilt%orig%value(3)=hads
+     appr%hamilt%orig%value(4)=hads
+     appr%hamilt%orig%value(5)=hads
+     appr%hamilt%orig%value(6)=hads
+     appr%hamilt%orig%value(7)=hads
+     appr%hamilt%orig%value(8)=jint
+     appr%hamilt%orig%value(9)=jint
+     appr%hamilt%orig%value(11)=jint
+     appr%hamilt%orig%value(12)=jint
+     appr%hamilt%orig%value(13)=jint
+     appr%hamilt%orig%value(14)=jint
+     appr%hamilt%orig%value(15)=jint
+     appr%hamilt%orig%value(16)=jint
+     appr%hamilt%orig%value(17)=jint
+     appr%hamilt%orig%value(18)=jint
+     appr%hamilt%orig%value(19)=jint
+
+     do i=2,7
+      appr%hamilt%corr%term(i-1,1)=i
+     end do
+     appr%hamilt%corr%term(7,1)=2
+     appr%hamilt%corr%term(7,2)=3
+     appr%hamilt%corr%term(8,1)=3
+     appr%hamilt%corr%term(8,2)=4
+     appr%hamilt%corr%term(9,1)=4
+     appr%hamilt%corr%term(9,2)=5
+     appr%hamilt%corr%term(10,1)=5
+     appr%hamilt%corr%term(10,2)=6
+     appr%hamilt%corr%term(11,1)=6
+     appr%hamilt%corr%term(11,2)=7
+     appr%hamilt%corr%term(12,1)=2
+     appr%hamilt%corr%term(12,2)=7
+
+     appr%hamilt%corr%intmap(1)=1
+     appr%hamilt%corr%intmap(2)=1
+     appr%hamilt%corr%intmap(3)=1
+     appr%hamilt%corr%intmap(4)=1
+     appr%hamilt%corr%intmap(5)=1
+     appr%hamilt%corr%intmap(6)=1
+     appr%hamilt%corr%intmap(7)=2
+     appr%hamilt%corr%intmap(8)=2
+     appr%hamilt%corr%intmap(9)=2
+     appr%hamilt%corr%intmap(10)=2
+     appr%hamilt%corr%intmap(11)=2
+     appr%hamilt%corr%intmap(12)=2
+     appr%hamilt%corr%intmap(13)=2
+
+     appr%hamilt%corr%value(1)=0.d0
+     appr%hamilt%corr%value(2)=0.d0
+
+     appr%eqn%lhs=0        
+     appr%eqn%rhs=0        
+     appr%eqn%lhs(1,1)=1
+     appr%eqn%lhs(2,1)=1
+     appr%eqn%lhs(2,2)=2
+     appr%eqn%rhs(1,1)=2
+     appr%eqn%rhs(2,1)=2
+     appr%eqn%rhs(2,2)=3
+        
+    end if
+
     return
     
     end subroutine approx_initialisation
     
-        
-        !odel%list1%term=0
-        !odel%list1%value=0.d0
-        !odel%list2%term=0
-        !odel%list2%intmap=0
-        !odel%list2%value=0.d0
-        !o i=1,7
-        !model%list1%term(i,1)=1
-        !nd do
-        !odel%list1%term(8,1)=1
-        !odel%list1%term(8,2)=2
-        !odel%list1%term(9,1)=1
-        !odel%list1%term(9,2)=3
-        !odel%list1%term(10,1)=1
-        !odel%list1%term(10,2)=4
-        !odel%list1%term(11,1)=1
-        !odel%list1%term(11,2)=5
-        !odel%list1%term(12,1)=1
-        !odel%list1%term(12,2)=6
-        !odel%list1%term(13,1)=1
-        !odel%list1%term(13,2)=7
-        !odel%list1%term(14,1)=2
-        !odel%list1%term(14,2)=3
-        !odel%list1%term(15,1)=3
-        !odel%list1%term(15,2)=4
-        !odel%list1%term(16,1)=4
-        !odel%list1%term(16,2)=5
-        !odel%list1%term(17,1)=5
-        !odel%list1%term(17,2)=6
-        !odel%list1%term(18,1)=6
-        !odel%list1%term(18,2)=7
-        !odel%list1%term(19,1)=2
-        !odel%list1%term(19,2)=7
-
-        !odel%list1%value(1)=hads
-        !odel%list1%value(2)=hads
-        !odel%list1%value(3)=hads
-        !odel%list1%value(4)=hads
-        !odel%list1%value(5)=hads
-        !odel%list1%value(6)=hads
-        !odel%list1%value(7)=hads
-        !odel%list1%value(8)=jint
-        !odel%list1%value(9)=jint
-        !odel%list1%value(11)=jint
-        !odel%list1%value(12)=jint
-        !odel%list1%value(13)=jint
-        !odel%list1%value(14)=jint
-        !odel%list1%value(15)=jint
-        !odel%list1%value(16)=jint
-        !odel%list1%value(17)=jint
-        !odel%list1%value(18)=jint
-        !odel%list1%value(19)=jint
-
-        !o i=2,7
-        !model%list2%term(i-1,1)=i
-        !nd do
-        !odel%list2%term(7,1)=2
-        !odel%list2%term(7,2)=3
-        !odel%list2%term(8,1)=3
-        !odel%list2%term(8,2)=4
-        !odel%list2%term(9,1)=4
-        !odel%list2%term(9,2)=5
-        !odel%list2%term(10,1)=5
-        !odel%list2%term(10,2)=6
-        !odel%list2%term(11,1)=6
-        !odel%list2%term(11,2)=7
-        !odel%list2%term(12,1)=2
-        !odel%list2%term(12,2)=7
-
-        !odel%list2%intmap(1)=1
-        !odel%list2%intmap(2)=1
-        !odel%list2%intmap(3)=1
-        !odel%list2%intmap(4)=1
-        !odel%list2%intmap(5)=1
-        !odel%list2%intmap(6)=1
-        !odel%list2%intmap(7)=2
-        !odel%list2%intmap(8)=2
-        !odel%list2%intmap(9)=2
-        !odel%list2%intmap(10)=2
-        !odel%list2%intmap(11)=2
-        !odel%list2%intmap(12)=2
-        !odel%list2%intmap(13)=2
-
-        !odel%list2%value(1)=0.d0
-        !odel%list2%value(2)=0.d0
-
-        !odel_eqn%lhs=0        
-        !odel_eqn%rhs=0        
-        !odel_eqn%lhs(1,1)=1
-        !odel_eqn%lhs(2,1)=1
-        !odel_eqn%lhs(2,2)=2
-        !odel_eqn%rhs(1,1)=2
-        !odel_eqn%rhs(2,1)=2
-        !odel_eqn%rhs(2,2)=3
-
-        !contains
-        !real*8 function energy(state,approx,nsites)
-        !implicit none
-        !integer nsites, s, i, j
-        !integer, dimension(nsites) :: state
-        !type (hamiltonian) :: approx
-        ! 
-        !energy=0.d0
-        !! Hamiltonian "original" block
-        !do i=1,2**nsites
-        ! s=1
-        ! do j=1,nsites
-        !  if(approx%list1%term(i,j).gt.0) then
-        !   s=s*state(approx%list1%term(i,j))
-        !  end if
-        ! end do
-        !! The variable "s" is used as a correlation variable. If zero, "value" is not included in the sum
-        ! energy=energy+s*approx%list1%value(i)
-        !end do          
-        !! Hamiltonian "correction" block
-        !do i=1,2**nsites
-        ! s=1
-        ! do j=1,nsites
-        !  if(approx%list2%term(i,j).gt.0) then
-        !   s=s*state(approx%list2%term(i,j))
-        !  end if
-        ! end do
-        ! energy=energy+approx%list2%value(approx%list2%intmap(i))
-        !end do
-        !end function 
-        end module meso_approx
+    end module 
