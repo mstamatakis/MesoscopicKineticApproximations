@@ -58,7 +58,7 @@
      appr%eqn%rhs=0
 
      do i=1,7
-      appr%hamilt%orig%term(i,1)=1
+      appr%hamilt%orig%term(i,1)=i
      end do
      appr%hamilt%orig%term(8,1)=1
      appr%hamilt%orig%term(8,2)=2
@@ -94,6 +94,7 @@
      appr%hamilt%orig%value(7)=hads
      appr%hamilt%orig%value(8)=jint
      appr%hamilt%orig%value(9)=jint
+     appr%hamilt%orig%value(10)=jint
      appr%hamilt%orig%value(11)=jint
      appr%hamilt%orig%value(12)=jint
      appr%hamilt%orig%value(13)=jint

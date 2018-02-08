@@ -13,7 +13,7 @@
         do i=1,2**nsites
          s=1
          do j=1,nsites
-          if(appr%hamilt%orig%term(i,j).ne.0)then
+          if(appr%hamilt%orig%term(i,j).ne.0) then
            s=s*state(appr%hamilt%orig%term(i,j))
           end if
          end do
@@ -23,7 +23,7 @@
         do i=1,2**nsites
          s=1
          do j=1,nsites
-          if(appr%hamilt%corr%term(i,j).ne.0)then
+          if(appr%hamilt%corr%term(i,j).ne.0) then
            s=s*state(appr%hamilt%corr%term(i,j))
           end if
          end do
