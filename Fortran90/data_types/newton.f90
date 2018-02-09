@@ -1,5 +1,4 @@
 	subroutine solver(x,n,check)
-    
         !use lu 
     
         implicit none
