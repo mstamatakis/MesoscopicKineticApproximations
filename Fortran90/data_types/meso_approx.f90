@@ -124,7 +124,7 @@
      appr%hamilt%orig%value=0.d0
      appr%hamilt%corr%term=0
      appr%hamilt%corr%intmap=0
-     appr%hamilt%corr%value=0.d0
+     appr%hamilt%corr%value=0.1d0
      appr%eqn%lhs=0
      appr%eqn%rhs=0
  

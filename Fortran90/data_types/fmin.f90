@@ -8,7 +8,7 @@
 	integer i
 	real*8 sum
 
-	call funcv(n,x,fvec)
+	call funcv(fvec)
 	sum=0.d0
 	do i=1,n
 	 sum=sum+fvec(i)**2

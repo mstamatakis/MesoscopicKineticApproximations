@@ -1,6 +1,6 @@
 	subroutine solver(x,n,check)
 	! See chapter 9 of Numerical Recipes in Fortran by Press et al.
-        !use lu 
+        use lu 
         implicit none
 	integer n, nn, np, maxits, d, c
 	logical check
@@ -44,9 +44,9 @@
 	 do i=1,n
 	  p(i)=-fvec(i)
 	 end do
-	 !call ludcmp(fjac,n,np,indx,d,c)
-	 !call lubksb(fjac,n,np,indx,p)
-         call gelim(fjac,-fvec,n,np,p)
+	 call ludcmp(fjac,n,np,indx,d,c)
+	 call lubksb(fjac,n,np,indx,p)
+         !call gelim(fjac,-fvec,n,np,p)
          write(*,*) its, sqrt(fvec(1)**2+fvec(2)**2+fvec(3)**2+fvec(4)**2)
 	 call lnsrch(n,xold,fold,g,p,x,f,stpmax,check,fmin)
 	 test=0.d0
@@ -161,7 +161,7 @@
 	 h=0.1d0*eps*abs(temp)
 	 if(h.eq.0)h=eps
 	 x(j)=temp+h
-	 call funcv(n,x,f)
+	 call funcv(f)
 	 x(j)=temp
 	 do i=1,n
 	  df(i,j)=(f(i)-fvec(i))/h
