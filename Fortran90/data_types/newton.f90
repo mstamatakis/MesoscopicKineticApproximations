@@ -1,9 +1,7 @@
 	subroutine solver(x,n,check)
-        !use lu 
-    
-        implicit none
-    
 	! See chapter 9 of Numerical Recipes in Fortran by Press et al.
+        !use lu 
+        implicit none
 	integer n, nn, np, maxits, d, c
 	logical check
 	real*8 x(n), fvec, tolf, tolmin, tolx, stpmx

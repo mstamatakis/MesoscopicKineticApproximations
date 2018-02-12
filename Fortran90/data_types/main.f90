@@ -7,6 +7,8 @@
         integer, allocatable :: state(:)
         type (approximation_type) :: obj_approx
 
+        real*8, allocatable, dimension(:) :: fvec
+
         ! Initialising the data structure of the model
         write(*,*) '--------------------------------------------'
         write(*,*) '|              APPROXIMATION               |'
@@ -22,10 +24,11 @@
         call obj_approx%init
 
         ! Initialising the state vectors
-        allocate(state(nsites))
+        allocate(state(nsites),fvec(npar))
         call confs(state,0)
+        call funcv(fvec)
 
         ! Calculating the self-consistent correction fields
         check=.false.
-        ! call newton(obj_approx%hamilt%corr%value,npar,check)
+        !call solver(obj_approx%hamilt%corr%value,npar,check)
         end program 

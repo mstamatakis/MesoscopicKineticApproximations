@@ -9,7 +9,7 @@
 	implicit none
         integer i, j, total
 	integer, allocatable, dimension(:) ::  v1, v2
-	real*8 fvec(npar), corr
+	real*8, intent(out) :: fvec(npar)
 	
         do i=1,npar
          total=0
@@ -23,7 +23,7 @@
           v1(j)=obj_approx%eqn%lhs(i,j)
           v2(j)=obj_approx%eqn%rhs(i,j)
          end do
-         fvec(i)=log(corr(v1,total,obj_approx))-log(corr(v2,total,obj_approx))
+         fvec(i)=log(obj_approx%corfun(v1,total,obj_approx))-log(obj_approx%corfun(v2,total,obj_approx))
          deallocate(v1,v2)
         end do
         do i=1,npar
