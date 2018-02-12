@@ -26,7 +26,4 @@
          fvec(i)=log(obj_approx%corfun(v1,total,obj_approx))-log(obj_approx%corfun(v2,total,obj_approx))
          deallocate(v1,v2)
         end do
-        do i=1,npar
-         write(*,*) fvec(i)
-        end do
 	end subroutine funcv

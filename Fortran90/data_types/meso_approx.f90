@@ -139,7 +139,7 @@
       appr%hamilt%orig%value(i+1)=hads
      end do
      j=13
-     do i=1,6
+     do i=1,5
       appr%hamilt%orig%term(j+i,1)=i+1
       appr%hamilt%orig%term(j+i,2)=i+2
      end do 

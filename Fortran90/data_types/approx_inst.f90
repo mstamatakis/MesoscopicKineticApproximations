@@ -1,5 +1,4 @@
         module approx_inst
-        
         use commons
         use meso_approx
         implicit none

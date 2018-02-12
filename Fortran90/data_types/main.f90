@@ -1,11 +1,10 @@
         program main 
         use commons
         use meso_approx
+        use approx_inst
         implicit none
         logical check
-        !real*8 energy, part, corr
         integer, allocatable :: state(:)
-        type (approximation_type) :: obj_approx
 
         real*8, allocatable, dimension(:) :: fvec
 
@@ -30,5 +29,5 @@
 
         ! Calculating the self-consistent correction fields
         check=.false.
-        !call solver(obj_approx%hamilt%corr%value,npar,check)
+        call solver(obj_approx%hamilt%corr%value,npar,check)
         end program 
