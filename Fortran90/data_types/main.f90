@@ -4,9 +4,11 @@
         use approx_inst
         implicit none
         logical check
+        integer i, j
+        real*8 cov
+        integer, dimension(1) :: v
         integer, allocatable :: state(:)
 
-        real*8, allocatable, dimension(:) :: fvec
 
         ! Initialising the data structure of the model
         write(*,*) '--------------------------------------------'
@@ -23,11 +25,24 @@
         call obj_approx%init
 
         ! Initialising the state vectors
-        allocate(state(nsites),fvec(npar))
+        allocate(state(nsites))
         call confs(state,0)
-        call funcv(fvec)
 
         ! Calculating the self-consistent correction fields
         check=.false.
         call solver(obj_approx%hamilt%corr%value,npar,check)
+        
+        ! Coverage vs Chemical Potential Plot
+        chemp=-1.40d0
+        do i=1,240
+         chemp=chemp+0.01d0
+         call solver(obj_approx%hamilt%corr%value,npar,check)
+         cov=0.d0
+         do j=1,nsites
+          v(1)=j
+          cov=cov+obj_approx%corfun(v,1,obj_approx)
+         end do
+         cov=cov/7.d0
+         write(16,*) chemp, cov
+        end do
         end program 
