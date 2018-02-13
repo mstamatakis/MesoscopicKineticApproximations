@@ -37,13 +37,12 @@
         do i=1,240
          chemp=chemp+0.01d0
          call solver(obj_approx%hamilt%corr%value,npar,check)
-         write(*,*) (obj_approx%hamilt%corr%value(j),j=1,npar)
          cov=0.d0
          do j=1,nsites
           v(1)=j
           cov=cov+obj_approx%corfun(v,1,obj_approx)/obj_approx%part()
          end do
-         cov=cov/7.d0
+         cov=cov/nsites
          write(16,*) chemp, cov
         end do
         end program 
