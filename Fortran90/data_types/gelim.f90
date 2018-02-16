@@ -62,7 +62,7 @@ do i = 1,n
 ! Check for singularity: If all elements of a column = 0 then STOP!
 ! (Practically " = 0" means " < threshold" = 1e-40 here)
  if (amax.lt.1D-40) then	   
-   write(*,*) "[gelim] Singular or ill-conditioned matrix. EXITING!"
+  write(*,*) "[gelim] Singular or ill-conditioned matrix. EXITING!"
    pause
    stop
  endif

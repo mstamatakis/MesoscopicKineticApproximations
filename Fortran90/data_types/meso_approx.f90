@@ -123,15 +123,15 @@
      appr%hamilt%orig%term=0
      appr%hamilt%orig%value=0.d0
      appr%hamilt%corr%term=0
-     appr%hamilt%corr%intmap=1
+     appr%hamilt%corr%intmap=0
      appr%hamilt%corr%value=0.1d0
      appr%eqn%lhs=0
      appr%eqn%rhs=0
      do i=1,7
       appr%hamilt%orig%term(i,1)=i
      end do
-     j=7
      appr%hamilt%orig%value(1)=hads
+     j=7
      do i=1,6
       appr%hamilt%orig%term(j+i,1)=1
       appr%hamilt%orig%term(j+i,2)=i+1
@@ -142,6 +142,52 @@
      end do
      do i=2,7
       appr%hamilt%corr%term(i-1,1)=i
+      appr%hamilt%corr%intmap(i-1)=1
+     end do
+     appr%eqn%lhs(1,1)=1
+     appr%eqn%rhs(1,1)=2
+    end if
+
+    if(appr%approx.eq.'bpe') then
+     nsites=7
+     npar=1
+     allocate(appr%hamilt%orig%term(2**nsites,nsites))
+     allocate(appr%hamilt%orig%value(2**nsites))
+     allocate(appr%hamilt%corr%term(2**nsites,nsites))
+     allocate(appr%hamilt%corr%intmap(2**nsites))
+     allocate(appr%hamilt%corr%value(npar))
+     allocate(appr%eqn%lhs(npar,nsites))
+     allocate(appr%eqn%rhs(npar,nsites))
+     appr%hamilt%orig%term=0
+     appr%hamilt%orig%value=0.d0
+     appr%hamilt%corr%term=0
+     appr%hamilt%corr%intmap=0
+     appr%hamilt%corr%value=0.1d0
+     appr%eqn%lhs=0
+     appr%eqn%rhs=0
+     do i=1,7
+      appr%hamilt%orig%term(i,1)=i
+     end do
+     appr%hamilt%orig%value(1)=hads
+     j=7
+     do i=1,6
+      appr%hamilt%orig%term(j+i,1)=1
+      appr%hamilt%orig%term(j+i,2)=i+1
+      appr%hamilt%orig%value(i+1)=hads
+     end do
+     j=13
+     do i=1,5
+      appr%hamilt%orig%term(j+i,1)=i+1
+      appr%hamilt%orig%term(j+i,2)=i+2
+     end do
+     appr%hamilt%orig%term(19,1)=2
+     appr%hamilt%orig%term(19,2)=7
+     do i=8,19
+      appr%hamilt%orig%value(i)=jint
+     end do
+     do i=2,7
+      appr%hamilt%corr%term(i-1,1)=i
+      appr%hamilt%corr%intmap(i-1)=1
      end do
      appr%eqn%lhs(1,1)=1
      appr%eqn%rhs(1,1)=2
@@ -179,6 +225,8 @@
       appr%hamilt%orig%term(j+i,1)=i+1
       appr%hamilt%orig%term(j+i,2)=i+2
      end do 
+     appr%hamilt%orig%term(19,1)=2
+     appr%hamilt%orig%term(19,2)=7
      do i=8,19
       appr%hamilt%orig%value(i)=jint
      end do
@@ -196,7 +244,7 @@
      do i=1,6
       appr%hamilt%corr%intmap(i)=1
      end do
-     do i=7,13
+     do i=7,12
       appr%hamilt%corr%intmap(i)=2
      end do
      appr%hamilt%corr%value(1)=0.1d0
