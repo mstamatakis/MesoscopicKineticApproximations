@@ -258,6 +258,50 @@
      appr%eqn%rhs(2,1)=2
      appr%eqn%rhs(2,2)=3
     end if
+
+    if(appr%approx.eq.'k2nnc1') then
+     nsites=13
+     npar=4
+     allocate(appr%hamilt%orig%term(2**nsites,nsites))
+     allocate(appr%hamilt%orig%value(2**nsites))
+     allocate(appr%hamilt%corr%term(2**nsites,nsites))
+     allocate(appr%hamilt%corr%intmap(2**nsites))
+     allocate(appr%hamilt%corr%value(npar))
+     allocate(appr%eqn%lhs(npar,nsites))
+     allocate(appr%eqn%rhs(npar,nsites))
+     appr%hamilt%orig%term=0
+     appr%hamilt%orig%value=0.d0
+     appr%hamilt%corr%term=0
+     appr%hamilt%corr%intmap=0
+     appr%hamilt%corr%value=0.1d0
+     appr%eqn%lhs=0
+     appr%eqn%rhs=0
+     do i=1,13
+      appr%hamilt%orig%term(i,1)=i
+      appr%hamilt%orig%value(i)=hads
+     end do
+     do i=2,7
+      appr%hamilt%orig%term(12+i,1)=1
+      appr%hamilt%orig%term(12+i,2)=i
+      appr%hamilt%orig%value(12+i)=jint
+     end do 
+     do i=2,6
+      appr%hamilt%orig%term(18+i,1)=i
+      appr%hamilt%orig%term(18+i,1)=i+1
+      appr%hamilt%orig%value(18+i)=jint
+     end do
+      appr%hamilt%orig%term(25,1)=2
+      appr%hamilt%orig%term(25,2)=7
+      appr%hamilt%orig%value(25)=jint
+     do i=8,12
+      appr%hamilt%orig%term(18+i,1)=i
+      appr%hamilt%orig%term(18+i,1)=i-6
+     end do
+     do i=8,12
+      appr%hamilt%orig%term(18+i,1)=i
+      appr%hamilt%orig%term(18+i,1)=i-6+1
+     end do
+    end if
     return
     end subroutine approx_initialisation
     end module 

@@ -23,7 +23,7 @@
           v1(j)=obj_approx%eqn%lhs(i,j)
           v2(j)=obj_approx%eqn%rhs(i,j)
          end do
-         fvec(i)=obj_approx%corfun(v1,total,obj_approx)-obj_approx%corfun(v2,total,obj_approx)
+         fvec(i)=log(obj_approx%corfun(v1,total,obj_approx))-log(obj_approx%corfun(v2,total,obj_approx))
          deallocate(v1,v2)
         end do
 	end subroutine funcv
