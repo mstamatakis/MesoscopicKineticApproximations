@@ -362,6 +362,137 @@
      appr%eqn%rhs(4,1)=2     
      appr%eqn%rhs(4,2)=8     
     end if
+
+    if(appr%approx.eq.'K2NNC2') then
+     nsites=13
+     npar=6
+     nrows=42
+     allocate(appr%hamilt%orig%term(nrows,nsites))
+     allocate(appr%hamilt%orig%value(nrows))
+     allocate(appr%hamilt%corr%term(nrows,nsites))
+     allocate(appr%hamilt%corr%intmap(nrows))
+     allocate(appr%hamilt%corr%value(npar))
+     allocate(appr%eqn%lhs(npar,nsites))
+     allocate(appr%eqn%rhs(npar,nsites))
+     appr%hamilt%orig%term=0
+     appr%hamilt%orig%value=0.d0
+     appr%hamilt%corr%term=0
+     appr%hamilt%corr%intmap=0
+     appr%hamilt%corr%value=0.1d0
+     appr%eqn%lhs=0
+     appr%eqn%rhs=0
+     ! Original terms
+     do i=1,13
+      appr%hamilt%orig%term(i,1)=i
+      appr%hamilt%orig%value(i)=hads
+     end do
+     do i=2,7
+      appr%hamilt%orig%term(12+i,1)=1
+      appr%hamilt%orig%term(12+i,2)=i
+      appr%hamilt%orig%value(12+i)=jint
+     end do 
+     do i=2,6
+      appr%hamilt%orig%term(18+i,1)=i
+      appr%hamilt%orig%term(18+i,2)=i+1
+      appr%hamilt%orig%value(18+i)=jint
+     end do
+      appr%hamilt%orig%term(25,1)=2
+      appr%hamilt%orig%term(25,2)=7
+      appr%hamilt%orig%value(25)=jint
+     do i=8,12
+      appr%hamilt%orig%term(18+i,1)=i
+      appr%hamilt%orig%term(18+i,2)=i-6
+      appr%hamilt%orig%value(18+i)=jint
+     end do
+     do i=8,12
+      appr%hamilt%orig%term(23+i,1)=i
+      appr%hamilt%orig%term(23+i,2)=i-6+1
+      appr%hamilt%orig%value(23+i)=jint
+     end do
+     appr%hamilt%orig%term(36,1)=13
+     appr%hamilt%orig%term(36,2)=2
+     appr%hamilt%orig%term(37,1)=13
+     appr%hamilt%orig%term(37,2)=7
+     appr%hamilt%orig%value(36)=jint
+     appr%hamilt%orig%value(37)=jint
+    ! Correction terms
+     do i=2,7
+      appr%hamilt%corr%term(i-1,1)=i
+      appr%hamilt%corr%intmap(i-1)=1
+     end do
+     do i=8,13
+      appr%hamilt%corr%term(i-1,1)=i
+      appr%hamilt%corr%intmap(i-1)=2
+     end do
+     do i=2,6
+      appr%hamilt%corr%term(11+i,1)=i   
+      appr%hamilt%corr%term(11+i,2)=i+1   
+      appr%hamilt%corr%intmap(11+i)=3  
+     end do
+     appr%hamilt%corr%term(18,1)=2
+     appr%hamilt%corr%term(18,2)=7
+     appr%hamilt%corr%intmap(18)=3
+     do i=8,12
+      appr%hamilt%corr%term(11+i,1)=i
+      appr%hamilt%corr%term(11+i,2)=i-6
+      appr%hamilt%corr%intmap(11+i)=4
+     end do
+     do i=8,12
+      appr%hamilt%corr%term(16+i,1)=i
+      appr%hamilt%corr%term(16+i,2)=i-6+1
+      appr%hamilt%corr%intmap(16+i)=4
+     end do
+     appr%hamilt%corr%term(29,1)=13
+     appr%hamilt%corr%term(29,2)=2
+     appr%hamilt%corr%term(30,1)=13
+     appr%hamilt%corr%term(30,2)=7
+     appr%hamilt%corr%intmap(29)=4
+     appr%hamilt%corr%intmap(30)=4
+     appr%hamilt%corr%term(31,1)=2
+     appr%hamilt%corr%term(31,2)=4
+     appr%hamilt%corr%term(32,1)=2
+     appr%hamilt%corr%term(32,2)=6
+     appr%hamilt%corr%term(33,1)=3
+     appr%hamilt%corr%term(33,2)=5
+     appr%hamilt%corr%term(34,1)=3
+     appr%hamilt%corr%term(34,2)=7
+     appr%hamilt%corr%term(35,1)=4
+     appr%hamilt%corr%term(35,2)=6
+     appr%hamilt%corr%term(36,1)=5
+     appr%hamilt%corr%term(36,2)=7
+     do i=1,6
+      appr%hamilt%corr%intmap(30+i)=5
+     end do
+     do i=8,12
+      appr%hamilt%corr%term(29+i,1)=i
+      appr%hamilt%corr%term(29+i,2)=i+1
+      appr%hamilt%corr%intmap(29+i)=6
+     end do
+     appr%hamilt%corr%term(42,1)=8
+     appr%hamilt%corr%term(42,2)=13
+     appr%hamilt%corr%intmap(42)=6
+    ! Equations
+     appr%eqn%lhs(1,1)=1
+     appr%eqn%lhs(2,1)=1
+     appr%eqn%lhs(3,1)=1
+     appr%eqn%lhs(3,2)=2
+     appr%eqn%lhs(4,1)=1
+     appr%eqn%lhs(4,2)=2
+     appr%eqn%lhs(5,1)=1
+     appr%eqn%lhs(5,2)=8
+     appr%eqn%lhs(6,1)=1
+     appr%eqn%lhs(6,2)=8
+     appr%eqn%rhs(1,1)=2
+     appr%eqn%rhs(2,1)=8
+     appr%eqn%rhs(3,1)=2     
+     appr%eqn%rhs(3,2)=3     
+     appr%eqn%rhs(4,1)=2     
+     appr%eqn%rhs(4,2)=8     
+     appr%eqn%rhs(5,1)=2     
+     appr%eqn%rhs(5,2)=4     
+     appr%eqn%rhs(6,1)=8     
+     appr%eqn%rhs(6,2)=9     
+    end if
     return
     end subroutine approx_initialisation
     end module 
