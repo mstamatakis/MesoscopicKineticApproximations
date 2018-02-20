@@ -9,7 +9,6 @@
         integer, dimension(1) :: v
         integer, allocatable :: state(:)
 
-
         ! Initialising the data structure of the model
         write(*,*) '--------------------------------------------'
         write(*,*) '|              APPROXIMATION               |'
@@ -31,7 +30,7 @@
         ! Calculating the self-consistent correction fields
         check=.false.
         call solver(obj_approx%hamilt%corr%value,npar,check)
-    
+
         ! Coverage vs Chemical Potential Plot
         chemp=-1.40d0
         do i=1,240
