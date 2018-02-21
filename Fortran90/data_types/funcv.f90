@@ -16,14 +16,6 @@
             total=total+1
           end if
          end do
-        ! Knowing that, we allocate the vectors to calculate
-        ! correlations.
-         allocate(v1(total),v2(total)) 
-         do j=1,total
-          v1(j)=obj_approx%eqn%lhs(i,j)
-          v2(j)=obj_approx%eqn%rhs(i,j)
-         end do
-         fvec(i)=log(obj_approx%corfun(v1,total,obj_approx))-log(obj_approx%corfun(v2,total,obj_approx))
-         deallocate(v1,v2)
+         fvec(i)=log(obj_approx%corfun(obj_approx%eqn%lhs(i,1:total),total,obj_approx))-log(obj_approx%corfun(obj_approx%eqn%rhs(i,1:total),total,obj_approx))
         end do
 	end subroutine funcv
