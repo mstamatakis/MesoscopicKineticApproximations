@@ -152,7 +152,7 @@
 	subroutine fdjac(n,x,fvec,np,df)
 	integer n, np, nmax
 	real*8 df(np,np),fvec(n),x(n),eps
-	parameter (nmax=40,eps=1.0d-4)
+	parameter (nmax=40,eps=1.0d-6)
 	integer i, j
 	real*8 h, temp, f(nmax)
 
