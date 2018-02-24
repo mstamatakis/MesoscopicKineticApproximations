@@ -83,7 +83,6 @@
      call confs(state,i)
      partition=partition+exp((chemp*sum(state)-appr%ener(appr,state)-h0)/(kb*temp))
     end do
-    partition=partition*exp(h0/(kb*temp))
     end function
  
     real*8 function correlation(v,m,appr)
@@ -105,7 +104,6 @@
      end do
      correlation=correlation+s*exp((chemp*sum(state)-appr%ener(appr,state)-h0)/(kb*temp))
     end do
-    correlation=correlation*exp(h0/(kb*temp))
     end function
  
     subroutine approx_initialisation(appr)

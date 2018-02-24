@@ -44,6 +44,6 @@
          end do
          cov=cov/nsites
          write(16,*) chemp, cov, obj_approx%part()
-         h0=-kb*temp*log(obj_approx%part())
+         h0=h0+kb*temp*log(obj_approx%part())
         end do
         end program 
