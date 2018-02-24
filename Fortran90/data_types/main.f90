@@ -43,7 +43,7 @@
           cov=cov+obj_approx%corfun(v,1,obj_approx)/obj_approx%part()
          end do
          cov=cov/nsites
-         write(16,*) chemp, cov
+         write(16,*) chemp, cov, obj_approx%part()
          h0=-kb*temp*log(obj_approx%part())
         end do
         end program 
