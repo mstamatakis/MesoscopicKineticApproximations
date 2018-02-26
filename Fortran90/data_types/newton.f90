@@ -5,7 +5,7 @@
 	integer n, nn, np, maxits, d, c
 	logical check
 	real*8 x(n), fvec, tolf, tolmin, tolx, stpmx
-	parameter(np=40,maxits=200,tolf=1.0d-10,tolmin=1.0d-6,tolx=1.0d-7,stpmx=100.d0)
+	parameter(np=40,maxits=200,tolf=1.0d-4,tolmin=1.0d-6,tolx=1.0d-7,stpmx=100.d0)
 	common /newtv/fvec(np),nn
 	save /newtv/
 	integer i, its, j, indx(np)
@@ -47,13 +47,17 @@
 	 call ludcmp(fjac,n,np,indx,d,c)
 	 call lubksb(fjac,n,np,indx,p)
          !call gelim(fjac,-fvec,n,np,p)
-         write(*,*) its, sqrt(fvec(1)**2+fvec(2)**2+fvec(3)**2+fvec(4)**2)
+         write(*,*) its,sqrt(fvec(1)**2+fvec(2)**2+fvec(3)**2+fvec(4)**2), check
 	 call lnsrch(n,xold,fold,g,p,x,f,stpmax,check,fmin)
 	 test=0.d0
 	 do i=1,n
 	  if(abs(fvec(i)).gt.test)test=abs(fvec(i))
 	 end do
 	 if(test.lt.tolf)then
+          check=.false.
+          return
+         end if
+         if(check)then
 	  test=0.d0
 	  den=max(f,0.5d0*n)
 	  do i=1,n
