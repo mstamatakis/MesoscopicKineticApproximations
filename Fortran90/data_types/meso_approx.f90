@@ -81,7 +81,7 @@
     partition=0.d0
     do i=1,2**nsites
      call confs(state,i)
-     partition=partition+exp((chemp*sum(state)-appr%ener(appr,state))/(kb*temp))
+     partition=partition+exp((chemp*sum(state)-appr%ener(appr,state)-h0)/(kb*temp))
     end do
     end function
  
@@ -102,7 +102,7 @@
      do k=1,m
       s=s*state(v(k))
      end do
-     correlation=correlation+s*exp((chemp*sum(state)-appr%ener(appr,state))/(kb*temp))
+     correlation=correlation+s*exp((chemp*sum(state)-appr%ener(appr,state)-h0)/(kb*temp))
     end do
     end function
  

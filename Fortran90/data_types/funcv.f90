@@ -1,5 +1,6 @@
 	subroutine funcv(fvec)
         use commons
+        use meso_approx
         use approx_inst
 	implicit none
         integer i, j, total
