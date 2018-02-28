@@ -34,6 +34,8 @@
         ! Coverage vs Chemical Potential Plot
         chemp=-1.40d0
         h0=0.d0
+        !$OMP PARALLEL 
+        !$OMP DO
         do i=1,240
          chemp=chemp+0.01d0
          call solver(obj_approx%hamilt%corr%value,npar,check)
@@ -46,4 +48,6 @@
          write(16,*) chemp, cov, obj_approx%part()
          h0=h0+kb*temp*log(obj_approx%part())
         end do
+        !$OMP END DO
+        !$OMP END PARALLEL
         end program 
