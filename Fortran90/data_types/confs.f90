@@ -14,6 +14,8 @@
 
 	if(l.eq.0) then
          allocate(states(2**nsites,nsites))
+        !$OMP PARALLEL
+        !$OMP DO
 	 do i=1,2**nsites
 	  do j=1,nsites
         ! "f" here stands for a frequency. The idea is to build "states"
@@ -36,9 +38,15 @@
 	   end if
 	  end do
  	 end do
+        !$OMP END DO
+        !$OMP END PARALLEL
 	else
+        !$OMP PARALLEL
+        !$OMP DO
 	 do i=1,nsites
 	  state(i)=states(l,i)
 	 end do
+        !$OMP END DO
+        !$OMP END PARALLEL
 	end if
 	end subroutine

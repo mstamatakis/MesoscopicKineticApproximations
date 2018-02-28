@@ -7,6 +7,8 @@
 	integer, allocatable, dimension(:) ::  v1, v2
 	real*8, intent(out) :: fvec(npar)
 	
+        !$OMP PARALLEL
+        !$OMP DO
         do i=1,npar
         ! "total" accumulates the number of non-zero elements into the
         ! row vector of "obj_approx%eqn%lhs". This is equal to
@@ -19,4 +21,6 @@
          end do
          fvec(i)=log(obj_approx%corfun(obj_approx%eqn%lhs(i,1:total),total,obj_approx))-log(obj_approx%corfun(obj_approx%eqn%rhs(i,1:total),total,obj_approx))
         end do
+        !$OMP END DO
+        !$OMP END PARALLEL
 	end subroutine funcv

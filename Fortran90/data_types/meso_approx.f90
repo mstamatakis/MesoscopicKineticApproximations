@@ -46,6 +46,8 @@
     
     energy=0.d0
     ! Hamiltonian original block
+    !$OMP PARALLEL
+    !$OMP DO
     do i=1,nrows
      s=1
      do j=1,nsites
@@ -55,7 +57,9 @@
      end do
      energy=energy+s*appr%hamilt%orig%value(i)
     end do
+    !$OMP END DO
     ! Hamiltonian correction block
+    !$OMP DO
     do i=1,nrows
      s=1
      do j=1,nsites
@@ -67,6 +71,8 @@
       energy=energy+s*appr%hamilt%corr%value(appr%hamilt%corr%intmap(i))
      end if
     end do        
+    !$OMP END DO
+    !$OMP END PARALLEL
     end function
  
     real*8 function partition(appr)
@@ -79,10 +85,14 @@
     
     state=0
     partition=0.d0
+    !$OMP PARALLEL
+    !$OMP DO
     do i=1,2**nsites
      call confs(state,i)
      partition=partition+exp((chemp*sum(state)-appr%ener(appr,state)-h0)/(kb*temp))
     end do
+    !$OMP END DO
+    !$OMP END PARALLEL
     end function
  
     real*8 function correlation(v,m,appr)
@@ -96,6 +106,8 @@
     
     state=0
     correlation=0.d0
+    !$OMP PARALLEL
+    !$OMP DO
     do i=1,2**nsites
      call confs(state,i)
      s=1
@@ -104,6 +116,8 @@
      end do
      correlation=correlation+s*exp((chemp*sum(state)-appr%ener(appr,state)-h0)/(kb*temp))
     end do
+    !$OMP END DO
+    !$OMP END PARALLEL
     end function
  
     subroutine approx_initialisation(appr)
