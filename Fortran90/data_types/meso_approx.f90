@@ -35,6 +35,7 @@
      procedure :: part => partition
      procedure, nopass :: corfun => correlation
      procedure :: init => approx_initialisation
+     procedure :: sigma => sigma
     end type
 
     contains
@@ -107,6 +108,112 @@
     end do
     end function
 
+    subroutine sigma(appr)
+    use commons
+    implicit none
+    integer, dimension(nsites) :: state
+    real*8, dimension(2**nsites) :: energy
+    integer i
+    real*8 memory
+    class (approximation_type) :: appr
+    
+    energy=0.d0
+    state=0
+    do i=1,2**nsites
+     call confs(state,i)
+     energy(i)=appr%ener(appr,state)
+    end do
+     
+    if((appr%approx.eq.'BP').or.(appr%approx.eq.'BPE')) then
+     appr%res(1)=0.d0
+     do i=1,2**nsites
+      call confs(state,i)
+      appr%res(1)=appr%res(1)+state(1)*exp((chemp*sum(state)-energy(i)-h0)/(kb*temp))
+     end do
+     appr%res(1)=log(appr%res(1))
+     memory=0.d0
+     do i=1,2**nsites
+      call confs(state,i)
+      memory=memory+state(2)*exp((chemp*sum(state)-energy(i)-h0)/(kb*temp))
+     end do 
+     appr%res(1)=appr%res(1)-log(memory)   
+    end if
+
+    if(appr%approx.eq.'BPEC') then
+     appr%res(1)=0.d0
+     do i=1,2**nsites
+      call confs(state,i)
+      appr%res(1)=appr%res(1)+state(1)*exp((chemp*sum(state)-energy(i)-h0)/(kb*temp))
+     end do 
+     appr%res(1)=log(appr%res(1))
+     memory=0.d0
+     do i=1,2**nsites
+      call confs(state,i)
+      memory=memory+state(2)*exp((chemp*sum(state)-energy(i)-h0)/(kb*temp))
+     end do 
+     appr%res(1)=appr%res(1)-log(memory)
+
+     appr%res(2)=0.d0
+     do i=1,2**nsites
+      call confs(state,i)
+      appr%res(2)=appr%res(2)+state(1)*state(2)*exp((chemp*sum(state)-energy(i)-h0)/(kb*temp))
+     end do
+     appr%res(2)=log(appr%res(2))
+     memory=0.d0
+     do i=1,2**nsites
+      call confs(state,i)
+      memory=memory+state(2)*state(3)*exp((chemp*sum(state)-energy(i)-h0)/(kb*temp))
+     end do
+     appr%res(2)=appr%res(2)-log(memory)
+    end if
+   
+    if(appr%approx.eq.'K2NNC1') then
+     appr%res(1)=0
+     appr%res(2)=0
+     appr%res(3)=0
+     appr%res(4)=0
+     do i=1,2**nsites
+      call confs(state,i)
+      appr%res(1)=appr%res(1)+state(1)*exp((chemp*sum(state)-energy(i)-h0)/(kb*temp))
+     end do
+     appr%res(1)=log(appr%res(1))
+     appr%res(2)=appr%res(1)
+     memory=0.d0
+     do i=1,2**nsites
+      call confs(state,i)
+      memory=memory+state(2)*exp((chemp*sum(state)-energy(i)-h0)/(kb*temp))
+     end do
+     appr%res(1)=appr%res(1)-log(memory)
+     memory=0.d0
+     do i=1,2**nsites
+      call confs(state,i)
+      memory=memory+state(8)*exp((chemp*sum(state)-energy(i)-h0)/(kb*temp))
+     end do
+     appr%res(2)=appr%res(2)-log(memory)
+     
+     appr%res(3)=0.d0
+     do i=1,2**nsites
+      call confs(state,i)
+      appr%res(3)=appr%res(3)+state(1)*state(2)*exp((chemp*sum(state)-energy(i)-h0)/(kb*temp))
+     end do
+     appr%res(3)=log(appr%res(3))
+     appr%res(4)=appr%res(3)
+     memory=0.d0
+     do i=1,2**nsites
+      call confs(state,i)
+      memory=memory+state(2)*state(3)*exp((chemp*sum(state)-energy(i)-h0)/(kb*temp))
+     end do
+     appr%res(3)=appr%res(3)-log(memory)
+     memory=0.d0
+     do i=1,2**nsites
+      call confs(state,i)
+      memory=memory+state(2)*state(8)*exp((chemp*sum(state)-energy(i)-h0)/(kb*temp))
+     end do
+     appr%res(4)=appr%res(4)-log(memory)
+    end if
+
+    end subroutine
+
     subroutine approx_initialisation(appr)
     use commons
     class(approximation_type), intent(inout) :: appr
@@ -123,6 +230,7 @@
      allocate(appr%hamilt%corr%value(npar))
      allocate(appr%eqn%lhs(npar,nsites))
      allocate(appr%eqn%rhs(npar,nsites))
+     allocate(appr%res(npar))
      appr%hamilt%orig%term=0
      appr%hamilt%orig%value=0.d0
      appr%hamilt%corr%term=0
@@ -162,6 +270,7 @@
      allocate(appr%hamilt%corr%value(npar))
      allocate(appr%eqn%lhs(npar,nsites))
      allocate(appr%eqn%rhs(npar,nsites))
+     allocate(appr%res(npar))
      appr%hamilt%orig%term=0
      appr%hamilt%orig%value=0.d0
      appr%hamilt%corr%term=0
@@ -208,6 +317,7 @@
      allocate(appr%hamilt%corr%value(npar))
      allocate(appr%eqn%lhs(npar,nsites))
      allocate(appr%eqn%rhs(npar,nsites))
+     allocate(appr%res(npar))
      appr%hamilt%orig%term=0
      appr%hamilt%orig%value=0.d0
      appr%hamilt%corr%term=0
@@ -275,6 +385,7 @@
      allocate(appr%hamilt%corr%value(npar))
      allocate(appr%eqn%lhs(npar,nsites))
      allocate(appr%eqn%rhs(npar,nsites))
+     allocate(appr%res(npar))
      appr%hamilt%orig%term=0
      appr%hamilt%orig%value=0.d0
      appr%hamilt%corr%term=0
@@ -375,6 +486,7 @@
      allocate(appr%hamilt%corr%value(npar))
      allocate(appr%eqn%lhs(npar,nsites))
      allocate(appr%eqn%rhs(npar,nsites))
+     allocate(appr%res(npar))
      appr%hamilt%orig%term=0
      appr%hamilt%orig%value=0.d0
      appr%hamilt%corr%term=0
