@@ -29,6 +29,7 @@
      character*10 :: approx
      type (hamiltonian) :: hamilt
      type (equation) :: eqn
+     real*8, allocatable, dimension(:) :: res
     contains
      procedure, nopass :: ener => energy
      procedure :: part => partition
@@ -105,7 +106,7 @@
      correlation=correlation+s*exp((chemp*sum(state)-appr%ener(appr,state)-h0)/(kb*temp))
     end do
     end function
- 
+
     subroutine approx_initialisation(appr)
     use commons
     class(approximation_type), intent(inout) :: appr
