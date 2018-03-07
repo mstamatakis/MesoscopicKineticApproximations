@@ -191,7 +191,6 @@
      end do
      appr%res(2)=appr%res(2)-log(memory)
      
-     appr%res(3)=0.d0
      do i=1,2**nsites
       call confs(state,i)
       appr%res(3)=appr%res(3)+state(1)*state(2)*exp((chemp*sum(state)-energy(i)-h0)/(kb*temp))
@@ -212,6 +211,71 @@
      appr%res(4)=appr%res(4)-log(memory)
     end if
 
+    if(appr%approx.eq.'K2NNC2') then
+     appr%res(1)=0
+     appr%res(2)=0
+     appr%res(3)=0
+     appr%res(4)=0
+     appr%res(5)=0
+     appr%res(6)=0
+
+     do i=1,2**nsites
+      call confs(state,i)
+      appr%res(1)=appr%res(1)+state(1)*exp((chemp*sum(state)-energy(i)-h0)/(kb*temp))
+     end do
+     appr%res(1)=log(appr%res(1))
+     appr%res(2)=appr%res(1)
+     memory=0.d0
+     do i=1,2**nsites
+      call confs(state,i)
+      memory=memory+state(2)*exp((chemp*sum(state)-energy(i)-h0)/(kb*temp))
+     end do
+     appr%res(1)=appr%res(1)-log(memory)
+     memory=0.d0
+     do i=1,2**nsites
+      call confs(state,i)
+      memory=memory+state(8)*exp((chemp*sum(state)-energy(i)-h0)/(kb*temp))
+     end do
+     appr%res(2)=appr%res(2)-log(memory)
+     
+     do i=1,2**nsites
+      call confs(state,i)
+      appr%res(3)=appr%res(3)+state(1)*state(2)*exp((chemp*sum(state)-energy(i)-h0)/(kb*temp))
+     end do
+     appr%res(3)=log(appr%res(3))
+     appr%res(4)=appr%res(3)
+     memory=0.d0
+     do i=1,2**nsites
+      call confs(state,i)
+      memory=memory+state(2)*state(3)*exp((chemp*sum(state)-energy(i)-h0)/(kb*temp))
+     end do
+     appr%res(3)=appr%res(3)-log(memory)
+     memory=0.d0
+     do i=1,2**nsites
+      call confs(state,i)
+      memory=memory+state(2)*state(8)*exp((chemp*sum(state)-energy(i)-h0)/(kb*temp))
+     end do
+     appr%res(4)=appr%res(4)-log(memory)
+
+     do i=1,2**nsites
+      call confs(state,i)
+      appr%res(5)=appr%res(5)+state(1)*state(8)*exp((chemp*sum(state)-energy(i)-h0)/(kb*temp))
+     end do
+     appr%res(5)=log(appr%res(5))
+     appr%res(6)=appr%res(5)
+     memory=0.d0
+     do i=1,2**nsites
+      call confs(state,i)
+      memory=memory+state(2)*state(4)*exp((chemp*sum(state)-energy(i)-h0)/(kb*temp))
+     end do
+     appr%res(5)=appr%res(5)-log(memory)
+     memory=0.d0
+     do i=1,2**nsites
+      call confs(state,i)
+      memory=memory+state(8)*state(9)*exp((chemp*sum(state)-energy(i)-h0)/(kb*temp))
+     end do
+     appr%res(6)=appr%res(6)-log(memory)
+    end if
     end subroutine
 
     subroutine approx_initialisation(appr)
