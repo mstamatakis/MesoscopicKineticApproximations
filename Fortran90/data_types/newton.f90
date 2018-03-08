@@ -1,6 +1,7 @@
 	subroutine solver(x,n,check)
 	! See chapter 9 of Numerical Recipes in Fortran by Press et al.
         use lu 
+        use approx_inst
         implicit none
 	integer n, nn, np, maxits, d, c
 	logical check
@@ -9,7 +10,7 @@
 	common /newtv/fvec(np),nn
 	save /newtv/
 	integer i, its, j, indx(np)
-	real*8 den, f, fold, stpmax, sum, temp, test, fjac(np,np)
+	real*8 den, f, fold, stpmax, sum, tmp, test, fjac(np,np)
 	real*8 g(np), p(np), xold(np), fmin
 	external fmin
 
@@ -29,6 +30,7 @@
 	end do	
 	stpmax=stpmx*max(sqrt(sum),float(n))
 	do its=1,maxits
+         call obj_approx%residuals()
 	 call fdjac(n,x,fvec,np,fjac)
 	 do i=1,n
 	  sum=0.d0
@@ -61,8 +63,8 @@
 	  test=0.d0
 	  den=max(f,0.5d0*n)
 	  do i=1,n
-	   temp=abs(g(i))*max(abs(x(i)),1.d0)/den
-	   if(temp.gt.test)test=temp 
+	   tmp=abs(g(i))*max(abs(x(i)),1.d0)/den
+	   if(temp.gt.test)test=tmp 
 	  end do 
 	  if(test.lt.tolmin)then
 	   check=.true.
@@ -73,8 +75,8 @@
 	 end if
 	 test=0.d0
 	 do i=1,n
-	  temp=(abs(x(i)-xold(i)))/max(abs(x(i)),1.d0)
-	  if(temp.gt.test)test=temp
+	  tmp=(abs(x(i)-xold(i)))/max(abs(x(i)),1.d0)
+	  if(tmp.gt.test)test=tmp
 	 end do
 	 if(test.lt.tolx)return
 	end do

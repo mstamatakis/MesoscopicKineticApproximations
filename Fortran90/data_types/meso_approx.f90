@@ -3,20 +3,22 @@
     implicit none
     private
 
-    integer, public :: nsites
-    integer, public :: npar
-    integer, public :: nrows
-            
     type :: original
+     integer nrows
+     integer, allocatable, dimension(:) :: ncol
      integer, allocatable, dimension(:,:) :: term
      real*8, allocatable, dimension(:) :: value 
     end type 
     type :: correction
+     integer nrows
+     integer, allocatable, dimension(:) :: ncol
      integer, allocatable, dimension(:,:) :: term
      integer, allocatable, dimension(:) :: intmap
      real*8, allocatable, dimension(:) :: value 
     end type 
     type :: equation
+     integer neqns
+     integer, allocatable, dimension(:) :: ncol
      integer, allocatable, dimension(:,:) :: lhs
      integer, allocatable, dimension(:,:) :: rhs 
     end type 
@@ -27,6 +29,7 @@
     
     type, public :: approximation_type
      character*10 :: approx
+     integer nsites
      type (hamiltonian) :: hamilt
      type (equation) :: eqn
      real*8, allocatable, dimension(:) :: res
@@ -35,53 +38,46 @@
      procedure :: part => partition
      procedure, nopass :: corfun => correlation
      procedure :: init => approx_initialisation
-     procedure :: sigma => sigma
+     procedure :: residuals => residuals
     end type
 
     contains
     real*8 function energy(appr,state)
     use commons
     implicit none
-    integer i, j, s
-    integer, dimension(nsites), intent(in) :: state
     class(approximation_type), intent(in) :: appr 
+    integer i, j, s
+    integer, dimension(appr%nsites), intent(in) :: state
     
     energy=0.d0
     ! Hamiltonian original block
-    do i=1,nrows
+    do i=1,appr%hamilt%orig%nrows
      s=1
-     do j=1,nsites
-      if(appr%hamilt%orig%term(i,j).ne.0) then
-       s=s*state(appr%hamilt%orig%term(i,j))
-      end if
+     do j=1,appr%hamilt%orig%ncol(i)
+      s=s*state(appr%hamilt%orig%term(i,j))
      end do
      energy=energy+s*appr%hamilt%orig%value(i)
     end do
     ! Hamiltonian correction block
-    do i=1,nrows
+    do i=1,appr%hamilt%corr%nrows
      s=1
-     do j=1,nsites
-      if(appr%hamilt%corr%term(i,j).ne.0) then
-       s=s*state(appr%hamilt%corr%term(i,j))
-      end if
+     do j=1,appr%hamilt%corr%ncol(i)
+      s=s*state(appr%hamilt%corr%term(i,j))
      end do
-     if(appr%hamilt%corr%intmap(i).ne.0) then
-      energy=energy+s*appr%hamilt%corr%value(appr%hamilt%corr%intmap(i))
-     end if
+     energy=energy+s*appr%hamilt%corr%value(appr%hamilt%corr%intmap(i))
     end do        
     end function
  
     real*8 function partition(appr)
     use commons
     implicit none
-    integer i
-    integer, dimension(nsites) :: state
-    real*8 energy
     class (approximation_type), intent(in) :: appr
+    integer, dimension(appr%nsites) :: state
+    integer i
     
     state=0
     partition=0.d0
-    do i=1,2**nsites
+    do i=1,2**appr%nsites
      call confs(state,i)
      partition=partition+exp((chemp*sum(state)-appr%ener(appr,state)-h0)/(kb*temp))
     end do
@@ -90,15 +86,14 @@
     real*8 function correlation(v,m,appr)
     use commons
     implicit none
+    class (approximation_type), intent(in) :: appr
     integer i, k, m, s
     integer, dimension(m), intent(in) :: v
-    integer, dimension(nsites) :: state
-    real*8 energy
-    class (approximation_type), intent(in) :: appr
+    integer, dimension(appr%nsites) :: state
     
     state=0
     correlation=0.d0
-    do i=1,2**nsites
+    do i=1,2**appr%nsites
      call confs(state,i)
      s=1
      do k=1,m
@@ -108,174 +103,37 @@
     end do
     end function
 
-    subroutine sigma(appr)
+    subroutine residuals(appr)
     use commons
     implicit none
-    integer, dimension(nsites) :: state
-    real*8, dimension(2**nsites) :: energy
-    integer i
-    real*8 memory
     class (approximation_type) :: appr
+    integer, dimension(appr%nsites) :: state
+    real*8, dimension(2**appr%nsites) :: energy
+    integer i, j, k, s1, s2
+    real*8 tot1, tot2
     
     energy=0.d0
     state=0
-    do i=1,2**nsites
+    do i=1,2**appr%nsites
      call confs(state,i)
      energy(i)=appr%ener(appr,state)
     end do
-     
-    if((appr%approx.eq.'BP').or.(appr%approx.eq.'BPE')) then
-     appr%res(1)=0.d0
-     do i=1,2**nsites
-      call confs(state,i)
-      appr%res(1)=appr%res(1)+state(1)*exp((chemp*sum(state)-energy(i)-h0)/(kb*temp))
-     end do
-     appr%res(1)=log(appr%res(1))
-     memory=0.d0
-     do i=1,2**nsites
-      call confs(state,i)
-      memory=memory+state(2)*exp((chemp*sum(state)-energy(i)-h0)/(kb*temp))
-     end do 
-     appr%res(1)=appr%res(1)-log(memory)   
-    end if
-
-    if(appr%approx.eq.'BPEC') then
-     appr%res(1)=0.d0
-     do i=1,2**nsites
-      call confs(state,i)
-      appr%res(1)=appr%res(1)+state(1)*exp((chemp*sum(state)-energy(i)-h0)/(kb*temp))
-     end do 
-     appr%res(1)=log(appr%res(1))
-     memory=0.d0
-     do i=1,2**nsites
-      call confs(state,i)
-      memory=memory+state(2)*exp((chemp*sum(state)-energy(i)-h0)/(kb*temp))
-     end do 
-     appr%res(1)=appr%res(1)-log(memory)
-
-     appr%res(2)=0.d0
-     do i=1,2**nsites
-      call confs(state,i)
-      appr%res(2)=appr%res(2)+state(1)*state(2)*exp((chemp*sum(state)-energy(i)-h0)/(kb*temp))
-     end do
-     appr%res(2)=log(appr%res(2))
-     memory=0.d0
-     do i=1,2**nsites
-      call confs(state,i)
-      memory=memory+state(2)*state(3)*exp((chemp*sum(state)-energy(i)-h0)/(kb*temp))
-     end do
-     appr%res(2)=appr%res(2)-log(memory)
-    end if
    
-    if(appr%approx.eq.'K2NNC1') then
-     appr%res(1)=0
-     appr%res(2)=0
-     appr%res(3)=0
-     appr%res(4)=0
-     do i=1,2**nsites
+    do i=1,appr%eqn%neqns
+     appr%res(i)=0.d0
+     do j=1,2**appr%nsites
       call confs(state,i)
-      appr%res(1)=appr%res(1)+state(1)*exp((chemp*sum(state)-energy(i)-h0)/(kb*temp))
+      s1=1
+      s2=1
+      do k=1,appr%eqn%ncol(i)
+       s1=s1*state(appr%eqn%lhs(i,k))
+       s2=s2*state(appr%eqn%rhs(i,k))
+      end do
+      tot1=tot1+s1*exp((chemp*sum(state)-energy(i)-h0)/(kb*temp))
+      tot2=tot2+s2*exp((chemp*sum(state)-energy(i)-h0)/(kb*temp))
      end do
-     appr%res(1)=log(appr%res(1))
-     appr%res(2)=appr%res(1)
-     memory=0.d0
-     do i=1,2**nsites
-      call confs(state,i)
-      memory=memory+state(2)*exp((chemp*sum(state)-energy(i)-h0)/(kb*temp))
-     end do
-     appr%res(1)=appr%res(1)-log(memory)
-     memory=0.d0
-     do i=1,2**nsites
-      call confs(state,i)
-      memory=memory+state(8)*exp((chemp*sum(state)-energy(i)-h0)/(kb*temp))
-     end do
-     appr%res(2)=appr%res(2)-log(memory)
-     
-     do i=1,2**nsites
-      call confs(state,i)
-      appr%res(3)=appr%res(3)+state(1)*state(2)*exp((chemp*sum(state)-energy(i)-h0)/(kb*temp))
-     end do
-     appr%res(3)=log(appr%res(3))
-     appr%res(4)=appr%res(3)
-     memory=0.d0
-     do i=1,2**nsites
-      call confs(state,i)
-      memory=memory+state(2)*state(3)*exp((chemp*sum(state)-energy(i)-h0)/(kb*temp))
-     end do
-     appr%res(3)=appr%res(3)-log(memory)
-     memory=0.d0
-     do i=1,2**nsites
-      call confs(state,i)
-      memory=memory+state(2)*state(8)*exp((chemp*sum(state)-energy(i)-h0)/(kb*temp))
-     end do
-     appr%res(4)=appr%res(4)-log(memory)
-    end if
-
-    if(appr%approx.eq.'K2NNC2') then
-     appr%res(1)=0
-     appr%res(2)=0
-     appr%res(3)=0
-     appr%res(4)=0
-     appr%res(5)=0
-     appr%res(6)=0
-
-     do i=1,2**nsites
-      call confs(state,i)
-      appr%res(1)=appr%res(1)+state(1)*exp((chemp*sum(state)-energy(i)-h0)/(kb*temp))
-     end do
-     appr%res(1)=log(appr%res(1))
-     appr%res(2)=appr%res(1)
-     memory=0.d0
-     do i=1,2**nsites
-      call confs(state,i)
-      memory=memory+state(2)*exp((chemp*sum(state)-energy(i)-h0)/(kb*temp))
-     end do
-     appr%res(1)=appr%res(1)-log(memory)
-     memory=0.d0
-     do i=1,2**nsites
-      call confs(state,i)
-      memory=memory+state(8)*exp((chemp*sum(state)-energy(i)-h0)/(kb*temp))
-     end do
-     appr%res(2)=appr%res(2)-log(memory)
-     
-     do i=1,2**nsites
-      call confs(state,i)
-      appr%res(3)=appr%res(3)+state(1)*state(2)*exp((chemp*sum(state)-energy(i)-h0)/(kb*temp))
-     end do
-     appr%res(3)=log(appr%res(3))
-     appr%res(4)=appr%res(3)
-     memory=0.d0
-     do i=1,2**nsites
-      call confs(state,i)
-      memory=memory+state(2)*state(3)*exp((chemp*sum(state)-energy(i)-h0)/(kb*temp))
-     end do
-     appr%res(3)=appr%res(3)-log(memory)
-     memory=0.d0
-     do i=1,2**nsites
-      call confs(state,i)
-      memory=memory+state(2)*state(8)*exp((chemp*sum(state)-energy(i)-h0)/(kb*temp))
-     end do
-     appr%res(4)=appr%res(4)-log(memory)
-
-     do i=1,2**nsites
-      call confs(state,i)
-      appr%res(5)=appr%res(5)+state(1)*state(8)*exp((chemp*sum(state)-energy(i)-h0)/(kb*temp))
-     end do
-     appr%res(5)=log(appr%res(5))
-     appr%res(6)=appr%res(5)
-     memory=0.d0
-     do i=1,2**nsites
-      call confs(state,i)
-      memory=memory+state(2)*state(4)*exp((chemp*sum(state)-energy(i)-h0)/(kb*temp))
-     end do
-     appr%res(5)=appr%res(5)-log(memory)
-     memory=0.d0
-     do i=1,2**nsites
-      call confs(state,i)
-      memory=memory+state(8)*state(9)*exp((chemp*sum(state)-energy(i)-h0)/(kb*temp))
-     end do
-     appr%res(6)=appr%res(6)-log(memory)
-    end if
+     appr%res(i)=log(tot1)-log(tot2) 
+    end do
     end subroutine
 
     subroutine approx_initialisation(appr)
@@ -284,17 +142,23 @@
     integer i, j
  
     if(appr%approx.eq.'BP') then
-     nsites=7
-     npar=1
-     nrows=13
-     allocate(appr%hamilt%orig%term(nrows,nsites))
-     allocate(appr%hamilt%orig%value(nrows))
-     allocate(appr%hamilt%corr%term(nrows,nsites))
-     allocate(appr%hamilt%corr%intmap(nrows))
-     allocate(appr%hamilt%corr%value(npar))
-     allocate(appr%eqn%lhs(npar,nsites))
-     allocate(appr%eqn%rhs(npar,nsites))
-     allocate(appr%res(npar))
+     appr%nsites=7
+     appr%eqn%neqns=1
+     allocate(appr%eqn%ncol(1))
+     appr%hamilt%orig%nrows=13
+     allocate(appr%hamilt%orig%ncol(13))
+     appr%hamilt%corr%nrows=6
+     allocate(appr%hamilt%corr%ncol(6))
+
+     allocate(appr%hamilt%orig%term(13,2))
+     allocate(appr%hamilt%orig%value(13))
+     allocate(appr%hamilt%corr%term(6,1))
+     allocate(appr%hamilt%corr%intmap(6))
+     allocate(appr%hamilt%corr%value(1))
+     allocate(appr%eqn%lhs(1,1))
+     allocate(appr%eqn%rhs(1,1))
+     allocate(appr%res(1))
+
      appr%hamilt%orig%term=0
      appr%hamilt%orig%value=0.d0
      appr%hamilt%corr%term=0
@@ -302,8 +166,11 @@
      appr%hamilt%corr%value=0.1d0
      appr%eqn%lhs=0
      appr%eqn%rhs=0
+     appr%eqn%ncol=1   
+
      do i=1,7
       appr%hamilt%orig%term(i,1)=i
+      appr%hamilt%orig%ncol(i)=1
      end do
      appr%hamilt%orig%value(1)=hads
      j=7
@@ -311,6 +178,7 @@
       appr%hamilt%orig%term(j+i,1)=1
       appr%hamilt%orig%term(j+i,2)=i+1
       appr%hamilt%orig%value(i+1)=hads
+      appr%hamilt%orig%ncol(j+i)=2
      end do
      do i=8,13
       appr%hamilt%orig%value(i)=jint
@@ -318,23 +186,30 @@
      do i=2,7
       appr%hamilt%corr%term(i-1,1)=i
       appr%hamilt%corr%intmap(i-1)=1
+      appr%hamilt%corr%ncol(i-1)=1
      end do
      appr%eqn%lhs(1,1)=1
      appr%eqn%rhs(1,1)=2
     end if
 
     if(appr%approx.eq.'BPE') then
-     nsites=7
-     npar=1
-     nrows=19
-     allocate(appr%hamilt%orig%term(nrows,nsites))
-     allocate(appr%hamilt%orig%value(nrows))
-     allocate(appr%hamilt%corr%term(nrows,nsites))
-     allocate(appr%hamilt%corr%intmap(nrows))
-     allocate(appr%hamilt%corr%value(npar))
-     allocate(appr%eqn%lhs(npar,nsites))
-     allocate(appr%eqn%rhs(npar,nsites))
-     allocate(appr%res(npar))
+     appr%nsites=7
+     appr%eqn%neqns=1
+     allocate(appr%eqn%ncol(1))
+     appr%hamilt%orig%nrows=19
+     allocate(appr%hamilt%orig%ncol(19))
+     appr%hamilt%corr%nrows=6
+     allocate(appr%hamilt%corr%ncol(6))
+
+     allocate(appr%hamilt%orig%term(19,2))
+     allocate(appr%hamilt%orig%value(19))
+     allocate(appr%hamilt%corr%term(6,2))
+     allocate(appr%hamilt%corr%intmap(6))
+     allocate(appr%hamilt%corr%value(1))
+     allocate(appr%eqn%lhs(1,2))
+     allocate(appr%eqn%rhs(1,2))
+     allocate(appr%res(1))
+
      appr%hamilt%orig%term=0
      appr%hamilt%orig%value=0.d0
      appr%hamilt%corr%term=0
@@ -342,8 +217,11 @@
      appr%hamilt%corr%value=0.1d0
      appr%eqn%lhs=0
      appr%eqn%rhs=0
+     appr%eqn%ncol=1
+
      do i=1,7
       appr%hamilt%orig%term(i,1)=i
+      appr%hamilt%orig%ncol(i)=1
      end do
      appr%hamilt%orig%value(1)=hads
      j=7
@@ -351,37 +229,47 @@
       appr%hamilt%orig%term(j+i,1)=1
       appr%hamilt%orig%term(j+i,2)=i+1
       appr%hamilt%orig%value(i+1)=hads
+      appr%hamilt%orig%ncol(j+i)=2
      end do
      j=13
      do i=1,5
       appr%hamilt%orig%term(j+i,1)=i+1
       appr%hamilt%orig%term(j+i,2)=i+2
+      appr%hamilt%orig%ncol(j+i)=2
      end do
      appr%hamilt%orig%term(19,1)=2
      appr%hamilt%orig%term(19,2)=7
+     appr%hamilt%orig%ncol(19)=2
      do i=8,19
       appr%hamilt%orig%value(i)=jint
      end do
      do i=2,7
       appr%hamilt%corr%term(i-1,1)=i
       appr%hamilt%corr%intmap(i-1)=1
+      appr%hamilt%corr%ncol(i-1)=1
      end do
      appr%eqn%lhs(1,1)=1
      appr%eqn%rhs(1,1)=2
     end if
 
     if(appr%approx.eq.'BPEC') then
-     nsites=7
-     npar=2
-     nrows=19
-     allocate(appr%hamilt%orig%term(nrows,nsites))
-     allocate(appr%hamilt%orig%value(nrows))
-     allocate(appr%hamilt%corr%term(nrows,nsites))
-     allocate(appr%hamilt%corr%intmap(nrows))
-     allocate(appr%hamilt%corr%value(npar))
-     allocate(appr%eqn%lhs(npar,nsites))
-     allocate(appr%eqn%rhs(npar,nsites))
-     allocate(appr%res(npar))
+     appr%nsites=7
+     appr%eqn%neqns=2
+     allocate(appr%eqn%ncol(2))
+     appr%hamilt%orig%nrows=19
+     allocate(appr%hamilt%orig%ncol(19))
+     appr%hamilt%corr%nrows=12
+     allocate(appr%hamilt%corr%ncol(12))
+
+     allocate(appr%hamilt%orig%term(19,2))
+     allocate(appr%hamilt%orig%value(19))
+     allocate(appr%hamilt%corr%term(12,2))
+     allocate(appr%hamilt%corr%intmap(12))
+     allocate(appr%hamilt%corr%value(2))
+     allocate(appr%eqn%lhs(2,2))
+     allocate(appr%eqn%rhs(2,2))
+     allocate(appr%res(2))
+
      appr%hamilt%orig%term=0
      appr%hamilt%orig%value=0.d0
      appr%hamilt%corr%term=0
@@ -389,8 +277,12 @@
      appr%hamilt%corr%value=0.1d0
      appr%eqn%lhs=0
      appr%eqn%rhs=0
+     appr%eqn%ncol(1)=1
+     appr%eqn%ncol(2)=2
+
      do i=1,7
       appr%hamilt%orig%term(i,1)=i
+      appr%hamilt%orig%ncol(i)=1
      end do
      j=7
      appr%hamilt%orig%value(1)=hads
@@ -398,27 +290,33 @@
       appr%hamilt%orig%term(j+i,1)=1
       appr%hamilt%orig%term(j+i,2)=i+1
       appr%hamilt%orig%value(i+1)=hads
+      appr%hamilt%orig%ncol(j+i)=2
      end do
      j=13
      do i=1,5
       appr%hamilt%orig%term(j+i,1)=i+1
       appr%hamilt%orig%term(j+i,2)=i+2
+      appr%hamilt%orig%ncol(j+i)=2
      end do 
      appr%hamilt%orig%term(19,1)=2
      appr%hamilt%orig%term(19,2)=7
+     appr%hamilt%orig%ncol(19)=2
      do i=8,19
       appr%hamilt%orig%value(i)=jint
      end do
      do i=2,7
       appr%hamilt%corr%term(i-1,1)=i
+      appr%hamilt%corr%ncol(i-1)=1
      end do
      j=6
      do i=1,5
       appr%hamilt%corr%term(j+i,1)=i+1
       appr%hamilt%corr%term(j+i,2)=i+2
+      appr%hamilt%corr%ncol(j+i)=2
      end do
      appr%hamilt%corr%term(12,1)=2
      appr%hamilt%corr%term(12,2)=7
+     appr%hamilt%corr%ncol(12)=2
  
      do i=1,6
       appr%hamilt%corr%intmap(i)=1
@@ -439,17 +337,23 @@
     end if
 
     if(appr%approx.eq.'K2NNC1') then
-     nsites=13
-     npar=4
-     nrows=37
-     allocate(appr%hamilt%orig%term(nrows,nsites))
-     allocate(appr%hamilt%orig%value(nrows))
-     allocate(appr%hamilt%corr%term(nrows,nsites))
-     allocate(appr%hamilt%corr%intmap(nrows))
-     allocate(appr%hamilt%corr%value(npar))
-     allocate(appr%eqn%lhs(npar,nsites))
-     allocate(appr%eqn%rhs(npar,nsites))
-     allocate(appr%res(npar))
+     appr%nsites=13
+     appr%eqn%neqns=4
+     allocate(appr%eqn%ncol(4))
+     appr%hamilt%orig%nrows=37
+     allocate(appr%hamilt%orig%ncol(37))
+     appr%hamilt%corr%nrows=30
+     allocate(appr%hamilt%corr%ncol(30))
+
+     allocate(appr%hamilt%orig%term(37,2))
+     allocate(appr%hamilt%orig%value(37))
+     allocate(appr%hamilt%corr%term(30,2))
+     allocate(appr%hamilt%corr%intmap(30))
+     allocate(appr%hamilt%corr%value(4))
+     allocate(appr%eqn%lhs(4,2))
+     allocate(appr%eqn%rhs(4,2))
+     allocate(appr%res(4))
+
      appr%hamilt%orig%term=0
      appr%hamilt%orig%value=0.d0
      appr%hamilt%corr%term=0
@@ -457,33 +361,44 @@
      appr%hamilt%corr%value=0.1d0
      appr%eqn%lhs=0
      appr%eqn%rhs=0
+     appr%eqn%ncol(1)=1
+     appr%eqn%ncol(2)=1
+     appr%eqn%ncol(3)=2
+     appr%eqn%ncol(4)=2
+
      ! Original terms
      do i=1,13
       appr%hamilt%orig%term(i,1)=i
       appr%hamilt%orig%value(i)=hads
+      appr%hamilt%orig%ncol(i)=1
      end do
      do i=2,7
       appr%hamilt%orig%term(12+i,1)=1
       appr%hamilt%orig%term(12+i,2)=i
       appr%hamilt%orig%value(12+i)=jint
+      appr%hamilt%orig%ncol(12+i)=2
      end do 
      do i=2,6
       appr%hamilt%orig%term(18+i,1)=i
       appr%hamilt%orig%term(18+i,2)=i+1
       appr%hamilt%orig%value(18+i)=jint
+      appr%hamilt%orig%ncol(18+i)=2
      end do
       appr%hamilt%orig%term(25,1)=2
       appr%hamilt%orig%term(25,2)=7
       appr%hamilt%orig%value(25)=jint
+      appr%hamilt%orig%ncol(25)=2
      do i=8,12
       appr%hamilt%orig%term(18+i,1)=i
       appr%hamilt%orig%term(18+i,2)=i-6
       appr%hamilt%orig%value(18+i)=jint
+      appr%hamilt%orig%ncol(18+i)=2
      end do
      do i=8,12
       appr%hamilt%orig%term(23+i,1)=i
       appr%hamilt%orig%term(23+i,2)=i-6+1
       appr%hamilt%orig%value(23+i)=jint
+      appr%hamilt%orig%ncol(23+i)=2
      end do
      appr%hamilt%orig%term(36,1)=13
      appr%hamilt%orig%term(36,2)=2
@@ -491,6 +406,9 @@
      appr%hamilt%orig%term(37,2)=7
      appr%hamilt%orig%value(36)=jint
      appr%hamilt%orig%value(37)=jint
+     appr%hamilt%orig%ncol(36)=2
+     appr%hamilt%orig%ncol(37)=2
+
     ! Correction terms
      do i=2,7
       appr%hamilt%corr%term(i-1,1)=i
@@ -524,6 +442,13 @@
      appr%hamilt%corr%term(30,2)=7
      appr%hamilt%corr%intmap(29)=4
      appr%hamilt%corr%intmap(30)=4
+     do i=1,12
+      appr%hamilt%corr%ncol(i)=1
+     end do
+     do i=13,30
+      appr%hamilt%corr%ncol(i)=2
+     end do
+
     ! Equations
      appr%eqn%lhs(1,1)=1
      appr%eqn%lhs(2,1)=1
@@ -540,17 +465,22 @@
     end if
 
     if(appr%approx.eq.'K2NNC2') then
-     nsites=13
-     npar=6
-     nrows=42
-     allocate(appr%hamilt%orig%term(nrows,nsites))
-     allocate(appr%hamilt%orig%value(nrows))
-     allocate(appr%hamilt%corr%term(nrows,nsites))
-     allocate(appr%hamilt%corr%intmap(nrows))
-     allocate(appr%hamilt%corr%value(npar))
-     allocate(appr%eqn%lhs(npar,nsites))
-     allocate(appr%eqn%rhs(npar,nsites))
-     allocate(appr%res(npar))
+     appr%nsites=13
+     appr%eqn%neqns=6
+     allocate(appr%eqn%ncol(6))
+     appr%hamilt%orig%nrows=37
+     allocate(appr%hamilt%corr%ncol(37))
+     appr%hamilt%corr%nrows=42
+
+     allocate(appr%hamilt%orig%term(37,2))
+     allocate(appr%hamilt%orig%value(37))
+     allocate(appr%hamilt%corr%term(42,2))
+     allocate(appr%hamilt%corr%intmap(42))
+     allocate(appr%hamilt%corr%value(6))
+     allocate(appr%eqn%lhs(6,2))
+     allocate(appr%eqn%rhs(6,2))
+     allocate(appr%res(6))
+
      appr%hamilt%orig%term=0
      appr%hamilt%orig%value=0.d0
      appr%hamilt%corr%term=0
@@ -558,6 +488,13 @@
      appr%hamilt%corr%value=0.1d0
      appr%eqn%lhs=0
      appr%eqn%rhs=0
+     appr%eqn%ncol(1)=1
+     appr%eqn%ncol(2)=1
+     appr%eqn%ncol(3)=2
+     appr%eqn%ncol(4)=2
+     appr%eqn%ncol(5)=2
+     appr%eqn%ncol(6)=2
+
      ! Original terms
      do i=1,13
       appr%hamilt%orig%term(i,1)=i
@@ -592,6 +529,13 @@
      appr%hamilt%orig%term(37,2)=7
      appr%hamilt%orig%value(36)=jint
      appr%hamilt%orig%value(37)=jint
+     do i=1,13
+      appr%hamilt%orig%ncol(i)=1
+     end do
+     do i=14,37
+      appr%hamilt%orig%ncol(i)=2
+     end do
+
     ! Correction terms
      do i=2,7
       appr%hamilt%corr%term(i-1,1)=i
@@ -648,6 +592,13 @@
      appr%hamilt%corr%term(42,1)=8
      appr%hamilt%corr%term(42,2)=13
      appr%hamilt%corr%intmap(42)=6
+     do i=1,13
+      appr%hamilt%corr%ncol(i)=1
+     end do
+     do i=14,42
+      appr%hamilt%corr%ncol(i)=2
+     end do
+
     ! Equations
      appr%eqn%lhs(1,1)=1
      appr%eqn%lhs(2,1)=1

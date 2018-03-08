@@ -5,10 +5,9 @@
 	implicit none
         integer i, j, total
 	integer, allocatable, dimension(:) ::  v1, v2
-	real*8, intent(out) :: fvec(npar)
+	real*8, intent(out) :: fvec(obj_approx%eqn%neqns)
 	
-        call obj_approx%sigma()
-        do i=1,npar
+        do i=1,obj_approx%eqn%neqns
          fvec(i)=obj_approx%res(i)
         end do
 	end subroutine funcv
