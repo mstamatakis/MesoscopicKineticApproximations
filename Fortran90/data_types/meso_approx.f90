@@ -121,16 +121,18 @@
    
     do i=1,appr%eqn%neqns
      appr%res(i)=0.d0
+     tot1=0.d0
+     tot2=0.d0
      do j=1,2**appr%nsites
-      call confs(state,i)
+      call confs(state,j)
       s1=1
       s2=1
       do k=1,appr%eqn%ncol(i)
        s1=s1*state(appr%eqn%lhs(i,k))
        s2=s2*state(appr%eqn%rhs(i,k))
       end do
-      tot1=tot1+s1*exp((chemp*sum(state)-energy(i)-h0)/(kb*temp))
-      tot2=tot2+s2*exp((chemp*sum(state)-energy(i)-h0)/(kb*temp))
+      tot1=tot1+s1*exp((chemp*sum(state)-energy(j)-h0)/(kb*temp))
+      tot2=tot2+s2*exp((chemp*sum(state)-energy(j)-h0)/(kb*temp))
      end do
      appr%res(i)=log(tot1)-log(tot2) 
     end do

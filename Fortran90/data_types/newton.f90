@@ -14,6 +14,7 @@
 	real*8 g(np), p(np), xold(np), fmin
 	external fmin
 
+        call obj_approx%residuals()
 	nn=n
 	f=fmin(x)
 	test=0.d0
