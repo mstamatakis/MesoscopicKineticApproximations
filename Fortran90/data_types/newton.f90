@@ -14,7 +14,6 @@
 	real*8 g(np), p(np), xold(np), fmin
 	external fmin
 
-        call obj_approx%residuals()
 	nn=n
 	f=fmin(x)
 	test=0.d0
@@ -31,7 +30,6 @@
 	end do	
 	stpmax=stpmx*max(sqrt(sum),float(n))
 	do its=1,maxits
-         call obj_approx%residuals()
 	 call fdjac(n,x,fvec,np,fjac)
 	 do i=1,n
 	  sum=0.d0
