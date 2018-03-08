@@ -471,8 +471,9 @@
      appr%eqn%neqns=6
      allocate(appr%eqn%ncol(6))
      appr%hamilt%orig%nrows=37
-     allocate(appr%hamilt%corr%ncol(37))
+     allocate(appr%hamilt%orig%ncol(37))
      appr%hamilt%corr%nrows=42
+     allocate(appr%hamilt%corr%ncol(42))
 
      allocate(appr%hamilt%orig%term(37,2))
      allocate(appr%hamilt%orig%value(37))
