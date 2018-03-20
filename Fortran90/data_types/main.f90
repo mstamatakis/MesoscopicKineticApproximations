@@ -5,7 +5,7 @@
         implicit none
         logical check
         integer i, j
-        real*8 cov
+        real*8 cov, start, finish
         integer, dimension(1) :: v
         integer, allocatable :: state(:)
 
@@ -21,6 +21,9 @@
         read(*,*) chemp
         write(*,*) 'temp?'
         read(*,*) temp
+
+        call cpu_time(start)
+
         call obj_approx%init
 
         ! Initialising the state vectors
@@ -42,4 +45,6 @@
          write(16,*) chemp, cov, obj_approx%part()
          h0=h0+kb*temp*log(obj_approx%part())
         end do
+        call cpu_time(finish)
+        print '("Time = ", f10.3, " seconds")',finish-start
         end program 

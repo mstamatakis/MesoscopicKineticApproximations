@@ -49,6 +49,7 @@
 	 call lubksb(fjac,n,np,indx,p)
          !call gelim(fjac,-fvec,n,np,p)
          write(*,*) its,sqrt(fvec(1)**2+fvec(2)**2+fvec(3)**2+fvec(4)**2), check
+         write(18,*) its
 	 call lnsrch(n,xold,fold,g,p,x,f,stpmax,check,fmin)
 	 test=0.d0
 	 do i=1,n
