@@ -30,7 +30,7 @@
 	end do	
 	stpmax=stpmx*max(sqrt(sum),float(n))
 	do its=1,maxits
-	 call fdjac(n,x,fvec,np,fjac)
+	 call fdjac(fjac)
 	 do i=1,n
 	  sum=0.d0
 	  do j=1,n
@@ -155,23 +155,42 @@
 	 goto 1
 	end subroutine	lnsrch 
 	
-	subroutine fdjac(n,x,fvec,np,df)
-	integer n, np, nmax
-	real*8 df(np,np),fvec(n),x(n),eps
-	parameter (nmax=40,eps=1.0d-6)
-	integer i, j
-	real*8 h, temp, f(nmax)
+	subroutine fdjac(df)
+        use commons
+        use meso_approx
+        use approx_inst
+	integer i, j, k, l, m
+        integer p, s, t
+        integer, dimension(obj_approx%nsites) :: state
+        real*8 corf, totl, totr
+        real*8, dimension(obj_approx%eqn%neqns,obj_approx%eqn%neqns) :: df
 
-	do j=1,n
-	 temp=x(j)
-	 h=0.1d0*eps*abs(temp)
-	 if(h.eq.0)h=eps
-	 x(j)=temp+h
-	 call funcv(f)
-	 x(j)=temp
-	 do i=1,n
-	  df(i,j)=(f(i)-fvec(i))/h
+	do i=1,obj_approx%eqn%neqns
+         do j=1,obj_approx%eqn%neqns
+          totl=0.d0
+          do k=1,2**obj_approx%nsites
+           call confs(state,k)
+           p=1
+           do l=1,obj_approx%eqn%ncol(i)
+            p=p*state(obj_approx%eqn%lhs(i,l))
+           end do
+           s=0
+           do l=1,obj_approx%hamilt%corr%nrows
+            if(obj_approx%hamilt%corr%intmap(l).eq.j) then
+             do m=1,obj_approx%hamilt%corr%ncol(l)
+              s=s+state(obj_approx%hamilt%corr%term(l,m))
+             end do
+            end if
+           end do
+           t=0
+           do l=1,obj_approx%nsites
+            t=t+state(l)
+           end do
+           totl=totl+p*s*exp((chemp*t-obj_approx%ener(obj_approx,state)-h0)/(kb*temp))
+          end do
+          totl=-totl/(kb*temp*obj_approx%part())
+          write(*,*) totl
 	 end do
-	end do
+        end do
 	end subroutine fdjac	
         end

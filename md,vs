@@ -1,0 +1,399 @@
+[33mcommit 0c8bb9909ed5f10ad62dda0c0de6c8a5c44540a4[m
+Author: Emanuele Vignola <chronoceum@gmail.com>
+Date:   Wed Mar 7 12:14:36 2018 +0100
+
+    K2NNC2 added
+
+[33mcommit e66303caea0424901d5f945d0dadf3648010a48d[m
+Author: Emanuele Vignola <chronoceum@gmail.com>
+Date:   Tue Mar 6 17:12:12 2018 +0100
+
+    First four approximations
+
+[33mcommit 5ce83566622e57aa8ca8a33ec02de71673c7aeec[m
+Author: Emanuele Vignola <chronoceum@gmail.com>
+Date:   Tue Mar 6 13:22:28 2018 +0100
+
+    Residual vector added
+
+[33mcommit c29080255f46b5639d969562fa7694db5048b914[m
+Author: Emanuele Vignola <chronoceum@gmail.com>
+Date:   Mon Feb 26 22:47:41 2018 +0100
+
+    Two lines of code were missing in the Newton algorithm
+
+[33mcommit db361f1a1c697eac6f4411b076f270210bece41d[m
+Merge: dd6d02c 00f0b5b
+Author: Emanuele Vignola <chronoceum@gmail.com>
+Date:   Mon Feb 26 09:02:11 2018 +0000
+
+    Merge pull request #6 from mstamatakis/h0
+    
+    Energy constant H0
+
+[33mcommit 00f0b5baae76a94c6353d66760ea15200aa838a7[m
+Author: Michail Stamatakis <m.stamatakis@ucl.ac.uk>
+Date:   Sat Feb 24 21:19:39 2018 +0000
+
+    Fixing algorithmic errors
+    
+    Fixed wrong sign of h0: the sign of h0 in the meso_approx expressions has to opposite from that of kb*temp*log(obj_approx%part()) in main.
+    
+    Also, the constant h0 has to be updated incrementally, so that it stores the free energy of the approximation at each iteration of the loop over chemical potentials.
+    
+    Finally, in meso_approx the partition function and the correlation shouldn't be multiplied by exp(h0/(hb*temp)). The whole point is to avoid the overflow errors created by such large terms. This is done by redefining the reference energy h0 as the chemical potential increases.
+
+[33mcommit 27ff31fae4486411d648ad04166823f586fe85f7[m
+Author: Michail Stamatakis <m.stamatakis@ucl.ac.uk>
+Date:   Sat Feb 24 20:46:24 2018 +0000
+
+    Monitor magnitude of partition function
+
+[33mcommit a0475165c7077a8e408aa0487862516cfa1b556b[m
+Author: Michail Stamatakis <m.stamatakis@ucl.ac.uk>
+Date:   Sat Feb 24 20:39:37 2018 +0000
+
+    Added Matlab script to plot results quickly
+
+[33mcommit 8e524a27804be0fa913597fc8f8163ef7bddd1be[m
+Author: Emanuele Vignola <chronoceum@gmail.com>
+Date:   Fri Feb 23 12:16:58 2018 +0100
+
+    h0 added as an external variable
+
+[33mcommit dd6d02cd532123062d8b086a56f05217e010651d[m
+Author: Emanuele Vignola <chronoceum@gmail.com>
+Date:   Thu Feb 22 10:50:48 2018 +0100
+
+    Derivative increment in subroutine "fdjac" decreased to 1E-10. This fixes BPEC convergence
+
+[33mcommit 76731a241649ed80947a93e4b8348df5185530de[m
+Author: Emanuele Vignola <chronoceum@gmail.com>
+Date:   Wed Feb 21 16:05:27 2018 +0100
+
+    Allocations in "funcv" removed
+
+[33mcommit 1bb2a19c8760fe78cfd27e97e446bfffd855752a[m
+Author: Emanuele Vignola <chronoceum@gmail.com>
+Date:   Tue Feb 20 18:06:26 2018 +0100
+
+    K2NNC2 approximation added
+
+[33mcommit dc4318f86f0a509dfac7d54eff29a87da9f7c0c2[m
+Author: Emanuele Vignola <chronoceum@gmail.com>
+Date:   Tue Feb 20 14:47:50 2018 +0100
+
+    K2NNC1 and variable "nrows" added
+
+[33mcommit 32265d9ca8bb6f93d2869f6852471a9682ec4902[m
+Author: Emanuele Vignola <chronoceum@gmail.com>
+Date:   Sat Feb 17 11:22:32 2018 +0100
+
+    Logarithms added
+
+[33mcommit c68d60146f3f5c438c298449cd26674bb295e067[m
+Author: Emanuele Vignola <chronoceum@gmail.com>
+Date:   Fri Feb 16 12:00:40 2018 +0100
+
+    BPs data structures successfully debugged
+
+[33mcommit dffb0353e260aebce907d63d65da9805bf2052ed[m
+Author: Emanuele Vignola <chronoceum@gmail.com>
+Date:   Wed Feb 14 17:42:22 2018 +0100
+
+    Constants added
+
+[33mcommit 04340ee4f755fe3da4510c070025cd3b2fc586bd[m
+Author: Emanuele Vignola <chronoceum@gmail.com>
+Date:   Tue Feb 13 12:39:20 2018 +0100
+
+    BP data structure implemented in "meso_approx"
+
+[33mcommit fe046a20dfc3484c54c3e0a976d87e8d4a392854[m
+Author: Emanuele Vignola <chronoceum@gmail.com>
+Date:   Mon Feb 12 17:47:33 2018 +0100
+
+    Division by partition function added
+
+[33mcommit 94e48035398c46f16fd7d3ddedc00b61527d2dc2[m
+Author: Emanuele Vignola <chronoceum@gmail.com>
+Date:   Mon Feb 12 16:51:06 2018 +0100
+
+    The program now compiles, but solutions diverge
+
+[33mcommit 75f26ba7e19c2d02fc72e977ae928f121f6f0aac[m
+Author: Emanuele Vignola <chronoceum@gmail.com>
+Date:   Mon Feb 12 16:21:38 2018 +0100
+
+    Bugs in newton fixed
+
+[33mcommit 3296a2e53121ad864913f47845f9493dce4c43dc[m
+Author: Emanuele Vignola <chronoceum@gmail.com>
+Date:   Mon Feb 12 16:14:18 2018 +0100
+
+    Bug in approximation routine fixed
+
+[33mcommit b951731e16e982727035e84b56bccd8fa3c4c105[m
+Author: Emanuele Vignola <chronoceum@gmail.com>
+Date:   Mon Feb 12 12:22:23 2018 +0100
+
+    Procedures energy, partition, and correlation implemented intoo class "approximation". Funcv not working yet
+
+[33mcommit 8131173d39616618584a5a9fb6c1a71bcc2b01fc[m
+Author: Michail Stamatakis <m.stamatakis@ucl.ac.uk>
+Date:   Fri Feb 9 16:19:48 2018 +0000
+
+    Use separate module for class instantiation
+    
+    This is done to avoid having the solver dealing with the instantiated object (even if it's just in the argument list of functions/subroutines in the solver).
+
+[33mcommit 34f123a641bfccc0808a2f2f8439f2b53ae23623[m
+Author: Emanuele Vignola <chronoceum@gmail.com>
+Date:   Fri Feb 9 12:05:00 2018 +0100
+
+    Subroutine "funcv" added
+
+[33mcommit a61e48f66bbd267f705bb6223346343864ed6115[m
+Author: Emanuele Vignola <chronoceum@gmail.com>
+Date:   Thu Feb 8 16:54:18 2018 +0100
+
+    Partition and correlation functions added
+
+[33mcommit 3ab8d906f4fedce1b3fdfe742c18db4f40555ee0[m
+Author: Emanuele Vignola <chronoceum@gmail.com>
+Date:   Thu Feb 8 16:16:45 2018 +0100
+
+    Function "energy" debugged
+
+[33mcommit 75dc96422a17f9e37ef6ab2b267f734bcc4def6b[m
+Author: Emanuele Vignola <chronoceum@gmail.com>
+Date:   Thu Feb 8 15:09:17 2018 +0100
+
+    First hybrid function added
+
+[33mcommit c8ad802d29410654706591e1b5fb004b88b63ea8[m
+Author: Emanuele Vignola <chronoceum@gmail.com>
+Date:   Thu Feb 8 12:44:33 2018 +0100
+
+    BPEC approximation implemented into data type. Data structures made allocatable
+
+[33mcommit 348b6dd1bf1e10d6b427d8d17140cc8492962b2e[m
+Author: Michail Stamatakis <m.stamatakis@ucl.ac.uk>
+Date:   Wed Feb 7 17:34:12 2018 +0000
+
+    Added initialization procedure
+
+[33mcommit afba681e2fea7016d0d62130f5edfa3cf6cddaae[m
+Author: Michail Stamatakis <m.stamatakis@ucl.ac.uk>
+Date:   Wed Feb 7 17:16:15 2018 +0000
+
+    Approximation type definition
+    
+    Also, added commons module, which can be removed later if needed.
+
+[33mcommit 77c50e06c58607c6cba97cb7e94f2a9f5508ec64[m
+Author: Michail Stamatakis <m.stamatakis@ucl.ac.uk>
+Date:   Wed Feb 7 17:05:12 2018 +0000
+
+    Completed the approximation data type
+
+[33mcommit 37c723cc2aeb74d61de44a75f69a3eb7484e9cf5[m
+Author: Michail Stamatakis <m.stamatakis@ucl.ac.uk>
+Date:   Wed Feb 7 17:04:39 2018 +0000
+
+    Indentation
+    
+    Replaced tab with 8 spaces for consistency
+
+[33mcommit 1d581cc5a7c5e32c717d80de03960616fb9011d6[m
+Author: Emanuele Vignola <chronoceum@gmail.com>
+Date:   Wed Feb 7 17:53:15 2018 +0100
+
+    Changes to data type
+
+[33mcommit 0a35f893c728c65b68b934a25fa006bed42e65d8[m
+Author: Emanuele Vignola <chronoceum@gmail.com>
+Date:   Wed Feb 7 14:43:15 2018 +0100
+
+    Attempt to construct a function of state in module data
+
+[33mcommit 9391f7970c48392e6fbecca089b9a70f05f37880[m
+Author: Emanuele Vignola <chronoceum@gmail.com>
+Date:   Tue Feb 6 17:42:59 2018 +0100
+
+    Small bug in derivative 4 found and corrected
+
+[33mcommit 5c3c0a617fb4eb4cf8b818f0a800cbb1c5310b57[m
+Author: Emanuele Vignola <chronoceum@gmail.com>
+Date:   Tue Feb 6 17:34:26 2018 +0100
+
+    Data type original completed
+
+[33mcommit c527b45398f8c4220b925a32a2d067b67ea21e5d[m
+Author: Emanuele Vignola <chronoceum@gmail.com>
+Date:   Tue Feb 6 16:59:11 2018 +0100
+
+    data_types prototype folder added
+
+[33mcommit e868e35251e17e8d83b1bad44fdacc99fcb1e184[m
+Author: Michail Stamatakis <m.stamatakis@ucl.ac.uk>
+Date:   Tue Feb 6 11:13:22 2018 +0000
+
+    Fixed issue with LU decomposition subroutine
+
+[33mcommit 70acbb6c9f1f7cbf0746401572d857dbec32e6ca[m
+Author: Michail Stamatakis <m.stamatakis@ucl.ac.uk>
+Date:   Tue Feb 6 10:55:50 2018 +0000
+
+    Added output commands for debugging
+
+[33mcommit 4e677ebb9d86a44bf17d44ac0dce4e2b27594e08[m
+Author: Michail Stamatakis <m.stamatakis@ucl.ac.uk>
+Date:   Tue Feb 6 10:46:58 2018 +0000
+
+    Restored original lu module code
+
+[33mcommit d848fb8f215eeaa835ae4a5d3d7a482715f3e6b2[m
+Author: Emanuele Vignola <chronoceum@gmail.com>
+Date:   Mon Feb 5 17:39:32 2018 +0100
+
+    Comments added to function and subroutine
+
+[33mcommit f6dc8487cfa8acb1096812d771e8cd412044a3f7[m
+Author: Emanuele Vignola <chronoceum@gmail.com>
+Date:   Mon Feb 5 17:15:12 2018 +0100
+
+    Analytic derivatives added in a separate folder
+
+[33mcommit a6c6bda41a997ab87dc8c4af2c19e04e8c5b14d1[m
+Author: Emanuele Vignola <chronoceum@gmail.com>
+Date:   Mon Feb 5 15:42:16 2018 +0100
+
+    Makefile and build folder added
+
+[33mcommit 9e03a990d5d7313e462a4ed0c73fc7a13ae15615[m
+Author: Emanuele Vignola <chronoceum@gmail.com>
+Date:   Mon Feb 5 15:39:54 2018 +0100
+
+    Kikuchi 2nnC1 approximation made modular
+
+[33mcommit cfd81c14298e6dcaba2bbec9aa8ccb45c165c0c3[m
+Author: Emanuele Vignola <chronoceum@gmail.com>
+Date:   Sat Feb 3 08:53:38 2018 +0000
+
+    Add files via upload
+    
+    Kikuchi 2NN C1 approximation with Gauss elimination
+
+[33mcommit 795a9d07b1490681f638eba933e116fb4dc6b924[m
+Author: Michail Stamatakis <m.stamatakis@ucl.ac.uk>
+Date:   Mon Jan 29 15:42:16 2018 +0000
+
+    Ignore compilation intermediate files
+
+[33mcommit a2e102a64dfb95d64fbe180a7ee2f137bcf24259[m
+Author: evignola <chronoceum@gmail.com>
+Date:   Fri Jan 26 16:16:25 2018 +0100
+
+    BPEC approximation now working
+
+[33mcommit eb277ce1408b0437df73b6f74ab88b22f71e5be2[m
+Author: evignola <chronoceum@gmail.com>
+Date:   Wed Jan 24 22:03:40 2018 +0100
+
+    A week of hard work, featuring globally convergent hard-coded approximations
+
+[33mcommit e67b1c4fab9decb991612bff4f5d2deac8ca7313[m
+Author: evignola <chronoceum@gmail.com>
+Date:   Wed Jan 24 19:38:44 2018 +0100
+
+    test commit from Windows
+
+[33mcommit 3a42f99e43b5880bbc56b784693640b64a99b69a[m
+Author: evignola <chronoceum@gmail.com>
+Date:   Wed Jan 24 19:35:51 2018 +0100
+
+    Just adding a test file
+
+[33mcommit a62d0ee5d68d2037e76b97f73baa466b2eb056e4[m
+Author: Emanuele Vignola <chronoceum@gmail.com>
+Date:   Thu Dec 14 10:20:17 2017 +0100
+
+    Newton's algo debugged
+
+[33mcommit f6cb3348e36ae50ffbe7fce070ca3548f1898941[m
+Author: Emanuele Vignola <chronoceum@gmail.com>
+Date:   Mon Dec 11 14:21:35 2017 +0100
+
+    Newton's method added and tested. Seems to work
+
+[33mcommit 276dccca54cde312653be112866c153a092ad5dd[m
+Author: Emanuele Vignola <chronoceum@gmail.com>
+Date:   Thu Dec 7 14:35:21 2017 +0100
+
+    File with data points for the BP approximation
+
+[33mcommit 8ba28c3f2400c70b1393101dde8610e27c58723e[m
+Author: Emanuele Vignola <chronoceum@gmail.com>
+Date:   Thu Dec 7 14:23:52 2017 +0100
+
+    Boltzmann constant corrected
+
+[33mcommit b5ba3304293403e2e0a5597def3cf2abd00909c7[m
+Author: Emanuele Vignola <chronoceum@gmail.com>
+Date:   Wed Dec 6 20:58:24 2017 +0100
+
+    Boltzmann constant made double precision
+
+[33mcommit dd6feb430e300d6dc5d0c3123a333d3c9e3d6acd[m
+Merge: f8b5922 cca5193
+Author: Emanuele Vignola <chronoceum@gmail.com>
+Date:   Wed Dec 6 20:54:36 2017 +0100
+
+    Merge branch 'master' of https://github.com/mstamatakis/MesoscopicKineticApproximations
+
+[33mcommit f8b5922e271bcc6305c35d09d8214757212e2b02[m
+Author: Emanuele Vignola <chronoceum@gmail.com>
+Date:   Wed Dec 6 20:51:48 2017 +0100
+
+    Boltzmann constant made double precision
+
+[33mcommit cca51937d4a3cd5bf23ae48abd61b154b91e308c[m
+Author: Michail Stamatakis <m.stamatakis@ucl.ac.uk>
+Date:   Wed Dec 6 14:47:02 2017 +0000
+
+    Specify files to ignore
+
+[33mcommit 62af881dc0aca8630338b54fe5828498bf1c1d84[m
+Author: Emanuele Vignola <chronoceum@gmail.com>
+Date:   Wed Dec 6 11:32:35 2017 +0100
+
+    Added missing parentheses to part and corr functions
+
+[33mcommit db5f07acc6c156e0d07b8ef700a6aa3b56cdc9ad[m
+Author: Emanuele Vignola <chronoceum@gmail.com>
+Date:   Wed Dec 6 10:53:27 2017 +0100
+
+    Here you have the Fortran90 repository, with the latest .f90 file
+
+[33mcommit 4983d9d262fcc5f02cf87d054b6756bab9f034e5[m
+Author: Emanuele Vignola <chronoceum@gmail.com>
+Date:   Wed Dec 6 10:42:13 2017 +0100
+
+    Hi, I've just added a test file to be deleted soon
+
+[33mcommit 8f0ac7bd63026377e88ecdd45992eb1f96ea781f[m
+Author: Michail Stamatakis <m.stamatakis@ucl.ac.uk>
+Date:   Thu Nov 30 16:23:58 2017 +0000
+
+    Initial code
+    
+    As used in the paper:
+    
+    Pineda, M. and M. Stamatakis (2017). “Beyond mean-field approximations for accurate and computationally efficient models of on-lattice chemical kinetics”. Journal of Chemical Physics, 147(2): 024105. (doi: 10.1063/1.4991690)
+
+[33mcommit b14b9649ef1fd7e2836411c19e3f1a0743d67a45[m
+Author: Michail Stamatakis <m.stamatakis@ucl.ac.uk>
+Date:   Thu Nov 30 16:14:24 2017 +0000
+
+    Initial commit
