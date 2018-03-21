@@ -1,15 +1,16 @@
 	subroutine solver(x,n,check)
 	! See chapter 9 of Numerical Recipes in Fortran by Press et al.
         use lu 
+        use approx_inst
         implicit none
 	integer n, nn, np, maxits, d, c
 	logical check
 	real*8 x(n), fvec, tolf, tolmin, tolx, stpmx
-	parameter(np=40,maxits=200,tolf=1.0d-10,tolmin=1.0d-6,tolx=1.0d-7,stpmx=100.d0)
+	parameter(np=40,maxits=200,tolf=1.0d-4,tolmin=1.0d-6,tolx=1.0d-7,stpmx=100.d0)
 	common /newtv/fvec(np),nn
 	save /newtv/
 	integer i, its, j, indx(np)
-	real*8 den, f, fold, stpmax, sum, temp, test, fjac(np,np)
+	real*8 den, f, fold, stpmax, sum, tmp, test, fjac(np,np)
 	real*8 g(np), p(np), xold(np), fmin
 	external fmin
 
@@ -47,18 +48,23 @@
 	 call ludcmp(fjac,n,np,indx,d,c)
 	 call lubksb(fjac,n,np,indx,p)
          !call gelim(fjac,-fvec,n,np,p)
-         write(*,*) its, sqrt(fvec(1)**2+fvec(2)**2+fvec(3)**2+fvec(4)**2)
+         write(*,*) its,sqrt(fvec(1)**2+fvec(2)**2+fvec(3)**2+fvec(4)**2), check
+         write(18,*) its
 	 call lnsrch(n,xold,fold,g,p,x,f,stpmax,check,fmin)
 	 test=0.d0
 	 do i=1,n
 	  if(abs(fvec(i)).gt.test)test=abs(fvec(i))
 	 end do
 	 if(test.lt.tolf)then
+          check=.false.
+          return
+         end if
+         if(check)then
 	  test=0.d0
 	  den=max(f,0.5d0*n)
 	  do i=1,n
-	   temp=abs(g(i))*max(abs(x(i)),1.d0)/den
-	   if(temp.gt.test)test=temp 
+	   tmp=abs(g(i))*max(abs(x(i)),1.d0)/den
+	   if(temp.gt.test)test=tmp 
 	  end do 
 	  if(test.lt.tolmin)then
 	   check=.true.
@@ -69,8 +75,8 @@
 	 end if
 	 test=0.d0
 	 do i=1,n
-	  temp=(abs(x(i)-xold(i)))/max(abs(x(i)),1.d0)
-	  if(temp.gt.test)test=temp
+	  tmp=(abs(x(i)-xold(i)))/max(abs(x(i)),1.d0)
+	  if(tmp.gt.test)test=tmp
 	 end do
 	 if(test.lt.tolx)return
 	end do
@@ -152,7 +158,7 @@
 	subroutine fdjac(n,x,fvec,np,df)
 	integer n, np, nmax
 	real*8 df(np,np),fvec(n),x(n),eps
-	parameter (nmax=40,eps=1.0d-4)
+	parameter (nmax=40,eps=1.0d-6)
 	integer i, j
 	real*8 h, temp, f(nmax)
 

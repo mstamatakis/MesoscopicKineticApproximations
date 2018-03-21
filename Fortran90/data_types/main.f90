@@ -5,10 +5,9 @@
         implicit none
         logical check
         integer i, j
-        real*8 cov
+        real*8 cov, start, finish
         integer, dimension(1) :: v
         integer, allocatable :: state(:)
-
 
         ! Initialising the data structure of the model
         write(*,*) '--------------------------------------------'
@@ -22,27 +21,30 @@
         read(*,*) chemp
         write(*,*) 'temp?'
         read(*,*) temp
+
+        call cpu_time(start)
+
         call obj_approx%init
 
         ! Initialising the state vectors
-        allocate(state(nsites))
+        allocate(state(obj_approx%nsites))
         call confs(state,0)
 
-        ! Calculating the self-consistent correction fields
-        check=.false.
-        call solver(obj_approx%hamilt%corr%value,npar,check)
-        
         ! Coverage vs Chemical Potential Plot
         chemp=-1.40d0
+        h0=0.d0
         do i=1,240
          chemp=chemp+0.01d0
-         call solver(obj_approx%hamilt%corr%value,npar,check)
+         call solver(obj_approx%hamilt%corr%value,obj_approx%eqn%neqns,check)
          cov=0.d0
-         do j=1,nsites
+         do j=1,obj_approx%nsites
           v(1)=j
           cov=cov+obj_approx%corfun(v,1,obj_approx)/obj_approx%part()
          end do
-         cov=cov/nsites
-         write(16,*) chemp, cov
+         cov=cov/obj_approx%nsites
+         write(16,*) chemp, cov, obj_approx%part()
+         h0=h0+kb*temp*log(obj_approx%part())
         end do
+        call cpu_time(finish)
+        print '("Time = ", f10.3, " seconds")',finish-start
         end program 
