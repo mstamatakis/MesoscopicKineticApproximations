@@ -160,7 +160,7 @@
         use meso_approx
         use approx_inst
 	integer i, j, k, l, m
-        integer p, s, t
+        integer p, q, s, t
         integer, dimension(obj_approx%nsites) :: state
         real*8 corf, totl, totr
         real*8, dimension(obj_approx%eqn%neqns,obj_approx%eqn%neqns) :: df
@@ -171,26 +171,59 @@
           do k=1,2**obj_approx%nsites
            call confs(state,k)
            p=1
+           !corf=0.d0
            do l=1,obj_approx%eqn%ncol(i)
             p=p*state(obj_approx%eqn%lhs(i,l))
            end do
            s=0
            do l=1,obj_approx%hamilt%corr%nrows
+            q=1
             if(obj_approx%hamilt%corr%intmap(l).eq.j) then
              do m=1,obj_approx%hamilt%corr%ncol(l)
-              s=s+state(obj_approx%hamilt%corr%term(l,m))
+              q=q*state(obj_approx%hamilt%corr%term(l,m))
              end do
             end if
+            s=s+q
            end do
            t=0
            do l=1,obj_approx%nsites
             t=t+state(l)
            end do
            totl=totl+p*s*exp((chemp*t-obj_approx%ener(obj_approx,state)-h0)/(kb*temp))
+           !corf=corf+p*exp((chemp*t-obj_approx%ener(obj_approx,state)-h0)/(kb*temp))
           end do
           totl=-totl/(kb*temp*obj_approx%part())
-          write(*,*) totl
-	 end do
+
+          totr=0.d0
+          do k=1,2**obj_approx%nsites
+           call confs(state,k)
+           p=1
+           !corf=0.d0
+           do l=1,obj_approx%eqn%ncol(i)
+            p=p*state(obj_approx%eqn%rhs(i,l))
+           end do
+           s=0
+           do l=1,obj_approx%hamilt%corr%nrows
+            q=1
+            if(obj_approx%hamilt%corr%intmap(l).eq.j) then
+             do m=1,obj_approx%hamilt%corr%ncol(l)
+              q=q*state(obj_approx%hamilt%corr%term(l,m))
+             end do
+            end if
+            s=s+q
+           end do
+           t=0
+           do l=1,obj_approx%nsites
+            t=t+state(l)
+           end do
+           totr=totr+p*s*exp((chemp*t-obj_approx%ener(obj_approx,state)-h0)/(kb*temp))
+           !corf=corf+p*exp((chemp*t-obj_approx%ener(obj_approx,state)-h0)/(kb*temp))
+          end do
+          totr=-totr/(kb*temp*obj_approx%part())
+          df(i,j)=totl-totr
+          write(*,*) df(i,j)
+         end do
         end do
-	end subroutine fdjac	
+
+	end subroutine fdjac
         end

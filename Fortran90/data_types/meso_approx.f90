@@ -134,7 +134,7 @@
       tot1=tot1+s1*exp((chemp*sum(state)-energy(j)-h0)/(kb*temp))
       tot2=tot2+s2*exp((chemp*sum(state)-energy(j)-h0)/(kb*temp))
      end do
-     appr%res(i)=log(tot1)-log(tot2) 
+     appr%res(i)=tot1-tot2 
     end do
     end subroutine
 
