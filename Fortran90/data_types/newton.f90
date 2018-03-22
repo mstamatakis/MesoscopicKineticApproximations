@@ -171,7 +171,7 @@
           do k=1,2**obj_approx%nsites
            call confs(state,k)
            p=1
-           !corf=0.d0
+           corf=0.d0
            do l=1,obj_approx%eqn%ncol(i)
             p=p*state(obj_approx%eqn%lhs(i,l))
            end do
@@ -190,15 +190,15 @@
             t=t+state(l)
            end do
            totl=totl+p*s*exp((chemp*t-obj_approx%ener(obj_approx,state)-h0)/(kb*temp))
-           !corf=corf+p*exp((chemp*t-obj_approx%ener(obj_approx,state)-h0)/(kb*temp))
+           corf=corf+p*exp((chemp*t-obj_approx%ener(obj_approx,state)-h0)/(kb*temp))
           end do
-          totl=-totl/(kb*temp*obj_approx%part())
+          totl=-totl/(kb*temp)
 
           totr=0.d0
           do k=1,2**obj_approx%nsites
            call confs(state,k)
            p=1
-           !corf=0.d0
+           corf=0.d0
            do l=1,obj_approx%eqn%ncol(i)
             p=p*state(obj_approx%eqn%rhs(i,l))
            end do
@@ -217,13 +217,12 @@
             t=t+state(l)
            end do
            totr=totr+p*s*exp((chemp*t-obj_approx%ener(obj_approx,state)-h0)/(kb*temp))
-           !corf=corf+p*exp((chemp*t-obj_approx%ener(obj_approx,state)-h0)/(kb*temp))
+           corf=corf+p*exp((chemp*t-obj_approx%ener(obj_approx,state)-h0)/(kb*temp))
           end do
-          totr=-totr/(kb*temp*obj_approx%part())
+          totr=-totr/(kb*temp)
           df(i,j)=totl-totr
-          write(*,*) df(i,j)
+          !write(*,*) df(i,j)
          end do
         end do
-
 	end subroutine fdjac
         end
