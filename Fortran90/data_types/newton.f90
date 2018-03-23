@@ -30,7 +30,18 @@
 	end do	
 	stpmax=stpmx*max(sqrt(sum),float(n))
 	do its=1,maxits
-	 call fdjac(fjac)
+
+ 	 call fdjac(fjac)
+         write(*,*) 'ANALYTIC'
+         do i=1,n
+           write(*,*) (fjac(i,j), j=1,n)
+         end do 
+         call fdjac2(n,x,fvec,np,fjac)
+         write(*,*) 'NUMERICAL'
+         do i=1,n
+           write(*,*) (fjac(i,j), j=1,n)
+         end do
+
 	 do i=1,n
 	  sum=0.d0
 	  do j=1,n
@@ -220,9 +231,29 @@
            corf=corf+p*exp((chemp*t-obj_approx%ener(obj_approx,state)-h0)/(kb*temp))
           end do
           totr=-totr/(kb*temp)
-          df(i,j)=totl-totr
-          !write(*,*) df(i,j)
+          df(j,i)=totl-totr
+          !write(*,*) corf, df(i,j)
          end do
         end do
 	end subroutine fdjac
+
+	subroutine fdjac2(n,x,fvec,np,df)
+	integer n, np, nmax
+	real*8 df(np,np),fvec(n),x(n),eps
+	parameter (nmax=40,eps=1.0d-6)
+	integer i, j
+	real*8 h, temp, f(nmax)
+
+	do j=1,n
+	 temp=x(j)
+	 h=0.1d0*eps*abs(temp)
+	 if(h.eq.0)h=eps
+	 x(j)=temp+h
+	 call funcv(f)
+	 x(j)=temp
+	 do i=1,n
+	  df(i,j)=(f(i)-fvec(i))/h
+	 end do
+	end do
+	end subroutine fdjac2	
         end
