@@ -30,14 +30,13 @@
         allocate(state(obj_approx%nsites),enerv(2**obj_approx%nsites))
         enerv=0.d0
         call confs(state,0)
-        call obj_approx%enervec(obj_approx,enerv)
 
         ! Coverage vs Chemical Potential Plot
         chemp=-1.40d0
         h0=0.d0
         do i=1,240
          chemp=chemp+0.01d0
-         call solver(obj_approx%hamilt%corr%value,obj_approx%eqn%neqns,check)
+         call solver(obj_approx%hamilt%corr%value,obj_approx%eqn%neqns,check,enerv)
          cov=0.d0
          do j=1,obj_approx%nsites
           v(1)=j
