@@ -52,6 +52,8 @@ module meso_approx
     type, public :: approximation
         character*10 :: approxname
         integer nsites
+        real(8) temp ! temperature
+        real(8) mu ! chemical potential
         integer, allocatable, dimension(:,:) :: allstates ! intended size (2^nsites,nsites) - we focus on 1-adsorbate approximations
         real(8), allocatable, dimension(:) :: allenergs ! intended size (2^nsites) 
         type (hamiltonian) :: hamilt
@@ -63,6 +65,7 @@ module meso_approx
         procedure :: init => approx_initialise
         procedure :: prnt => approx_print
         procedure :: populate_allstates
+        procedure :: calc_energ => calculate_energies
         !procedure :: residuals => residuals
     end type
     
@@ -81,9 +84,9 @@ module meso_approx
             count = 0
             do j = 1,this%nsites
                 if (mod(dec,2)==0) then
-                    this%allstates(i+1,this%nsites+1-j) = 0
+                    this%allstates(i+1,j) = 0
                 else
-                    this%allstates(i+1,this%nsites+1-j) = 1
+                    this%allstates(i+1,j) = 1
                 end if
                 dec = dec/2
                 count = count + 1
@@ -98,6 +101,35 @@ module meso_approx
     
     end subroutine populate_allstates
 
+    
+    subroutine calculate_energies(this)
+    
+        implicit none
+        class (approximation) :: this
+        integer i, j, dec, count
+        integer, allocatable, save :: temptermvec(:,:) ! #MSTAM: this is a temporary array storing terms like sigma(1)*sigma(2) etc, for each state.
+        ! These are saved for computational efficiency, but for large approximations it can be memory intensive!
+        
+        if (.not. allocated(temptermvec)) then
+            allocate(temptermvec(2**this%nsites,this%hamilt%nterms),source=1)
+            do i = 1,this%hamilt%nterms
+                do j = 1,this%hamilt%internbody(i)
+                    temptermvec(:,i) = temptermvec(:,i)*this%allstates(:,this%hamilt%interaction(i,j))
+                enddo
+            enddo
+        endif
+
+        this%allenergs = this%hamilt%H0
+        do i = 1,this%hamilt%nterms                        
+            this%allenergs = this%allenergs + & 
+                (this%hamilt%origpars(this%hamilt%origterms(i)) + &
+                 this%hamilt%corcpars(this%hamilt%corcterms(i)))*temptermvec(:,i)
+        enddo
+        
+        return
+        
+    end subroutine calculate_energies
+    
 	subroutine approx_initialise(this)
 
 	    use global_constants
@@ -106,7 +138,10 @@ module meso_approx
         integer nsites, nterms, norig, ncorc, nbodymax, ntm, i, j, k, s1, s2
         real*8 tot1, tot2
 	
-	
+	    this%mu = mu0
+	    this%temp = temp
+
+        
 	    this%approxname = 'BPEC'
 	    nsites = 7
 	    this%nsites = nsites
@@ -188,7 +223,7 @@ module meso_approx
         write(*,*) ''
         write(*,*) 'All states:'
 	    do i = 1,2**this%nsites
-		    write(*,'(' // int2str(this%nsites) // 'I3)') (this%allstates(i,j), j=1,this%nsites)
+		    write(*,'(' // int2str(this%nsites) // 'I3)') (this%allstates(i,j), j=this%nsites,1,-1)
         enddo
 	
 	    return
