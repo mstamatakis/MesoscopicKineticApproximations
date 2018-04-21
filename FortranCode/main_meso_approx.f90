@@ -2,9 +2,11 @@ program main
     
     use global_constants
     use meso_approx
+    use parser_module
     
     implicit none
-
+    integer i
+    
     type (approximation) :: obj_approx
     
     
@@ -18,6 +20,10 @@ program main
     
     call obj_approx%calc_energ()
     call obj_approx%calc_energ()
+    
+    do i = 1,2**7
+        write(*,'(a,f22.16)') trim(int2str(i)), obj_approx%allenergs(i)
+    enddo
     
     pause
     continue    
