@@ -20,39 +20,28 @@
 !*                  Fortran 90 Release By J-P Moreau, Paris.  *
 !*                            (www.jpmoreau.fr)               *
 !**************************************************************
-PROGRAM TPOWELL
-IMPLICIT REAL*8 (A-H,O-Z)
-PARAMETER(NP=20)
-
-  DIMENSION P(NP),XI(NP,NP)
-  
-  N=2         !number of variables
-  P=2.D0      !starting point x=2, y=2)
-  XI=1.D0
-  FTOL=1.D-8
-
-  CALL POWELL(P,XI,N,NP,FTOL,ITER,FRET)
-
-  print *,' '
-  print *,' Number of iterations:', ITER
-  print *,' '
-  print *,' Minimum value:', FRET
-  print *,' '
-  print *,' at point:',P(1),' ',P(2)
-  print *,' '
-
-END
 
 !user defined function to minimize
 REAL*8 FUNCTION FUNC(P)
-REAL*8 P(2),R
-R=DSQRT(P(1)*P(1)+P(2)*P(2))
-IF (DABS(R).LT.1.D-12) THEN
-  FUNC=1.D0
-ELSE
-  FUNC=DSIN(R)/R
-END IF
-RETURN
+
+use meso_approx_inst
+
+REAL*8 P(*),R
+
+obj_approx%hamilt%corcpars(1:obj_approx%hamilt%ncorc) = P(1:obj_approx%hamilt%ncorc)
+
+call obj_approx%calc_resid()
+FUNC = sum(obj_approx%eqns%residual**2)
+
+return
+
+!R=DSQRT(P(1)*P(1)+P(2)*P(2))
+!IF (DABS(R).LT.1.D-12) THEN
+!  FUNC=1.D0
+!ELSE
+!  FUNC=DSIN(R)/R
+!END IF
+!RETURN
 END
 
 
@@ -127,7 +116,7 @@ SUBROUTINE LINMIN(P,XI,N,FRET)
 ! calling the routines MNBRAK and BRENT.
 !----------------------------------------------------------
   IMPLICIT REAL*8 (A-H,O-Z)
-  PARAMETER(NMAX=50,TOL=1.D-4)
+  PARAMETER(NMAX=50,TOL=1.D-6)
   DIMENSION P(N),XI(N)
   COMMON /F1COM/ PCOM(NMAX),XICOM(NMAX),NCOM
   NCOM=N

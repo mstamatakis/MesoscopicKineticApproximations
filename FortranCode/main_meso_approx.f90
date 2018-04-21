@@ -1,14 +1,16 @@
 program main
     
     use global_constants
-    use meso_approx
+    use meso_approx_inst
     use parser_module
     
     implicit none
     integer i
     
-    type (approximation) :: obj_approx
-    
+    integer N, ITER
+    real(8), allocatable, dimension(:) :: P
+    real(8), allocatable, dimension(:,:) :: XI
+    real(8) FTOL, FRET    
     
     call obj_approx%init()
     call obj_approx%prnt()
@@ -26,6 +28,28 @@ program main
     !enddo
 
     call obj_approx%calc_resid()
+    
+    N=obj_approx%hamilt%ncorc         !number of variables
+
+    allocate(P(N),source=(/0.25d0,-0.10d0/))
+    !allocate(P(N),source=(/0.300202951383935d0, -0.106778775188085d0/))
+    allocate(XI(N,N),source=0.0d0)
+    XI(1,1) = 1.d0
+    XI(2,2) = 1.d0
+
+    FTOL=1.D-12
+
+    CALL POWELL(P,XI,N,N,FTOL,ITER,FRET)
+
+    print *,' '
+    print *,' Number of iterations:', ITER
+    print *,' '
+    print *,' Minimum value:', FRET
+    print *,' '
+    print *,' at point:',P(1),' ',P(2)
+    print *,' '
+
+    
     
     pause
     continue    
