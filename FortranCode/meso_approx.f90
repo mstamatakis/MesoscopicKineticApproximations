@@ -232,7 +232,32 @@ module meso_approx
 	    this%hamilt%origterms(nsites+1:nterms) = 2		 
 	    this%hamilt%corcterms(2:7) = 1
 	    this%hamilt%corcterms(14:19) = 2
-	 
+        
+        ! Populate equations data-structures
+        this%eqns%neqns = 2
+        this%eqns%nterms = 4
+        this%eqns%nbodymax = 2
+        
+        allocate(this%eqns%residual(this%eqns%neqns),source=1.d+10) ! initialise residuals to something large
+        allocate(this%eqns%lhs(this%eqns%neqns),source=0)
+        allocate(this%eqns%rhs(this%eqns%neqns),source=0) ! null info for left and right hand side
+
+        allocate(this%eqns%correlation(this%eqns%nterms,this%eqns%nbodymax),source=0)
+        allocate(this%eqns%corrlvalue(this%eqns%nterms),source=0) ! all correlation values initialised to zero
+        allocate(this%eqns%corrlnbody(this%eqns%nterms),source=0)
+        
+	    this%eqns%corrlnbody(1:2) = 1
+	    this%eqns%correlation(1,1) = 1
+	    this%eqns%correlation(2,1) = 2 ! the terms of the 1st equation sigma(1) = sigma(2)
+	    this%eqns%lhs(1) = 1
+	    this%eqns%rhs(1) = 2 ! and finally we encode the equation
+        
+	    this%eqns%corrlnbody(3:4) = 2
+	    this%eqns%correlation(3,1:2) = (/1,2/)
+	    this%eqns%correlation(4,1:2) = (/2,3/) ! the terms of the 2nd equation sigma(1)*sigma(2) = sigma(2)*sigma(3)
+	    this%eqns%lhs(2) = 3
+	    this%eqns%rhs(2) = 4 ! and finally we encode the equation
+        
         return
 	
 	end subroutine approx_initialise
@@ -261,13 +286,26 @@ module meso_approx
 			    (this%hamilt%interaction(i,j),j=1,this%hamilt%internbody(i))
         enddo
         
-        write(*,*) ''
-        write(*,*) 'All states:'
-	    do i = 1,2**this%nsites
-		    write(*,'(' // int2str(this%nsites) // 'I3)') (this%allstates(i,j), j=this%nsites,1,-1)
+     !   write(*,*) ''
+     !   write(*,*) 'All states:'
+	    !do i = 1,2**this%nsites
+		   ! write(*,'(' // int2str(this%nsites) // 'I3)') (this%allstates(i,j), j=this%nsites,1,-1)
+     !   enddo
+        
+	    write(*,*) 'EQUATIONS'
+	    write(*,*) 'number of distinct terms:   ',this%eqns%nterms
+	    write(*,*) 'number of equations:        ',this%eqns%neqns
+	    write(*,*) 'list of equations:   ',this%eqns%nterms
+        do i = 1,this%eqns%neqns
+            write(*,'(I3,a,5x,' // trim(int2str(this%eqns%corrlnbody(this%eqns%lhs(i)))) // '("s(",I3,")"),' &
+                             // ', " = ", ' // trim(int2str(this%eqns%corrlnbody(this%eqns%rhs(i)))) // '("s(",I3,")"))' ) &
+                i,')', &
+                (this%eqns%correlation(this%eqns%lhs(i),j),j=1,this%eqns%corrlnbody(this%eqns%lhs(i))), &
+                (this%eqns%correlation(this%eqns%rhs(i),j),j=1,this%eqns%corrlnbody(this%eqns%rhs(i)))
+            continue
         enddo
-	
-	    return
+        	
+        return
 	
 	end subroutine approx_print
 
