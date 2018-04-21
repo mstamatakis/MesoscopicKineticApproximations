@@ -17,6 +17,7 @@ program main
     call obj_approx%prnt()
     
     
+    pause
     continue    
   
 stop    
