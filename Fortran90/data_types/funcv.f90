@@ -1,4 +1,4 @@
-	subroutine funcv(fvec,enerv)
+	subroutine funcv(fvec)
         use commons
         use meso_approx
         use approx_inst
@@ -8,6 +8,7 @@
 	real*8, intent(out) :: fvec(obj_approx%eqn%neqns)
         real*8, dimension(2**obj_approx%nsites) :: enerv
 	
+        
         call obj_approx%residuals(obj_approx,enerv)
         do i=1,obj_approx%eqn%neqns
          fvec(i)=obj_approx%res(i)

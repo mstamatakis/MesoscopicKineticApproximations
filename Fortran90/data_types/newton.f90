@@ -1,4 +1,4 @@
-	subroutine solver(x,n,check,enerv)
+	subroutine solver(x,n,check)
 	! See chapter 9 of Numerical Recipes in Fortran by Press et al.
         use lu 
         use approx_inst
@@ -13,11 +13,9 @@
 	real*8 den, f, fold, stpmax, sum, tmp, test, fjac(np,np)
 	real*8 g(np), p(np), xold(np), fmin
 	external fmin
-        real*8, dimension(2**obj_approx%nsites) :: enerv
 
-        call obj_approx%enervec(obj_approx,enerv)
 	nn=n
-	f=fmin(x,enerv)
+	f=fmin(x)
 	test=0.d0
 	do i=1,n
 	 if(abs(fvec(i)).gt.test)test=abs(fvec(i))
@@ -32,17 +30,18 @@
 	end do	
 	stpmax=stpmx*max(sqrt(sum),float(n))
 	do its=1,maxits
-         call funcv(obj_approx,enerv)
-  	 call fdjac(fjac)
-         !write(*,*) 'ANALYTICAL'
-         !do i=1,n
-         ! write(*,*) (fjac(i,j), j=1,n)
-         !end do 
-         !call fdjac2(n,x,fvec,np,fjac,enerv)
-         !write(*,*) 'NUMERICAL'
-         !do i=1,n
-         ! write(*,*) (fjac(i,j), j=1,n)
-         !end do
+
+ 	!call fdjac(fjac)
+        !write(*,*) 'ANALYTIC'
+        !do i=1,n
+        !  write(*,*) (fjac(i,j), j=1,n)
+        !end do 
+        call fdjac2(n,x,fvec,np,fjac)
+        write(*,*) 'NUMERICAL'
+        do i=1,n
+          write(*,*) (fjac(i,j), j=1,n)
+        end do
+
 	 do i=1,n
 	  sum=0.d0
 	  do j=1,n
@@ -61,6 +60,7 @@
 	 call lubksb(fjac,n,np,indx,p)
          !call gelim(fjac,-fvec,n,np,p)
          write(*,*) its,sqrt(fvec(1)**2+fvec(2)**2+fvec(3)**2+fvec(4)**2), check
+         write(18,*) its
 	 call lnsrch(n,xold,fold,g,p,x,f,stpmax,check,fmin)
 	 test=0.d0
 	 do i=1,n
@@ -90,7 +90,6 @@
 	  if(tmp.gt.test)test=tmp
 	 end do
 	 if(test.lt.tolx)return
-         call obj_approx%enervec(obj_approx,enerv)
 	end do
         contains
 	subroutine lnsrch(n,xold,fold,g,p,x,f,stpmax,check,func)
@@ -238,20 +237,19 @@
         end do
 	end subroutine fdjac
 
-	subroutine fdjac2(n,x,fvec,np,df,enerv)
+	subroutine fdjac2(n,x,fvec,np,df)
 	integer n, np, nmax
 	real*8 df(np,np),fvec(n),x(n),eps
 	parameter (nmax=40,eps=1.0d-6)
 	integer i, j
 	real*8 h, temp, f(nmax)
-        real*8, dimension(2**obj_approx%nsites) :: enerv
 
 	do j=1,n
 	 temp=x(j)
-         h=0.1d0*eps*abs(temp)
+	 h=0.1d0*eps*abs(temp)
 	 if(h.eq.0)h=eps
 	 x(j)=temp+h
-	 call funcv(f,enerv)
+	 call funcv(f)
 	 x(j)=temp
 	 do i=1,n
 	  df(i,j)=(f(i)-fvec(i))/h
