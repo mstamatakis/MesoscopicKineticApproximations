@@ -82,13 +82,10 @@ gcguess = [0.25 0.10];
 
 gc = 0*gcguess;
 clc
-AllStt = AllStates(7);
-AllStt = AllStt(:,7:-1:1);
-AllEnergs = HamiltonianBPEC(H0,H1,h,nn,gc(1),gc(2),AllStt);
+AllStt = AllStates(7)
+AllEnergs = HamiltonianBPEC(H0,H1,h,nn,gc(1),gc(2),AllStates(7))
+
 disp(' ');
-for i = 1:2^7
-    disp(sprintf('%1.0f  %20.16f',i,AllEnergs(i)));
-end
 disp(['gc parameter = ' sprintf('%0.16e ',gc)]);
 
 outResid = Residual(ApproxIdent,CorrelLHS,CorrelRHS,nsites,beta,H0,H1,h,nn,muOstar,gc);
