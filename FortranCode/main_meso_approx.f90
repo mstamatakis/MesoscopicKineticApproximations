@@ -11,9 +11,9 @@ program main
     call obj_approx%init()
     call obj_approx%prnt()
 
-    obj_approx%hamilt%origpars(1) = -1.5d0
-    obj_approx%hamilt%corcpars(1) =  0.5d0
-    obj_approx%hamilt%corcpars(2) =  0.1d0
+    !obj_approx%hamilt%origpars(1) = -1.5d0
+    !obj_approx%hamilt%corcpars(1) =  0.25d0
+    !obj_approx%hamilt%corcpars(2) =  0.10d0
     call obj_approx%prnt()
     
     call obj_approx%calc_energ()
