@@ -183,7 +183,7 @@ module meso_approx
 		    this%hamilt%internbody(ntm) = 2
 	    enddo
 	    ntm = ntm + 1
-	    this%hamilt%interaction(ntm,1:2) = (/7,1/) ! final 1NN-1NN pairwise term
+	    this%hamilt%interaction(ntm,1:2) = (/7,2/) ! final 1NN-1NN pairwise term
 	    this%hamilt%internbody(ntm) = 2
 
 	    ! Integer arrays to be used as pointers to terms and corrections:
