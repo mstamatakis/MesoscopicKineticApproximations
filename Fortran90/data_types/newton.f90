@@ -31,16 +31,16 @@
 	stpmax=stpmx*max(sqrt(sum),float(n))
 	do its=1,maxits
 
- 	!call fdjac(fjac)
-        !write(*,*) 'ANALYTIC'
-        !do i=1,n
-        !  write(*,*) (fjac(i,j), j=1,n)
-        !end do 
-        call fdjac2(n,x,fvec,np,fjac)
-        write(*,*) 'NUMERICAL'
-        do i=1,n
-          write(*,*) (fjac(i,j), j=1,n)
-        end do
+ 	 call fdjac(fjac)
+         write(*,*) 'ANALYTIC'
+         do i=1,n
+           write(*,*) (fjac(i,j), j=1,n)
+         end do 
+         call fdjac2(n,x,fvec,np,fjac)
+         write(*,*) 'NUMERICAL'
+         do i=1,n
+           write(*,*) (fjac(i,j), j=1,n)
+         end do
 
 	 do i=1,n
 	  sum=0.d0
@@ -183,8 +183,8 @@
            call confs(state,k)
            p=1
            corf=0.d0
-           do l=1,obj_approx%eqn%ncol(j)
-            p=p*state(obj_approx%eqn%lhs(j,l))
+           do l=1,obj_approx%eqn%ncol(i)
+            p=p*state(obj_approx%eqn%lhs(i,l))
            end do
            s=0
            do l=1,obj_approx%hamilt%corr%nrows
@@ -210,8 +210,8 @@
            call confs(state,k)
            p=1
            corf=0.d0
-           do l=1,obj_approx%eqn%ncol(j)
-            p=p*state(obj_approx%eqn%rhs(j,l))
+           do l=1,obj_approx%eqn%ncol(i)
+            p=p*state(obj_approx%eqn%rhs(i,l))
            end do
            s=0
            do l=1,obj_approx%hamilt%corr%nrows

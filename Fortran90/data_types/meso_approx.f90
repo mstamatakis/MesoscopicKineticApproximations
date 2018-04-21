@@ -35,11 +35,10 @@
      real*8, allocatable, dimension(:) :: res
     contains
      procedure, nopass :: ener => energy
-     procedure, nopass :: part => partition
+     procedure :: part => partition
      procedure, nopass :: corfun => correlation
      procedure :: init => approx_initialisation
-     procedure, nopass :: residuals => residuals
-     procedure, nopass :: enervec => enervec
+     procedure :: residuals => residuals
     end type
 
     contains
@@ -69,30 +68,28 @@
     end do        
     end function
  
-    real*8 function partition(appr,enerv)
+    real*8 function partition(appr)
     use commons
     implicit none
     class (approximation_type), intent(in) :: appr
     integer, dimension(appr%nsites) :: state
     integer i
-    real*8, dimension(2**appr%nsites) :: enerv
     
     state=0
     partition=0.d0
     do i=1,2**appr%nsites
      call confs(state,i)
-     partition=partition+exp((chemp*sum(state)-enerv(i)-h0)/(kb*temp))
+     partition=partition+exp((chemp*sum(state)-appr%ener(appr,state)-h0)/(kb*temp))
     end do
     end function
  
-    real*8 function correlation(v,m,appr,enerv)
+    real*8 function correlation(v,m,appr)
     use commons
     implicit none
     class (approximation_type), intent(in) :: appr
     integer i, k, m, s
     integer, dimension(m), intent(in) :: v
     integer, dimension(appr%nsites) :: state
-    real*8, dimension(2**appr%nsites) :: enerv
     
     state=0
     correlation=0.d0
@@ -102,34 +99,26 @@
      do k=1,m
       s=s*state(v(k))
      end do
-     correlation=correlation+s*exp((chemp*sum(state)-enerv(i)-h0)/(kb*temp))
+     correlation=correlation+s*exp((chemp*sum(state)-appr%ener(appr,state)-h0)/(kb*temp))
     end do
     end function
 
-    subroutine enervec(appr,enerv)
-    implicit none
-    class (approximation_type), intent(in) :: appr
-    integer, dimension(appr%nsites) :: state
-    real*8, dimension(2**appr%nsites) :: enerv
-    integer i
-        
-    enerv=0.d0
-    state=0
-    do i=1,2**appr%nsites
-     call confs(state,i)
-     enerv(i)=appr%ener(appr,state)
-    end do
-    end subroutine
-
-    subroutine residuals(appr,enerv)
+    subroutine residuals(appr)
     use commons
     implicit none
     class (approximation_type) :: appr
     integer, dimension(appr%nsites) :: state
-    real*8, dimension(2**appr%nsites) :: enerv
+    real*8, dimension(2**appr%nsites) :: energy
     integer i, j, k, s1, s2
     real*8 tot1, tot2
     
+    energy=0.d0
+    state=0
+    do i=1,2**appr%nsites
+     call confs(state,i)
+     energy(i)=appr%ener(appr,state)
+    end do
+   
     do i=1,appr%eqn%neqns
      appr%res(i)=0.d0
      tot1=0.d0
@@ -142,8 +131,8 @@
        s1=s1*state(appr%eqn%lhs(i,k))
        s2=s2*state(appr%eqn%rhs(i,k))
       end do
-      tot1=tot1+s1*exp((chemp*sum(state)-enerv(j)-h0)/(kb*temp))
-      tot2=tot2+s2*exp((chemp*sum(state)-enerv(j)-h0)/(kb*temp))
+      tot1=tot1+s1*exp((chemp*sum(state)-energy(j)-h0)/(kb*temp))
+      tot2=tot2+s2*exp((chemp*sum(state)-energy(j)-h0)/(kb*temp))
      end do
      appr%res(i)=tot1-tot2 
     end do
