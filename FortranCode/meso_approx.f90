@@ -34,7 +34,7 @@ module meso_approx
 		integer nbodymax  ! consider up to nbodymax-body correlation terms (1-body, 2-body pairwise etc)
 		integer, allocatable, dimension(:,:) :: correlation ! intended as a (nterms x nbodymax) array encoding correlation terms e.g. 1, 2, 1-2, ...
 		integer, allocatable, dimension(:) :: corrlnbody ! number of bodies for each correlation term (in array right above),    e.g. 1, 1, 2, ...
-		integer, allocatable, dimension(:) :: corrlvalue ! number of bodies for each correlation term (in array right above),    e.g. 1, 1, 2, ...
+		real(8), allocatable, dimension(:) :: corrlvalue ! value for each correlation term
 		integer, allocatable, dimension(:) :: lhs  ! points to array "correlation", encoding the left hand side of each equation
 		integer, allocatable, dimension(:) :: rhs  ! points to array "correlation", encoding the right hand side of each equation
 		real(8), allocatable, dimension(:) :: residual  ! residual of each equation
@@ -54,21 +54,18 @@ module meso_approx
         integer nsites
         real(8) temp ! temperature
         real(8) mu ! chemical potential
+        real(8) partfcn ! partition function
         integer, allocatable, dimension(:,:) :: allstates ! intended size (2^nsites,nsites) - we focus on 1-adsorbate approximations
         integer, allocatable, dimension(:) :: nparticles ! intended size (2^nsites,nsites) - we focus on 1-adsorbate approximations
         real(8), allocatable, dimension(:) :: allenergs ! intended size (2^nsites) 
         type (hamiltonian) :: hamilt
         type (equation) :: eqns
     contains
-        !procedure, nopass :: energy => calc_energy
-        !procedure :: partfcn => calc_partitionfcn
-        !procedure, nopass :: corfun => calc_correlation
         procedure :: init => approx_initialise
         procedure :: prnt => approx_print
         procedure :: populate_allstates
         procedure :: calc_energ => calculate_energies
-        procedure :: calc_corrl => calculate_correlations
-        !procedure :: residuals => residuals
+        procedure :: calc_resid => calculate_residuals
     end type
     
     contains
@@ -135,7 +132,7 @@ module meso_approx
     end subroutine calculate_energies
     
     
-    subroutine calculate_correlations(this)
+    subroutine calculate_residuals(this)
     
         use global_constants
 
@@ -143,12 +140,12 @@ module meso_approx
         
         class (approximation) :: this
         integer i, j, dec, count
-        
+
         integer, allocatable, save :: temptermvec(:,:) ! #MSTAM: this is a temporary array storing terms like sigma(1)*sigma(2) etc, for each state.
         ! These are saved for computational efficiency, but for large approximations it can be memory intensive!
         
         if (.not. allocated(temptermvec)) then
-            allocate(temptermvec(2**this%nsites,this%hamilt%nterms),source=1)
+            allocate(temptermvec(2**this%nsites,this%eqns%nterms),source=1)
             do i = 1,this%eqns%nterms
                 do j = 1,this%eqns%corrlnbody(i)
                     temptermvec(:,i) = temptermvec(:,i)*this%allstates(:,this%eqns%correlation(i,j))
@@ -160,15 +157,26 @@ module meso_approx
         ! it would be unnecessary (and a waste of time) to compute the energies in the calling program unit
         
         this%eqns%corrlvalue = 0.d0
+
+        this%partfcn = sum(exp(-(this%allenergs-this%mu*this%nparticles)/(kboltz*this%temp)))
         do i = 1,this%eqns%nterms
-            this%eqns%corrlvalue(i) = sum(temptermvec(:,i)*exp((this%allenergs-this%mu*this%nparticles)/(kboltz*this%temp)))
-            continue
+            ! The following two expressions should give the same results (numerical accuracy issues excluded)
+            ! In the Matlab code the first expression is used, i.e. not the actual correlation function, but the 
+            ! non-normalised partial sum that corresponds to that correlation
+            this%eqns%corrlvalue(i) = sum(temptermvec(:,i)*exp(-(this%allenergs-this%mu*this%nparticles)/(kboltz*this%temp)))
+            ! this%eqns%corrlvalue(i) = sum(temptermvec(:,i)*exp(-(this%allenergs-this%mu*this%nparticles)/(kboltz*this%temp)))/this%partfcn
+        enddo        
+    
+        this%eqns%residual = 0.d0
+        do i = 1,this%eqns%neqns
+            ! Again, two options. In Matlab we have used the version of the equations with the logarithms
+            this%eqns%residual(i) = log(this%eqns%corrlvalue(this%eqns%lhs(i))) - log(this%eqns%corrlvalue(this%eqns%rhs(i)))
+            ! this%eqns%residual(i) = this%eqns%corrlvalue(this%eqns%lhs(i)) - this%eqns%corrlvalue(this%eqns%rhs(i))
         enddo
         
-    
         return
     
-    end subroutine calculate_correlations
+    end subroutine calculate_residuals
     
     
 	subroutine approx_initialise(this)
@@ -243,7 +251,7 @@ module meso_approx
         allocate(this%eqns%rhs(this%eqns%neqns),source=0) ! null info for left and right hand side
 
         allocate(this%eqns%correlation(this%eqns%nterms,this%eqns%nbodymax),source=0)
-        allocate(this%eqns%corrlvalue(this%eqns%nterms),source=0) ! all correlation values initialised to zero
+        allocate(this%eqns%corrlvalue(this%eqns%nterms),source=0.d0) ! all correlation values initialised to zero
         allocate(this%eqns%corrlnbody(this%eqns%nterms),source=0)
         
 	    this%eqns%corrlnbody(1:2) = 1

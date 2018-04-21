@@ -80,7 +80,7 @@ gcguess = [0.25 0.10];
     nsites,gcguess,options);
 
 
-gc = 0*gcguess;
+gc = gcguess;
 clc
 AllStt = AllStates(7);
 AllStt = AllStt(:,7:-1:1);
