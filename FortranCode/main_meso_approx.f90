@@ -27,9 +27,9 @@ program main
 
     call obj_approx%calc_resid()
     
-    pause
+!    pause
     continue    
-  
+    
 stop    
     
 end program
