@@ -24,6 +24,8 @@ program main
     do i = 1,2**7
         write(*,'(a,f22.16)') trim(int2str(i)), obj_approx%allenergs(i)
     enddo
+
+    call obj_approx%calc_corrl()
     
     pause
     continue    

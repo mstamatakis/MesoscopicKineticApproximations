@@ -55,9 +55,10 @@ module meso_approx
         real(8) temp ! temperature
         real(8) mu ! chemical potential
         integer, allocatable, dimension(:,:) :: allstates ! intended size (2^nsites,nsites) - we focus on 1-adsorbate approximations
+        integer, allocatable, dimension(:) :: nparticles ! intended size (2^nsites,nsites) - we focus on 1-adsorbate approximations
         real(8), allocatable, dimension(:) :: allenergs ! intended size (2^nsites) 
         type (hamiltonian) :: hamilt
-        type (equation) :: eqn
+        type (equation) :: eqns
     contains
         !procedure, nopass :: energy => calc_energy
         !procedure :: partfcn => calc_partitionfcn
@@ -66,6 +67,7 @@ module meso_approx
         procedure :: prnt => approx_print
         procedure :: populate_allstates
         procedure :: calc_energ => calculate_energies
+        procedure :: calc_corrl => calculate_correlations
         !procedure :: residuals => residuals
     end type
     
@@ -97,6 +99,8 @@ module meso_approx
     
         enddo
     
+        allocate(this%nparticles(2**this%nsites),source=sum(this%allstates,2))
+        
         return
     
     end subroutine populate_allstates
@@ -129,6 +133,43 @@ module meso_approx
         return
         
     end subroutine calculate_energies
+    
+    
+    subroutine calculate_correlations(this)
+    
+        use global_constants
+
+        implicit none
+        
+        class (approximation) :: this
+        integer i, j, dec, count
+        
+        integer, allocatable, save :: temptermvec(:,:) ! #MSTAM: this is a temporary array storing terms like sigma(1)*sigma(2) etc, for each state.
+        ! These are saved for computational efficiency, but for large approximations it can be memory intensive!
+        
+        if (.not. allocated(temptermvec)) then
+            allocate(temptermvec(2**this%nsites,this%hamilt%nterms),source=1)
+            do i = 1,this%eqns%nterms
+                do j = 1,this%eqns%corrlnbody(i)
+                    temptermvec(:,i) = temptermvec(:,i)*this%allstates(:,this%eqns%correlation(i,j))
+                enddo
+            enddo
+        endif
+
+        call this%calc_energ() ! Note that we calculate the energies here, so if a program unit is calling the correlations subroutine,
+        ! it would be unnecessary (and a waste of time) to compute the energies in the calling program unit
+        
+        this%eqns%corrlvalue = 0.d0
+        do i = 1,this%eqns%nterms
+            this%eqns%corrlvalue(i) = sum(temptermvec(:,i)*exp((this%allenergs-this%mu*this%nparticles)/(kboltz*this%temp)))
+            continue
+        enddo
+        
+    
+        return
+    
+    end subroutine calculate_correlations
+    
     
 	subroutine approx_initialise(this)
 
