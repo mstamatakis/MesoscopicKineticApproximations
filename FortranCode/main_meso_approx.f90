@@ -38,7 +38,7 @@ program main
     XI(1,1) = 1.d0
     XI(2,2) = 1.d0
 
-    FTOL=1.D-12
+    FTOL=1.D-20
 
     CALL POWELL(P,XI,N,N,FTOL,ITER,FRET)
 
@@ -66,6 +66,9 @@ program main
         ! Reset direction for the next solution
         XI(1,1:2) = (/1.d0,0.d0/)
         XI(2,1:2) = (/0.d0,1.d0/)
+        
+        ! Re-reference energy levels to avoid large values of the partition function sums
+        obj_approx%hamilt%h0 = obj_approx%hamilt%h0 + kboltz*obj_approx%temp*log(obj_approx%partfcn)
         
         continue
         
