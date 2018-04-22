@@ -301,13 +301,12 @@ end
 % return
 
 %% SAVE RESULTS TO TEXT FILE
-fileID = fopen('../FortranCode/BPEC_Matlab_Theta_vs_Mu.txt','w');
 gsolBPEC = gcsolnv{4}.';
 for i = 1:length(muOstarRange)
-    fprintf(fileID,[repmat('%32.13f',1,4) '\r\n'], ...
-        [muOstarRange(i) Theta(4,i) gsolBPEC(i,:)]);
+    stringOut = sprintf('(4F32.13)', ...
+        [muOstarRange(i) Theta(4,i) gsolBPEC(i)].')
+    '../FortranCode/BPEC_Matlab_Theta_vs_Mu.txt'
 end
-fclose(fileID);
 
 %% PLOTTING COMMANDS FOLLOW
 
