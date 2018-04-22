@@ -44,7 +44,7 @@ program main
         XI(i,i) = 1.d0
     enddo
 
-    FTOL=1.D-20
+    FTOL=1.D-12
 
     CALL POWELL(P,XI,N,N,FTOL,ITER,FRET)
 

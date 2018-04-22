@@ -51,6 +51,7 @@ SUBROUTINE POWELL(P,XI,N,NP,FTOL,ITER,FRET)
 ! ITER is the number of iterations taken. The routine LINMIN
 ! is used.
 !------------------------------------------------------------
+  use global_constants
   IMPLICIT REAL*8 (A-H,O-Z)
   PARAMETER(NMAX=20,ITMAX=200)
   DIMENSION P(NP),XI(NP,NP),PT(NMAX),PTT(NMAX),XIT(NMAX)
@@ -59,7 +60,10 @@ SUBROUTINE POWELL(P,XI,N,NP,FTOL,ITER,FRET)
     PT(J)=P(J)       !Save initial pont
   END DO
   ITER=0
+  write(*,'("Iteration   Func-count         f(x)")')
+  write(*,'(I9,1x,I12,2x,E11.5E2)') iter, fcncounts, FRET  
 1 ITER=ITER+1
+  fcncounts = 0
   FP=FRET
   IBIG=0
   DEL=0.D0           !Will be the biggest function decrease.
@@ -85,13 +89,20 @@ SUBROUTINE POWELL(P,XI,N,NP,FTOL,ITER,FRET)
     PT(J)=P(J)
   END DO
   FPTT=FUNC(PTT)            !Function value at extrapolated point.
-  IF (FPTT.GE.FP) GO TO 1   !One reason not to use new direction. 
+  IF (FPTT.GE.FP) then
+      write(*,'(I9,1x,I12,2x,E11.5E2,a)') iter, fcncounts, FRET, '  -- new direction not used [1]'  
+      GO TO 1   !One reason not to use new direction. 
+  endif
   T=2.D0*(FP-2.D0*FRET+FPTT)*(FP-FRET-DEL)**2-DEL*(FP-FPTT)**2
-  IF (T.GE.0.D0) GO TO 1    !Other reason not to use new direction.
+  IF (T.GE.0.D0) then
+      write(*,'(I9,1x,I12,2x,E11.5E2,a)') iter, fcncounts, FRET, '  -- new direction not used [2]'  
+      GO TO 1    !Other reason not to use new direction.
+  endif
   CALL LINMIN(P,XIT,N,FRET) !Move to the minimum of the new direction.
   DO J=1,N                  !and save the new direction
     XI(J,IBIG)=XIT(J)
   END DO
+  write(*,'(I9,1x,I12,2x,E11.5E2)') iter, fcncounts, FRET  
   GO TO 1
 END
 

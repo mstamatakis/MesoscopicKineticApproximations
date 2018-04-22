@@ -12,5 +12,7 @@ module global_constants
     real(8), parameter :: mu0 = -1.5d0
     real(8), parameter :: mu1 =  1.0d0
     real(8), parameter :: Dmu =  0.02d0
+    
+    integer fcncounts
 
 end module global_constants
