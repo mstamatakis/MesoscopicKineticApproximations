@@ -71,7 +71,7 @@ ApproxColor{kAppr} = [0 0 0]; % FOR PLOTTING: color
 ApproxMarkr{kAppr} = 'o'; % FOR PLOTTING: marker
 ApproxLinSpec{kAppr} = '-'; % FOR PLOTTING: line type
 ApproxMSize(kAppr) = 6; % FOR PLOTTING: marker size
-
+if 0
 % Next the BP approximation without edge interactions
 kAppr = kAppr + 1; % index of the approximation
 ApproxName{kAppr} = 'BP'; % name of the approximation
@@ -97,7 +97,7 @@ ApproxColor{kAppr} = [200 0 255]/255; % FOR PLOTTING: color
 ApproxMarkr{kAppr} = '>'; % FOR PLOTTING: marker
 ApproxLinSpec{kAppr} = '--'; % FOR PLOTTING: line type
 ApproxMSize(kAppr) = 6; % FOR PLOTTING: marker size
-
+end
 % Next the BPEC approximation with edge interactions and an equation for
 % the correlation
 kAppr = kAppr + 1; % index of the approximation
@@ -302,10 +302,11 @@ end
 
 %% SAVE RESULTS TO TEXT FILE
 fileID = fopen('../FortranCode/BPEC_Matlab_Theta_vs_Mu.txt','w');
-gsolBPEC = gcsolnv{4}.';
+iBPEC = 2;
+gsolBPEC = gcsolnv{iBPEC}.';
 for i = 1:length(muOstarRange)
     fprintf(fileID,[repmat('%32.13f',1,4) '\r\n'], ...
-        [muOstarRange(i) Theta(4,i) gsolBPEC(i,:)]);
+        [muOstarRange(i) Theta(iBPEC,i) gsolBPEC(i,:)]);
 end
 fclose(fileID);
 

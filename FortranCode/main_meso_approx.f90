@@ -57,6 +57,8 @@ program main
         
         call powell(p,xi,n,n,ftol,iter,fret)
         print *,' ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'        
+        print *,' Chemical potential:', mu
+        print *,' Coverage:          ', obj_approx%eqns%corrlvalue(1)/obj_approx%partfcn
         print *,' Number of iterations:', ITER
         print *,' Minimum value:', FRET
         print *,' at point:',P(1),' ',P(2)
