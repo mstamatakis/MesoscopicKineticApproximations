@@ -21,7 +21,7 @@ subroutine approx_initialise_bpec(obj_approx)
 	obj_approx%hamilt%nterms = nterms
 	obj_approx%hamilt%norig = norig
 	obj_approx%hamilt%ncorc = ncorc
-	obj_approx%hamilt%nbodymax = 2
+	obj_approx%hamilt%nbodymax = nbodymax
 	
 	allocate(obj_approx%hamilt%interaction(nterms,nbodymax),source=0) ! encoding interaction terms
 	allocate(obj_approx%hamilt%internbody(nterms),source=0) ! number of bodies for each interaction term
