@@ -2,7 +2,7 @@ real*8 function func(p)
 
 use meso_approx_inst
 
-real*8 p(*)
+real*8 p(obj_approx%hamilt%ncorc)
 
 obj_approx%hamilt%corcpars(1:obj_approx%hamilt%ncorc) = P(1:obj_approx%hamilt%ncorc)
 
