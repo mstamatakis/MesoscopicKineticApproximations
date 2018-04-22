@@ -195,6 +195,9 @@ module meso_approx
             
             case ('BPEC')
                 call approx_initialise_bpec(this)
+
+            case ('K2NNC2')
+                call approx_initialise_k2nnc2(this)
                 
             case default
                 write(*,*) 'Unknown approximation',approx_name
