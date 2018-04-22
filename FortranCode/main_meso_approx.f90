@@ -6,6 +6,7 @@ program main
     
     implicit none
     integer i
+    real(8) mu
     
     integer N, ITER
     real(8), allocatable, dimension(:) :: P
@@ -49,7 +50,26 @@ program main
     print *,' at point:',P(1),' ',P(2)
     print *,' '
 
-    
+    open(unit=101,file='BPEC_Fortran_Theta_vs_Mu.txt')
+    do mu = mu0,mu1,Dmu
+        
+        obj_approx%mu = mu
+        
+        call powell(p,xi,n,n,ftol,iter,fret)
+        print *,' ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'        
+        print *,' Number of iterations:', ITER
+        print *,' Minimum value:', FRET
+        print *,' at point:',P(1),' ',P(2)
+       
+        write(101,'(4F32.13)') mu, obj_approx%eqns%corrlvalue(1)/obj_approx%partfcn, P(1), P(2)
+        
+        ! Reset direction for the next solution
+        XI(1,1:2) = (/1.d0,0.d0/)
+        XI(2,1:2) = (/0.d0,1.d0/)
+        
+        continue
+        
+    enddo
     
     pause
     continue    
