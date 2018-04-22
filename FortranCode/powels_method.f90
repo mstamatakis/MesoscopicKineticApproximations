@@ -22,19 +22,8 @@
 !**************************************************************
 
 !user defined function to minimize
-REAL*8 FUNCTION FUNC(P)
-
-use meso_approx_inst
-
-REAL*8 P(*),R
-
-obj_approx%hamilt%corcpars(1:obj_approx%hamilt%ncorc) = P(1:obj_approx%hamilt%ncorc)
-
-call obj_approx%calc_resid()
-FUNC = sum(obj_approx%eqns%residual**2)
-
-return
-
+!REAL*8 FUNCTION FUNC(P)
+!
 !R=DSQRT(P(1)*P(1)+P(2)*P(2))
 !IF (DABS(R).LT.1.D-12) THEN
 !  FUNC=1.D0
@@ -42,7 +31,8 @@ return
 !  FUNC=DSIN(R)/R
 !END IF
 !RETURN
-END
+!
+!END
 
 
 SUBROUTINE POWELL(P,XI,N,NP,FTOL,ITER,FRET)

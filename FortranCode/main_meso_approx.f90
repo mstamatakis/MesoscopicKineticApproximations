@@ -12,7 +12,7 @@ program main
     real(8), allocatable, dimension(:,:) :: XI
     real(8) FTOL, FRET    
     
-    call obj_approx%init()
+    call obj_approx%init('BPEC')
     call obj_approx%prnt()
 
     !obj_approx%hamilt%origpars(1) = -1.5d0
