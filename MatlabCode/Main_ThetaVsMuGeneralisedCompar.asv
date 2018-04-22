@@ -71,7 +71,7 @@ ApproxColor{kAppr} = [0 0 0]; % FOR PLOTTING: color
 ApproxMarkr{kAppr} = 'o'; % FOR PLOTTING: marker
 ApproxLinSpec{kAppr} = '-'; % FOR PLOTTING: line type
 ApproxMSize(kAppr) = 6; % FOR PLOTTING: marker size
-
+if 0
 % Next the BP approximation without edge interactions
 kAppr = kAppr + 1; % index of the approximation
 ApproxName{kAppr} = 'BP'; % name of the approximation
@@ -124,7 +124,7 @@ ApproxColor{kAppr} = [0 0 255]/255; % FOR PLOTTING: color
 ApproxMarkr{kAppr} = 's'; % FOR PLOTTING: marker
 ApproxLinSpec{kAppr} = '-'; % FOR PLOTTING: line type
 ApproxMSize(kAppr) = 6; % FOR PLOTTING: marker size
-
+end
 % Next the K2NNC2 approximation
 kAppr = kAppr + 1; % index of the approximation
 ApproxName{kAppr} = 'K2NNC2'; % name of the approximation
@@ -301,12 +301,14 @@ end
 % return
 
 %% SAVE RESULTS TO TEXT FILE
-gsolBPEC = gcsolnv{4}.';
+fileID = fopen('../FortranCode/BPEC_Matlab_Theta_vs_Mu.txt','w');
+iBPEC = 2;
+gsolBPEC = gcsolnv{iBPEC}.';
 for i = 1:length(muOstarRange)
-    stringOut = sprintf('(4F32.13)', ...
-        [muOstarRange(i) Theta(4,i) gsolBPEC(i)].')
-    '../FortranCode/BPEC_Matlab_Theta_vs_Mu.txt'
+    fprintf(fileID,[repmat('%32.13f',1,4) '\r\n'], ...
+        [muOstarRange(i) Theta(iBPEC,i) gsolBPEC(i,:)]);
 end
+fclose(fileID);
 
 %% PLOTTING COMMANDS FOLLOW
 

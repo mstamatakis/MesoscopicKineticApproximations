@@ -97,7 +97,7 @@ ApproxColor{kAppr} = [200 0 255]/255; % FOR PLOTTING: color
 ApproxMarkr{kAppr} = '>'; % FOR PLOTTING: marker
 ApproxLinSpec{kAppr} = '--'; % FOR PLOTTING: line type
 ApproxMSize(kAppr) = 6; % FOR PLOTTING: marker size
-end
+
 % Next the BPEC approximation with edge interactions and an equation for
 % the correlation
 kAppr = kAppr + 1; % index of the approximation
@@ -111,7 +111,7 @@ ApproxColor{kAppr} = [180 0 255]/255; % FOR PLOTTING: color
 ApproxMarkr{kAppr} = '^'; % FOR PLOTTING: marker
 ApproxLinSpec{kAppr} = '--'; % FOR PLOTTING: line type
 ApproxMSize(kAppr) = 6; % FOR PLOTTING: marker size
-if 0
+
 % Next the K2NNC1 approximation
 kAppr = kAppr + 1; % index of the approximation
 ApproxName{kAppr} = 'K2NNC1'; % name of the approximation
@@ -124,7 +124,7 @@ ApproxColor{kAppr} = [0 0 255]/255; % FOR PLOTTING: color
 ApproxMarkr{kAppr} = 's'; % FOR PLOTTING: marker
 ApproxLinSpec{kAppr} = '-'; % FOR PLOTTING: line type
 ApproxMSize(kAppr) = 6; % FOR PLOTTING: marker size
-
+end
 % Next the K2NNC2 approximation
 kAppr = kAppr + 1; % index of the approximation
 ApproxName{kAppr} = 'K2NNC2'; % name of the approximation
@@ -137,7 +137,7 @@ ApproxColor{kAppr} = [0 100 255]/255; % FOR PLOTTING: color
 ApproxMarkr{kAppr} = 'd'; % FOR PLOTTING: marker
 ApproxLinSpec{kAppr} = '-'; % FOR PLOTTING: line type
 ApproxMSize(kAppr) = 6; % FOR PLOTTING: marker size
-
+if 0
 % Next the K2NNC3 approximation
 kAppr = kAppr + 1; % index of the approximation
 ApproxName{kAppr} = 'K2NNC3'; % name of the approximation
@@ -301,12 +301,12 @@ end
 % return
 
 %% SAVE RESULTS TO TEXT FILE
-fileID = fopen('../FortranCode/BPEC_Matlab_Theta_vs_Mu.txt','w');
-iBPEC = 2;
-gsolBPEC = gcsolnv{iBPEC}.';
+fileID = fopen('../FortranCode/K2NNC2_Matlab_Theta_vs_Mu.txt','w');
+iK2NNC2 = 2;
+gsolK2NNC2 = gcsolnv{iK2NNC2}.';
 for i = 1:length(muOstarRange)
-    fprintf(fileID,[repmat('%32.13f',1,4) '\r\n'], ...
-        [muOstarRange(i) Theta(iBPEC,i) gsolBPEC(i,:)]);
+    fprintf(fileID,[repmat('%32.13f',1,2+size(gsolK2NNC2,2)) '\r\n'], ...
+        [muOstarRange(i) Theta(iK2NNC2,i) gsolK2NNC2(i,:)]);
 end
 fclose(fileID);
 
