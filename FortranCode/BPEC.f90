@@ -5,8 +5,7 @@ subroutine approx_initialise_bpec(obj_approx)
     
     implicit none
     type (approximation) :: obj_approx
-    integer nsites, nterms, norig, ncorc, nbodymax, ntm, i, j, k, s1, s2
-    real*8 tot1, tot2   
+    integer nsites, nterms, norig, ncorc, nbodymax, i, ntm
         
     obj_approx%approxname = 'BPEC'
 	nsites = 7
