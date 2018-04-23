@@ -13,6 +13,7 @@ program main
     integer N, ITER
     real(DP), allocatable, dimension(:) :: P
     real(8), allocatable, dimension(:,:) :: XI
+	REAL(DP), allocatable, DIMENSION(:) :: fvec
     real(8) FTOL, FRET    
     logical check
     character(10) approx
@@ -54,13 +55,26 @@ program main
     !P(5) = -0.0279416468428d0                
     !P(6) = -0.1775037458119d0
     
-    P(1) = 0.300202951383935d0
-    P(2) = -0.106778775188085d0
+    P(1) = 0.135d0
+    P(2) = -0.108d0
+    !P(1) = 0.300202951383935d0
+    !P(2) = -0.106778775188085d0
+    obj_approx%hamilt%corcpars(1) = P(1)
+    obj_approx%hamilt%corcpars(2) = P(2)
+    call obj_approx%calc_resid()
+
     allocate(XI(N,N),source=0.0d0)
     do i = 1,N
         XI(i,i) = 1.d0
     enddo
-
+    allocate(fvec(N),source=0.0d0)
+    fvec = obj_approx%eqns%residual
+    
+    call fdjac(P,fvec,XI)    
+    
+    continue
+    stop
+    
     FTOL=1.D-12
 
     call powell(p,xi,n,n,ftol,iter,fret)
