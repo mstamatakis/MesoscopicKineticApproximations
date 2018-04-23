@@ -38,7 +38,7 @@ MODULE nrutil
 		MODULE PROCEDURE array_copy_r, array_copy_d, array_copy_i
 	END INTERFACE
 	INTERFACE swap
-		MODULE PROCEDURE swap_i,swap_r,swap_rv,swap_c, &
+		MODULE PROCEDURE swap_i,swap_r,swap_d,swap_rv,swap_dv,swap_c, &
         swap_cv,swap_cm,swap_z,swap_zv,swap_zm, &
         masked_swap_rs,masked_swap_rv,masked_swap_rm
 	END INTERFACE
@@ -49,7 +49,7 @@ MODULE nrutil
 	! Routines returning a location as an integer value (ifirstloc, iminloc are not currently overloaded
 	! and so do not have a generic interface here):
 	INTERFACE imaxloc
-		MODULE PROCEDURE imaxloc_r,imaxloc_i
+		MODULE PROCEDURE imaxloc_r,imaxloc_d,imaxloc_i
 	END INTERFACE
 	! Routines for argument checking and error handling (nrerror is not currently overloaded):
 	INTERFACE assert
@@ -105,7 +105,10 @@ MODULE nrutil
 	INTERFACE put_diag
 		MODULE PROCEDURE put_diag_rv, put_diag_r
 	END INTERFACE
-	! Other routines (vabs is not currently overloaded):
+	! Other routines
+    INTERFACE vabs
+		MODULE PROCEDURE vabs_r,vabs_d
+	END INTERFACE
 	CONTAINS
 	! Routines that move data:
 	SUBROUTINE array_copy_r(src,dest,n_copied,n_not_copied)
@@ -148,6 +151,13 @@ MODULE nrutil
 		a=b
 		b=dum
 	END SUBROUTINE swap_r
+	SUBROUTINE swap_d(a,b)
+		REAL(DP), INTENT(INOUT) :: a,b
+		REAL(DP) :: dum
+		dum=a
+		a=b
+		b=dum
+	END SUBROUTINE swap_d
 	SUBROUTINE swap_rv(a,b)
 		REAL(SP), DIMENSION(:), INTENT(INOUT) :: a,b
 		REAL(SP), DIMENSION(SIZE(a)) :: dum
@@ -155,6 +165,13 @@ MODULE nrutil
 		a=b
 		b=dum
 	END SUBROUTINE swap_rv
+	SUBROUTINE swap_dv(a,b)
+		REAL(DP), DIMENSION(:), INTENT(INOUT) :: a,b
+		REAL(DP), DIMENSION(SIZE(a)) :: dum
+		dum=a
+		a=b
+		b=dum
+	END SUBROUTINE swap_dv
 	SUBROUTINE swap_c(a,b)
 		COMPLEX(SPC), INTENT(INOUT) :: a,b
 		COMPLEX(SPC) :: dum
@@ -310,6 +327,14 @@ MODULE nrutil
 		imax=maxloc(arr(:))
 		imaxloc_r=imax(1)
 	END FUNCTION imaxloc_r
+	FUNCTION imaxloc_d(arr)
+		! Index of maxloc on an array.
+		REAL(DP), DIMENSION(:), INTENT(IN) :: arr
+		INTEGER(I4B) :: imaxloc_d
+		INTEGER(I4B), DIMENSION(1) :: imax
+		imax=maxloc(arr(:))
+		imaxloc_d=imax(1)
+	END FUNCTION imaxloc_d
 	FUNCTION imaxloc_i(iarr)
 		INTEGER(I4B), DIMENSION(:), INTENT(IN) :: iarr
 		INTEGER(I4B), DIMENSION(1) :: imax
@@ -1128,14 +1153,20 @@ MODULE nrutil
 		n=0
 		if (present(extra)) n=extra
 		lower_triangle=(outerdiff(arth_i(1,1,j),arth_i(1,1,k)) > -n)
-	END FUNCTION lower_triangle
+    END FUNCTION lower_triangle
 	! Other routines:
-	FUNCTION vabs(v)
+    FUNCTION vabs_r(v)
 		! Return the length (ordinary L2 norm) of a vector.
 		REAL(SP), DIMENSION(:), INTENT(IN) :: v
-		REAL(SP) :: vabs
-		vabs=sqrt(dot_product(v,v))
-	END FUNCTION vabs
+		REAL(SP) :: vabs_r
+		vabs_r=sqrt(dot_product(v,v))
+	END FUNCTION vabs_r
+	FUNCTION vabs_d(v)
+		! Return the length (ordinary L2 norm) of a vector.
+		REAL(DP), DIMENSION(:), INTENT(IN) :: v
+		REAL(DP) :: vabs_d
+		vabs_d=sqrt(dot_product(v,v))
+	END FUNCTION vabs_d
 END MODULE nrutil
 
 
