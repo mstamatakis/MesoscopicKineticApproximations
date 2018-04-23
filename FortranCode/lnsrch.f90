@@ -15,7 +15,7 @@ SUBROUTINE lnsrch(xold,fold,g,p,x,f,stpmax,check,func)
 			REAL(DP), DIMENSION(:), INTENT(IN) :: x
 		END FUNCTION func
 	END INTERFACE
-	REAL(DP), PARAMETER :: ALF=1.0e-4_sp,TOLX=epsilon(x)
+	REAL(DP), PARAMETER :: ALF=1.0e-4_dp,TOLX=epsilon(x)
 	! Given an N-dimensional point xold, the value of the function and gradient there, fold
 	! and g, and a direction p, finds a new point x along the direction p from xold where the
 	! function func has decreased “sufficiently.” xold, g, p, and x are all arrays of length N.
@@ -35,7 +35,7 @@ SUBROUTINE lnsrch(xold,fold,g,p,x,f,stpmax,check,func)
 	if (pabs > stpmax) p(:)=p(:)*stpmax/pabs ! Scale if attempted step is too big.
 	slope=dot_product(g,p)
 	if (slope >= 0.0) call nrerror('roundoff problem in lnsrch')
-	alamin=TOLX/maxval(abs(p(:))/max(abs(xold(:)),1.0_sp)) ! Compute lamda-min.
+	alamin=TOLX/maxval(abs(p(:))/max(abs(xold(:)),1.0_dp)) ! Compute lamda-min.
 	alam=1.0                                               ! Always try full Newton step first.
 	do                                                     ! Start of iteration loop.
 		x(:)=xold(:)+alam*p(:)
@@ -48,7 +48,7 @@ SUBROUTINE lnsrch(xold,fold,g,p,x,f,stpmax,check,func)
 		RETURN
 		else                                               ! Backtrack.
 			if (alam == 1.0) then                          ! First time.
-			tmplam=-slope/(2.0_sp*(f-fold-slope))
+			tmplam=-slope/(2.0_dp*(f-fold-slope))
 			else                                           ! Subsequent backtracks.
 				rhs1=f-fold-alam*slope
 				rhs2=f2-fold-alam2*slope
@@ -56,23 +56,23 @@ SUBROUTINE lnsrch(xold,fold,g,p,x,f,stpmax,check,func)
 				b=(-alam2*rhs1/alam**2+alam*rhs2/alam2**2)/ &
 				(alam-alam2)
 				if (a == 0.0) then
-				tmplam=-slope/(2.0_sp*b)
+				tmplam=-slope/(2.0_dp*b)
 				else
-					disc=b*b-3.0_sp*a*slope
+					disc=b*b-3.0_dp*a*slope
 					if (disc < 0.0) then
-					tmplam=0.5_sp*alam
+					tmplam=0.5_dp*alam
 					else if (b <= 0.0) then
-					tmplam=(-b+sqrt(disc))/(3.0_sp*a)
+					tmplam=(-b+sqrt(disc))/(3.0_dp*a)
 					else
 						tmplam=-slope/(b+sqrt(disc))
 					end if
 				end if
-				if (tmplam > 0.5_sp*alam) tmplam=0.5_sp*alam ! lamda ≤ 0.5*lamda1.
+				if (tmplam > 0.5_dp*alam) tmplam=0.5_dp*alam ! lamda ≤ 0.5*lamda1.
 			end if
 		end if
 		alam2=alam
 		f2=f
-		alam=max(tmplam,0.1_sp*alam) ! lamda ≥ 0.1*lamda1.
+		alam=max(tmplam,0.1_dp*alam) ! lamda ≥ 0.1*lamda1.
 	end do ! Try again.
 END SUBROUTINE lnsrch
 

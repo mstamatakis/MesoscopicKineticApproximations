@@ -9,7 +9,7 @@ SUBROUTINE newt(x,check)
 	REAL(DP), DIMENSION(:), INTENT(INOUT) :: x
 	LOGICAL(LGT), INTENT(OUT) :: check
 	INTEGER(I4B), PARAMETER :: MAXITS=200
-	REAL(DP), PARAMETER :: TOLF=1.0e-4_sp,TOLMIN=1.0e-6_sp,TOLX=epsilon(x), &
+	REAL(DP), PARAMETER :: TOLF=1.0e-12_dp,TOLMIN=1.0e-12_dp,TOLX=epsilon(x), &
 	STPMX=100.0
 	
 	! Given an initial guess x for a root in N dimensions, find the root by a globally convergent
@@ -33,7 +33,7 @@ SUBROUTINE newt(x,check)
 	fmin_fvecp=>fvec ! fvec is also computed by this call.
 	f=fmin(x)
 	
-	if (maxval(abs(fvec(:))) < 0.01_sp*TOLF) then ! Test for initial guess being a root.
+	if (maxval(abs(fvec(:))) < 0.01_dp*TOLF) then ! Test for initial guess being a root.
 		check=.false.                             ! Use more stringent test than
 		RETURN                                    ! simply TOLF.
 	end if
@@ -58,11 +58,11 @@ SUBROUTINE newt(x,check)
 		end if
 		
 		if (check) then ! Check for gradient of f zero, i.e., spurious
-			check=(maxval(abs(g(:))*max(abs(x(:)),1.0_sp) / & ! convergence.
-			max(f,0.5_sp*size(x))) < TOLMIN)
+			check=(maxval(abs(g(:))*max(abs(x(:)),1.0_dp) / & ! convergence.
+			max(f,0.5_dp*size(x))) < TOLMIN)
 			RETURN ! Test for convergence on dx.
 		end if
-		if (maxval(abs(x(:)-xold(:))/max(abs(x(:)),1.0_sp)) < TOLX) &
+		if (maxval(abs(x(:)-xold(:))/max(abs(x(:)),1.0_dp)) < TOLX) &
 		RETURN
 	end do
 	

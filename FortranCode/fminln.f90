@@ -20,7 +20,7 @@ MODULE fminln
 		if (.not. associated(fmin_fvecp)) call &
 		nrerror('fmin:problem with pointer for returned values')
 		fmin_fvecp=funcv(x)
-		fmin=0.5_sp*dot_product(fmin_fvecp,fmin_fvecp)
+		fmin=0.5_dp*dot_product(fmin_fvecp,fmin_fvecp)
 	END FUNCTION fmin
 END MODULE fminln	
 

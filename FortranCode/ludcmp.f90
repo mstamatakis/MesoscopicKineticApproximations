@@ -11,14 +11,14 @@ SUBROUTINE ludcmp(a,indx,d)
 	! respectively. This routine is used in combination with lubksb to solve linear equations or
 	! invert a matrix.
 	REAL(DP), DIMENSION(size(a,1)) :: vv      ! vv stores the implicit scaling of each row.
-	REAL(DP), PARAMETER :: TINY=1.0e-20_sp    ! A small number.
+	REAL(DP), PARAMETER :: TINY=1.0e-20_dp    ! A small number.
 	INTEGER(I4B) :: j,n,imax
 	n=assert_eq(size(a,1),size(a,2),size(indx),'ludcmp')
 	d=1.0                                     ! No row interchanges yet.
 	vv=maxval(abs(a),dim=2)                   ! Loop over rows to get the implicit scaling
 	if (any(vv == 0.0)) call nrerror('singular matrix in ludcmp') ! information.
 	! There is a row of zeros.
-	vv=1.0_sp/vv ! Save the scaling.
+	vv=1.0_dp/vv ! Save the scaling.
 	do j=1,n
 		imax=(j-1)+imaxloc(vv(j:n)*abs(a(j:n,j))) ! Find the pivot row.
 		if (j /= imax) then                       ! Do we need to interchange rows?

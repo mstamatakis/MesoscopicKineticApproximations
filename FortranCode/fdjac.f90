@@ -12,7 +12,7 @@ SUBROUTINE fdjac(x,fvec,df)
 			REAL(DP), DIMENSION(size(x)) :: funcv
 		END FUNCTION funcv
 	END INTERFACE
-	REAL(DP), PARAMETER :: EPS=1.0e-4_sp
+	REAL(DP), PARAMETER :: EPS=1.0e-4_dp
 	! Computes forward-difference approximation to Jacobian. On input, x is the point at which
 	! the Jacobian is to be evaluated, and fvec is the vector of function values at the point,
 	! both arrays of length N. df is the N × N output Jacobian. FUNCTION funcv(x) is a
