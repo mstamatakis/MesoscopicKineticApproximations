@@ -11,7 +11,7 @@ program main
     real(8) mu
     
     integer N, ITER
-    real(SP), allocatable, dimension(:) :: P
+    real(DP), allocatable, dimension(:) :: P
     real(8), allocatable, dimension(:,:) :: XI
     real(8) FTOL, FRET    
     logical check
@@ -29,7 +29,6 @@ program main
     obj_approx%hamilt%corcpars(5) =  0.035d0
     obj_approx%hamilt%corcpars(6) =  0.040d0
     call obj_approx%prnt()
-    
     call obj_approx%calc_energ()
     call obj_approx%calc_energ()
     
@@ -41,7 +40,13 @@ program main
     
     N=obj_approx%hamilt%ncorc         !number of variables
 
-    allocate(P(N),source=0.001_SP)
+    allocate(P(N),source=0.d0)
+    P(1) = 0.0000148405758d0
+    P(2) = 0.0000593569692d0
+    P(3) = 0.0000000000000d0
+    P(4) = -0.0000148300566d0
+    P(5) = -0.0000000000000d0
+    P(6) = -0.0000148300585d0
     !allocate(P(N),source=(/0.300202951383935d0, -0.106778775188085d0/))
     allocate(XI(N,N),source=0.0d0)
     do i = 1,N
