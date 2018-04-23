@@ -450,6 +450,7 @@ MODULE nrutil
 		! Report a message, then die.
 		CHARACTER(LEN=*), INTENT(IN) :: string
 		write (*,*) 'nrerror: ',string
+        pause
 		STOP 'program terminated by nrerror'
 	END SUBROUTINE nrerror
 	! Routines relating to polynomials and recurrences:
