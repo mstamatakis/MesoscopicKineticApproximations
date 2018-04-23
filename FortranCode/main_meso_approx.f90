@@ -3,15 +3,19 @@ program main
     use global_constants
     use meso_approx_inst
     use parser_module
+    use nrtype
+    use nr
     
     implicit none
     integer i
     real(8) mu
     
     integer N, ITER
-    real(8), allocatable, dimension(:) :: P
+    real(SP), allocatable, dimension(:) :: P
     real(8), allocatable, dimension(:,:) :: XI
     real(8) FTOL, FRET    
+    logical check
+
     
     !call obj_approx%init('BPEC')
     call obj_approx%init('K2NNC2')
@@ -37,7 +41,7 @@ program main
     
     N=obj_approx%hamilt%ncorc         !number of variables
 
-    allocate(P(N),source=0.001d0)
+    allocate(P(N),source=0.001_SP)
     !allocate(P(N),source=(/0.300202951383935d0, -0.106778775188085d0/))
     allocate(XI(N,N),source=0.0d0)
     do i = 1,N
@@ -46,7 +50,7 @@ program main
 
     FTOL=1.D-12
 
-    CALL POWELL(P,XI,N,N,FTOL,ITER,FRET)
+    call newt(P,check)
 
     print *,' '
     print *,' Number of iterations:', ITER
@@ -61,12 +65,10 @@ program main
         
         obj_approx%mu = mu
         
-        call powell(p,xi,n,n,ftol,iter,fret)
+        call newt(P,check)
         print *,' ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'        
         print *,' Chemical potential:', mu
         print *,' Coverage:          ', obj_approx%eqns%corrlvalue(1)/obj_approx%partfcn
-        print *,' Number of iterations:', ITER
-        print *,' Minimum value:', FRET
         print *,' at point:',P(1),' ',P(2),' ',P(3),' ',P(4),' ',P(5),' ',P(6)
        
         write(101,'(' // trim(int2str(N+2)) // 'F32.13)') mu, obj_approx%eqns%corrlvalue(1)/obj_approx%partfcn, (P(i), i = 1,N)
