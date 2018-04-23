@@ -11,6 +11,8 @@ module meso_approx
 		integer, allocatable, dimension(:,:) :: interaction ! intended as a (nterms x nbodymax) array encoding interaction terms e.g. 1, 2, 1-2, ...
 		integer, allocatable, dimension(:) :: origterms ! integers pointing to origpars (see below) to return original Hamiltonian parameters for each of the interaction terms in vector "interaction" above
 		integer, allocatable, dimension(:) :: corcterms ! integers pointing to corcpars (see below) to return correction parameters for each of the interaction terms in vector "interaction" above
+		integer, allocatable, dimension(:,:) :: temptermvec ! #MSTAM: this is a temporary array storing terms like sigma(1)*sigma(2) etc, for each state.
+        ! These are stored as a member of the class for computational efficiency, but for large approximations it can be memory intensive!
         
 		integer norig      ! number of original parameters in the Hamiltonian, e.g. = 2 if only adsorption energy and 1NN interaction energy are used
 		integer ncorc      ! number of correction terms in the Hamiltonian, e.g. = 1 if only one correction for adsorption energy is imposed (e.g. in BP, BPE)
@@ -23,6 +25,7 @@ module meso_approx
 		!    corcterms(1:nterms)
 		!    origpars(0:norig)
 		!    corcpars(0:ncorc) 
+        !    temptermvec(1:2**nsites,1:nterms)
         ! In origpars and corcpars the zero-th element is there on purpose and must always be equal to zero. This is because for example, not all terms of corcpars are 
         ! referenced in corcterms(1:nterms), as some interactions are not corrected. Thus corcterms may contain zeros.
 		! The intention is to do a fast addition: origpars(origterms) + corcpars(corcterms) and then evaluate the Hamiltonian
@@ -39,6 +42,9 @@ module meso_approx
 		integer, allocatable, dimension(:) :: rhs  ! points to array "correlation", encoding the right hand side of each equation
 		real(8), allocatable, dimension(:) :: residual  ! residual of each equation
 		real(8), allocatable, dimension(:,:) :: jacobian  ! jacobian of each equation
+        integer, allocatable, dimension(:,:) ::  temptermvec(:,:) ! #MSTAM: this is a temporary array storing terms like sigma(1)*sigma(2) etc, for each state.
+        ! These are saved for computational efficiency, but for large approximations it can be memory intensive!
+        
 		! The sizes of the above are intended to be:
 		!    correlation(1:nterms,1:nbodymax)
 		!    corrlnbody(1:nterms)
@@ -46,6 +52,7 @@ module meso_approx
 		!    lhs(1:neqns)
 		!    rhs(1:neqns)
 		!    residual(1:neqns)
+        !    temptermvec(1:2**nsites,1:nterms)
 		! The number of equations must be the same as the number of correction terms in the Hamiltonian (neqns = ncorc)
 		! to be able to solve the approximation		
     end type 
@@ -109,14 +116,13 @@ module meso_approx
         implicit none
         class (approximation) :: this
         integer i, j
-        integer, allocatable, save :: temptermvec(:,:) ! #MSTAM: this is a temporary array storing terms like sigma(1)*sigma(2) etc, for each state.
-        ! These are saved for computational efficiency, but for large approximations it can be memory intensive!
         
-        if (.not. allocated(temptermvec)) then
-            allocate(temptermvec(2**this%nsites,this%hamilt%nterms),source=1)
+        if (.not. allocated(this%hamilt%temptermvec)) then
+            allocate(this%hamilt%temptermvec(2**this%nsites,this%hamilt%nterms),source=1)
             do i = 1,this%hamilt%nterms
                 do j = 1,this%hamilt%internbody(i)
-                    temptermvec(:,i) = temptermvec(:,i)*this%allstates(:,this%hamilt%interaction(i,j))
+                    this%hamilt%temptermvec(:,i) = &
+                        this%hamilt%temptermvec(:,i)*this%allstates(:,this%hamilt%interaction(i,j))
                 enddo
             enddo
         endif
@@ -125,7 +131,7 @@ module meso_approx
         do i = 1,this%hamilt%nterms                        
             this%allenergs = this%allenergs + & 
                 (this%hamilt%origpars(this%hamilt%origterms(i)) + &
-                 this%hamilt%corcpars(this%hamilt%corcterms(i)))*temptermvec(:,i)
+                 this%hamilt%corcpars(this%hamilt%corcterms(i)))*this%hamilt%temptermvec(:,i)
         enddo
         
         return
@@ -141,15 +147,13 @@ module meso_approx
         
         class (approximation) :: this
         integer i, j
-
-        integer, allocatable, save :: temptermvec(:,:) ! #MSTAM: this is a temporary array storing terms like sigma(1)*sigma(2) etc, for each state.
-        ! These are saved for computational efficiency, but for large approximations it can be memory intensive!
         
-        if (.not. allocated(temptermvec)) then
-            allocate(temptermvec(2**this%nsites,this%eqns%nterms),source=1)
+        if (.not. allocated(this%eqns%temptermvec)) then
+            allocate(this%eqns%temptermvec(2**this%nsites,this%eqns%nterms),source=1)
             do i = 1,this%eqns%nterms
                 do j = 1,this%eqns%corrlnbody(i)
-                    temptermvec(:,i) = temptermvec(:,i)*this%allstates(:,this%eqns%correlation(i,j))
+                    this%eqns%temptermvec(:,i) = &
+                        this%eqns%temptermvec(:,i)*this%allstates(:,this%eqns%correlation(i,j))
                 enddo
             enddo
         endif
@@ -164,8 +168,8 @@ module meso_approx
             ! The following two expressions should give the same results (numerical accuracy issues excluded)
             ! In the Matlab code the first expression is used, i.e. not the actual correlation function, but the 
             ! non-normalised partial sum that corresponds to that correlation
-            this%eqns%corrlvalue(i) = sum(temptermvec(:,i)*exp(-(this%allenergs-this%mu*this%nparticles)/(kboltz*this%temp)))
-            ! this%eqns%corrlvalue(i) = sum(temptermvec(:,i)*exp(-(this%allenergs-this%mu*this%nparticles)/(kboltz*this%temp)))/this%partfcn
+            this%eqns%corrlvalue(i) = sum(this%eqns%temptermvec(:,i)*exp(-(this%allenergs-this%mu*this%nparticles)/(kboltz*this%temp)))
+            ! this%eqns%corrlvalue(i) = sum(this%eqns%temptermvec(:,i)*exp(-(this%allenergs-this%mu*this%nparticles)/(kboltz*this%temp)))/this%partfcn
         enddo        
     
         this%eqns%residual = 0.d0
