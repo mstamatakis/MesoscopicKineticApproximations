@@ -107,6 +107,7 @@ subroutine approx_initialise_k2nnc2(obj_approx)
     obj_approx%eqns%nbodymax = 2
         
     allocate(obj_approx%eqns%residual(obj_approx%eqns%neqns),source=1.d+10) ! initialise residuals to something large
+    allocate(obj_approx%eqns%jacobian(obj_approx%eqns%neqns,obj_approx%eqns%neqns),source=0.d+0) ! initialise jacobian to zero
     allocate(obj_approx%eqns%lhs(obj_approx%eqns%neqns),source=0)
     allocate(obj_approx%eqns%rhs(obj_approx%eqns%neqns),source=0) ! null info for left and right hand side
 

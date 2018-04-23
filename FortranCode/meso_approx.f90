@@ -38,6 +38,7 @@ module meso_approx
 		integer, allocatable, dimension(:) :: lhs  ! points to array "correlation", encoding the left hand side of each equation
 		integer, allocatable, dimension(:) :: rhs  ! points to array "correlation", encoding the right hand side of each equation
 		real(8), allocatable, dimension(:) :: residual  ! residual of each equation
+		real(8), allocatable, dimension(:,:) :: jacobian  ! jacobian of each equation
 		! The sizes of the above are intended to be:
 		!    correlation(1:nterms,1:nbodymax)
 		!    corrlnbody(1:nterms)
@@ -107,7 +108,7 @@ module meso_approx
     
         implicit none
         class (approximation) :: this
-        integer i, j, dec, count
+        integer i, j
         integer, allocatable, save :: temptermvec(:,:) ! #MSTAM: this is a temporary array storing terms like sigma(1)*sigma(2) etc, for each state.
         ! These are saved for computational efficiency, but for large approximations it can be memory intensive!
         
@@ -139,7 +140,7 @@ module meso_approx
         implicit none
         
         class (approximation) :: this
-        integer i, j, dec, count
+        integer i, j
 
         integer, allocatable, save :: temptermvec(:,:) ! #MSTAM: this is a temporary array storing terms like sigma(1)*sigma(2) etc, for each state.
         ! These are saved for computational efficiency, but for large approximations it can be memory intensive!
@@ -174,6 +175,13 @@ module meso_approx
             ! this%eqns%residual(i) = this%eqns%corrlvalue(this%eqns%lhs(i)) - this%eqns%corrlvalue(this%eqns%rhs(i))
         enddo
         
+        this%eqns%jacobian = 0.d0
+        do i = 1,this%eqns%neqns
+            do j = 1,this%eqns%neqns
+                this%eqns%jacobian(i,j) = 0.d0
+            enddo
+        enddo
+
         return
     
     end subroutine calculate_residuals
@@ -184,8 +192,6 @@ module meso_approx
 	    use global_constants
         implicit none
         class (approximation) :: this
-        integer nsites, nterms, norig, ncorc, nbodymax, ntm, i, j, k, s1, s2
-        real*8 tot1, tot2
         character(*) approx_name
 	
 	    this%mu = mu0
