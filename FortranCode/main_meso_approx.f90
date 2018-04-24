@@ -7,7 +7,7 @@ program main
     use nr
     
     implicit none
-    integer i
+    integer i,j
     real(8) mu
     
     integer N, ITER
@@ -18,7 +18,8 @@ program main
     logical check
     character(10) approx
 
-    approx = 'BPEC'
+    !approx = 'BPEC'
+    approx = 'K2NNC2'
     call obj_approx%init(trim(approx))
     call obj_approx%prnt()
     
@@ -47,20 +48,23 @@ program main
     !P(4) = -0.0000148300566d0
     !P(5) = -0.0000000000000d0
     !P(6) = -0.0000148300585d0
-    !
-    !P(1) = 0.0857037076391d0                 
-    !P(2) = 0.6409559144920d0                 
-    !P(3) = 0.1061338496444d0                
-    !P(4) = -0.0424423610796d0                
-    !P(5) = -0.0279416468428d0                
-    !P(6) = -0.1775037458119d0
     
-    P(1) = 0.135d0
-    P(2) = -0.108d0
+    P(1) = 0.0857037076391d0                 
+    P(2) = 0.6409559144920d0                 
+    P(3) = 0.1061338496444d0                
+    P(4) = -0.0424423610796d0                
+    P(5) = -0.0279416468428d0                
+    P(6) = -0.1775037458119d0
+    
+    !P(1) = 0.135d0
+    !P(2) = -0.108d0
+
     !P(1) = 0.300202951383935d0
     !P(2) = -0.106778775188085d0
-    obj_approx%hamilt%corcpars(1) = P(1)
-    obj_approx%hamilt%corcpars(2) = P(2)
+    do i = 1,N
+        obj_approx%hamilt%corcpars(i) = P(i)
+    enddo
+    
     call obj_approx%calc_resid()
 
     allocate(XI(N,N),source=0.0d0)
@@ -70,9 +74,20 @@ program main
     allocate(fvec(N),source=0.0d0)
     fvec = obj_approx%eqns%residual
     
-    call fdjac(P,fvec,XI)    
-    
-    continue
+    call fdjac(P,fvec,XI)  
+    write(*,*) '-----------------------'
+    write(*,*) 'Numerical Jacobian'
+    do i = 1,N
+        write(*,'(' // trim(int2str(N)) // 'ES15.5E3)') (XI(i,j),j=1,N)
+    enddo
+    write(*,*) 'Analytical Jacobian'
+    do i = 1,N
+        write(*,'(' // trim(int2str(N)) // 'ES15.5E3)') (obj_approx%eqns%jacobian(i,j),j=1,N)
+    enddo
+    write(*,*) '-----------------------'
+
+    pause
+    !continue
     stop
     
     FTOL=1.D-12
