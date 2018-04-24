@@ -113,14 +113,15 @@ program main
         
         obj_approx%mu = mu
         
+        write(*,*) ' ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'        
+        write(*,*) ' Chemical potential:', mu
+
         !call powell(p,xi,n,n,ftol,iter,fret)
         call newt(P,check)
-        print *,' ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'        
-        print *,' Chemical potential:', mu
-        print *,' Coverage:          ', obj_approx%eqns%corrlvalue(1)/obj_approx%partfcn
-        print *,' Number of iterations:', ITER
-        print *,' Minimum value:', FRET
-        print *,' at point:',P(1),' ',P(2) !,' ',P(3),' ',P(4),' ',P(5),' ',P(6)
+        write(*,*) ' Coverage:           ', obj_approx%eqns%corrlvalue(1)/obj_approx%partfcn
+        write(*,*) ' Partition function: ', obj_approx%partfcn
+        write(*,*) ' Residual norm:      ', sqrt(sum(obj_approx%eqns%residual**2))
+        write(*,'(1x," at point: "' // trim(int2str(N)) // 'F32.13)') (P(i), i = 1,N)
        
         write(101,'(' // trim(int2str(N+2)) // 'F32.13)') mu, obj_approx%eqns%corrlvalue(1)/obj_approx%partfcn, (P(i), i = 1,N)
         

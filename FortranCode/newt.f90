@@ -1,4 +1,6 @@
 SUBROUTINE newt(x,check)
+    
+    use global_constants
 	
 	USE nrtype; USE nrutil, ONLY :nrerror,vabs
 	USE nr, ONLY :fdjac,lnsrch,lubksb,ludcmp
@@ -11,6 +13,15 @@ SUBROUTINE newt(x,check)
 	INTEGER(I4B), PARAMETER :: MAXITS=200
 	REAL(DP), PARAMETER :: TOLF=1.0e-12_dp,TOLMIN=1.0e-12_dp,TOLX=epsilon(x), &
 	STPMX=100.0
+
+    INTERFACE
+        SUBROUTINE jacobian(x,jaca)
+            USE nrtype
+            IMPLICIT NONE
+            REAL(DP), DIMENSION(:), INTENT(IN) :: x
+            REAL(DP), DIMENSION(size(x),size(x)) :: jaca
+		END SUBROUTINE jacobian
+	END INTERFACE
 	
 	! Given an initial guess x for a root in N dimensions, find the root by a globally convergent
 	! Newton's method. The length N vector of functions to be zeroed, called fvec in the routine
@@ -39,11 +50,17 @@ SUBROUTINE newt(x,check)
 	end if
 	
 	stpmax=STPMX*max(vabs(x(:)),real(size(x),sp)) ! Calculate stpmax for line searches.
-	
+    
+    write(*,'(8x,"Iteration   Func-count       |f(x)|")')
+    
 	do its=1,MAXITS ! Start of iteration loop.
-		call fdjac(x,fvec,fjac)
+        
+        fcncounts = 0 ! reset function counts
+        
 		! If analytic Jacobian is available, you can replace the routine fdjac below with your own
 		! routine.
+        !call fdjac(x,fvec,fjac)
+		call jacobian(x,fjac)
 		g(:)=matmul(fvec(:),fjac(:,:)) ! Compute Del-f for the line search.
 		xold(:)=x(:)                   ! Store x,
 		fold=f                         ! and f.
@@ -52,7 +69,10 @@ SUBROUTINE newt(x,check)
 		call lubksb(fjac,indx,p)
 		call lnsrch(xold,fold,g,p,x,f,stpmax,check,fmin)
 		! lnsrch returns new x and f. It also calculates fvec at the new x when it calls fmin.
-		if (maxval(abs(fvec(:))) < TOLF) then ! Test for convergence on function values.
+
+        write(*,'(8x,I9,1x,I12,2x,E11.5E2)') its, fcncounts, vabs(fvec)
+        
+        if (maxval(abs(fvec(:))) < TOLF) then ! Test for convergence on function values.
 			check=.false. 
 			RETURN
 		end if
