@@ -8,7 +8,7 @@ program main
     
     implicit none
     integer i,j,ndeg
-    real(8) mu
+    real(8) mu, munext
     
     integer N, ITER
     real(DP), allocatable, dimension(:) :: P
@@ -20,14 +20,14 @@ program main
     logical check
     character(10) approx
 
-    real(8) x,y,dy
-    real(8) xa(2),ya(2)
-    xa = (/1.d0,2.d0/)
-    ya = (/2.d0,4.d0/)
-    x = 3.d0    
-    call polint(xa,ya,x,y,dy)
-    continue
-    stop
+    !real(8) x,y,dy
+    !real(8) xa(2),ya(2)
+    !xa = (/1.d0,2.d0/)
+    !ya = (/2.d0,4.d0/)
+    !x = 3.d0    
+    !call polint(xa,ya,x,y,dy)
+    !continue
+    !stop
     
     
     !approx = 'BPEC'
@@ -148,7 +148,8 @@ program main
         enddo
 
         H0 = obj_approx%hamilt%h0 + kboltz*obj_approx%temp*log(obj_approx%partfcn) ! "absolute" energies
-        call InitialGuessesContinuation(N,ndeg,H0,H0newguess,P,Pnewguess)
+        munext = mu + Dmu
+        call InitialGuessesContinuation(mu,munext,N,ndeg,H0,H0newguess,P,Pnewguess)
         
         ! Set parameter values to new initial guesses
         P = Pnewguess
@@ -167,7 +168,7 @@ program main
     
     contains
     
-        subroutine InitialGuessesContinuation(N,ndeg,H0,H0newguess,P,Pnewguess)
+        subroutine InitialGuessesContinuation(x,xnext,N,ndeg,H0,H0newguess,P,Pnewguess)
             
             use nrtype
         
@@ -176,29 +177,62 @@ program main
             integer ndeg, N
             integer, save :: ipopul = 0
             
-            real(DP) H0, H0newguess
+            real(DP) H0, H0newguess, x, xnext, errestim
             real(DP), dimension(N) :: P, Pnewguess
+            real(DP), dimension(:), allocatable, save :: xrange
             real(DP), dimension(:), allocatable, save :: H0prevguess
             real(DP), dimension(:,:), allocatable, save :: Pprevguess
 
             if (.not.allocated(H0prevguess)) then
+                allocate(xrange(ndeg+1),source=0.d0)
                 allocate(H0prevguess(ndeg+1),source=0.d0)
                 allocate(Pprevguess(N,ndeg+1),source=0.d0)
             endif
             
             ! Create good initial guesses via the continuation/interpolation scheme
-            if (ipopul <= ndeg) then ! First few iterations where we need to populate the guess vectors
+            if (ipopul < ndeg) then ! First few iterations where we need to populate the guess vectors
                 ipopul = ipopul + 1
                 ! The guess vector will be set to the latest solution (0th
                 ! order continuation scheme) and the H0 constant to minus the free energy
+                xrange(ipopul) = x
                 H0prevguess(ipopul) = H0
                 Pprevguess(:,ipopul) = P
+                H0newguess = H0
+                Pnewguess = P
+                
+            elseif (ipopul == ndeg) then ! we have enough information to generate the first initial guess with continuation
+                
+                ipopul = ipopul + 1
+                xrange(ipopul) = x
+                H0prevguess(ipopul) = H0
+                Pprevguess(:,ipopul) = P
+                call polint(xrange,H0prevguess,xnext,H0newguess,errestim)
+                do i = 1,N
+                    call polint(xrange,Pprevguess(i,:),xnext,Pnewguess(i),errestim)
+                enddo
+                continue
     
+            elseif (ipopul > ndeg) then ! by now ipopul = ndeg+1 and will remain so for the rest of the run
+
+                ! shifting back and deleting old entries - one could use linked lists for this,
+                ! but we are not dealing with large arrays so probably it's not going to make a difference
+                continue
+                do i = 1,ndeg
+                    xrange(i) = xrange(i+1)
+                    H0prevguess(i) = H0prevguess(i+1)
+                    Pprevguess(:,i) = Pprevguess(:,i+1)
+                enddo
+                xrange(ipopul) = x
+                H0prevguess(ipopul) = H0
+                Pprevguess(:,ipopul) = P
+                continue
+                call polint(xrange,H0prevguess,xnext,H0newguess,errestim)
+                do i = 1,N
+                    call polint(xrange,Pprevguess(i,:),xnext,Pnewguess(i),errestim)
+                enddo
+                continue
+                
             endif
-            
-            ! Not finished yet, for now 0th order continuation to test the framework
-            H0newguess = H0 ! H0prevguess(ipopul)
-            Pnewguess = P ! Pprevguess(:,ipopul)
         
         end subroutine InitialGuessesContinuation
 
