@@ -19,116 +19,47 @@ program main
     real(8) FTOL, FRET
     real(4) t1, t2
     logical check
-    character(10) approx
-
-    !real(8) x,y,dy
-    !real(8) xa(2),ya(2)
-    !xa = (/1.d0,2.d0/)
-    !ya = (/2.d0,4.d0/)
-    !x = 3.d0    
-    !call polint(xa,ya,x,y,dy)
-    !continue
-    !stop
-    
+    character(10) approx    
     
     !approx = 'BPEC'
     approx = 'K2NNC2'
     call obj_approx%init(trim(approx))
     call obj_approx%prnt()
     
-    !obj_approx%hamilt%corcpars(1) =  0.025d0
-    !obj_approx%hamilt%corcpars(2) =  0.010d0
-    !obj_approx%hamilt%corcpars(3) =  0.035d0
-    !obj_approx%hamilt%corcpars(4) =  0.040d0
-    !obj_approx%hamilt%corcpars(5) =  0.035d0
-    !obj_approx%hamilt%corcpars(6) =  0.040d0
-    !call obj_approx%prnt()
-    
-    !call obj_approx%calc_energ()    
-    !do i = 1,2**7
-    !    write(*,'(a,f22.16)') trim(int2str(i)), obj_approx%allenergs(i)
-    !enddo
-
     call obj_approx%calc_resid()
     
     N=obj_approx%hamilt%ncorc         !number of variables
 
     allocate(P(N),source=0.d0)
-
-    !P(1) = 0.0000148405758d0
-    !P(2) = 0.0000593569692d0
-    !P(3) = 0.0000000000000d0
-    !P(4) = -0.0000148300566d0
-    !P(5) = -0.0000000000000d0
-    !P(6) = -0.0000148300585d0
     
-    P(1) = 0.0857037076391d0                 
-    P(2) = 0.6409559144920d0                 
-    P(3) = 0.1061338496444d0                
-    P(4) = -0.0424423610796d0                
-    P(5) = -0.0279416468428d0                
-    P(6) = -0.1775037458119d0
-    
-    !P(1) = 0.135d0
-    !P(2) = -0.108d0
-
-    !P(1) = 0.300202951383935d0
-    !P(2) = -0.106778775188085d0
-    do i = 1,N
-        obj_approx%hamilt%corcpars(i) = P(i)
-    enddo
-    
-    call obj_approx%calc_resid()
-
-    allocate(XI(N,N),source=0.0d0)
-    do i = 1,N
-        XI(i,i) = 1.d0
-    enddo
-    allocate(fvec(N),source=0.0d0)
-    fvec = obj_approx%eqns%residual
-    
-    call fdjac(P,fvec,XI)  
-    write(*,*) '-----------------------'
-    write(*,*) 'Numerical Jacobian'
-    do i = 1,N
-        write(*,'(' // trim(int2str(N)) // 'ES15.5E3)') (XI(i,j),j=1,N)
-    enddo
-    write(*,*) 'Analytical Jacobian'
-    do i = 1,N
-        write(*,'(' // trim(int2str(N)) // 'ES15.5E3)') (obj_approx%eqns%jacobian(i,j),j=1,N)
-    enddo
-    write(*,*) '-----------------------'
-
-    !pause
-    !continue
-    !stop
+    !allocate(XI(N,N),source=0.0d0)
+    !do i = 1,N
+    !    XI(i,i) = 1.d0
+    !enddo
     
     FTOL=1.D-12
-
+    ITER = 0
+    FRET = 0.d0
+    
     !call powell(p,xi,n,n,ftol,iter,fret)
     call newt(P,check)
 
-    print *,' '
-    print *,' -------------------------------'        
-    print *,' Chemical potential:', mu
-    print *,' Coverage:          ', obj_approx%eqns%corrlvalue(1)/obj_approx%partfcn
-    print *,' Number of iterations:', ITER
-    print *,' Minimum value:', FRET
-    print *,' at point:',P(1),' ',P(2) !,' ',P(3),' ',P(4),' ',P(5),' ',P(6)
-    print *,' -------------------------------'        
-    print *,' '
-    print *,' '
-    print *,' '
+    write(*,*) ' '
+    write(*,*) ' -------------------------------'        
+    write(*,*) ' Chemical potential:', mu
+    write(*,*) ' Coverage:           ', obj_approx%eqns%corrlvalue(1)/obj_approx%partfcn
+    write(*,*) ' Partition function: ', obj_approx%partfcn
+    write(*,*) ' Residual norm:      ', sqrt(sum(obj_approx%eqns%residual**2))
+    write(*,'(1x," at point: "' // trim(int2str(N)) // 'F32.13)') (P(i), i = 1,N)
 
     ! Degree of polynomial to be used in continuation of initial guesses
-    ndeg = 3
+    ndeg = 2
     allocate(Pnewguess(N),source=0.d0)
     
     open(unit=101,file=trim(approx) // '_Fortran_Theta_vs_Mu.txt')
     
-    call cpu_Time(t1) ! function for calculating elapsed CPU time
+    call cpu_time(t1) ! function for calculating elapsed CPU time
     do mu = mu0,mu1,Dmu
-    !do mu = -0.5d0,mu1,Dmu
         
         obj_approx%mu = mu
         
@@ -141,14 +72,14 @@ program main
         write(*,*) ' Partition function: ', obj_approx%partfcn
         write(*,*) ' Residual norm:      ', sqrt(sum(obj_approx%eqns%residual**2))
         write(*,'(1x," at point: "' // trim(int2str(N)) // 'F32.13)') (P(i), i = 1,N)
-       
+
         write(101,'(' // trim(int2str(N+2)) // 'F32.13)') mu, obj_approx%eqns%corrlvalue(1)/obj_approx%partfcn, (P(i), i = 1,N)
         
         ! Reset direction for the next solution
-        XI = 0.d0
-        do i = 1,N
-            XI(i,i) = 1.d0
-        enddo
+        !XI = 0.d0
+        !do i = 1,N
+        !    XI(i,i) = 1.d0
+        !enddo
 
         H0 = obj_approx%hamilt%h0 + kboltz*obj_approx%temp*log(obj_approx%partfcn) ! "absolute" energies
         munext = mu + Dmu
@@ -163,7 +94,7 @@ program main
         continue
         
     enddo
-    call cpu_Time(t2) ! function for calculating elapsed CPU time
+    call cpu_time(t2) ! function for calculating elapsed CPU time
     
     write(*,*) 'Elapsed CPU-time',t2-t1
     
