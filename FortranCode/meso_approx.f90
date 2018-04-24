@@ -68,6 +68,7 @@ module meso_approx
         integer, allocatable, dimension(:,:) :: allstates ! intended size (2^nsites,nsites) - we focus on 1-adsorbate approximations
         integer, allocatable, dimension(:) :: nparticles ! intended size (2^nsites,nsites) - we focus on 1-adsorbate approximations
         real(8), allocatable, dimension(:) :: allenergs ! intended size (2^nsites) 
+        real(8), allocatable, dimension(:) :: expenergies ! intended size (2^nsites) - stores expressions exp(-(E-mu*N)/(kB*T)) for efficiency
         type (hamiltonian) :: hamilt
         type (equation) :: eqns
     contains
@@ -178,19 +179,23 @@ module meso_approx
                 enddo
             enddo
         endif
+        if (.not. allocated(this%expenergies)) then
+            allocate(this%expenergies(2**this%nsites),source=0.d0)
+        endif
 
         call this%calc_energ() ! Note that we calculate the energies here, so if a program unit is calling the correlations subroutine,
         ! it would be unnecessary (and a waste of time) to compute the energies in the calling program unit
+        this%expenergies = exp(-(this%allenergs-this%mu*this%nparticles)/(kboltz*this%temp))
         
         this%eqns%corrlvalue = 0.d0
 
-        this%partfcn = sum(exp(-(this%allenergs-this%mu*this%nparticles)/(kboltz*this%temp)))
+        this%partfcn = sum(this%expenergies)
         do i = 1,this%eqns%nterms
             ! The following two expressions should give the same results (numerical accuracy issues excluded)
             ! In the Matlab code the first expression is used, i.e. not the actual correlation function, but the 
             ! non-normalised partial sum that corresponds to that correlation
-            this%eqns%corrlvalue(i) = sum(this%eqns%stateprods(:,i)*exp(-(this%allenergs-this%mu*this%nparticles)/(kboltz*this%temp)))
-            ! this%eqns%corrlvalue(i) = sum(this%eqns%stateprods(:,i)*exp(-(this%allenergs-this%mu*this%nparticles)/(kboltz*this%temp)))/this%partfcn
+            this%eqns%corrlvalue(i) = sum(this%eqns%stateprods(:,i)*this%expenergies)
+            ! this%eqns%corrlvalue(i) = sum(this%eqns%stateprods(:,i)*this%expenergies)/this%partfcn
         enddo        
     
         this%eqns%residual = 0.d0
@@ -207,11 +212,9 @@ module meso_approx
         do i = 1,this%eqns%neqns
             do j = 1,this%eqns%neqns
                 lhsderivativeterm = sum(this%eqns%stateprods(:,this%eqns%lhs(i)) &
-                    *exp(-(this%allenergs-this%mu*this%nparticles)/(kboltz*this%temp)) &
-                    *this%hamilt%sumstateprods(:,j))    ! some part of this expression has been computed before - could be saved for efficiency
+                                        *this%expenergies*this%hamilt%sumstateprods(:,j))
                 rhsderivativeterm = sum(this%eqns%stateprods(:,this%eqns%rhs(i)) &
-                    *exp(-(this%allenergs-this%mu*this%nparticles)/(kboltz*this%temp)) &
-                    *this%hamilt%sumstateprods(:,j))
+                                        *this%expenergies*this%hamilt%sumstateprods(:,j))
                 this%eqns%jacobian(i,j) = 1.d0/this%eqns%corrlvalue(this%eqns%lhs(i))*lhsderivativeterm &
                     - 1.d0/this%eqns%corrlvalue(this%eqns%rhs(i))*rhsderivativeterm
             enddo
