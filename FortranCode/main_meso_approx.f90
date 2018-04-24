@@ -7,11 +7,13 @@ program main
     use nr
     
     implicit none
-    integer i,j
+    integer i,j,ndeg
     real(8) mu
     
     integer N, ITER
     real(DP), allocatable, dimension(:) :: P
+    real(DP), allocatable, dimension(:) :: Pnewguess
+    real(DP) H0, H0newguess
     real(8), allocatable, dimension(:,:) :: XI
 	REAL(DP), allocatable, DIMENSION(:) :: fvec
     real(8) FTOL, FRET    
@@ -86,7 +88,7 @@ program main
     enddo
     write(*,*) '-----------------------'
 
-    pause
+    !pause
     !continue
     !stop
     
@@ -107,6 +109,10 @@ program main
     print *,' '
     print *,' '
 
+    ! Degree of polynomial to be used in continuation of initial guesses
+    ndeg = 1
+    allocate(Pnewguess(N),source=0.d0)
+    
     open(unit=101,file=trim(approx) // '_Fortran_Theta_vs_Mu.txt')
     do mu = mu0,mu1,Dmu
     !do mu = -0.5d0,mu1,Dmu
@@ -131,9 +137,14 @@ program main
             XI(i,i) = 1.d0
         enddo
 
+        H0 = obj_approx%hamilt%h0 + kboltz*obj_approx%temp*log(obj_approx%partfcn) ! "absolute" energies
+        call InitialGuessesContinuation(N,ndeg,H0,H0newguess,P,Pnewguess)
+        
+        ! Set parameter values to new initial guesses
+        P = Pnewguess
         
         ! Re-reference energy levels to avoid large values of the partition function sums
-        obj_approx%hamilt%h0 = obj_approx%hamilt%h0 + kboltz*obj_approx%temp*log(obj_approx%partfcn)
+        obj_approx%hamilt%h0 = H0newguess
         
         continue
         
@@ -142,6 +153,43 @@ program main
     pause
     continue    
   
-stop    
+    stop    
     
+    contains
+    
+        subroutine InitialGuessesContinuation(N,ndeg,H0,H0newguess,P,Pnewguess)
+            
+            use nrtype
+        
+            implicit none
+            
+            integer ndeg, N
+            integer, save :: ipopul = 0
+            
+            real(DP) H0, H0newguess
+            real(DP), dimension(N) :: P, Pnewguess
+            real(DP), dimension(:), allocatable, save :: H0prevguess
+            real(DP), dimension(:,:), allocatable, save :: Pprevguess
+
+            if (.not.allocated(H0prevguess)) then
+                allocate(H0prevguess(ndeg+1),source=0.d0)
+                allocate(Pprevguess(N,ndeg+1),source=0.d0)
+            endif
+            
+            ! Create good initial guesses via the continuation/interpolation scheme
+            if (ipopul <= ndeg) then ! First few iterations where we need to populate the guess vectors
+                ipopul = ipopul + 1
+                ! The guess vector will be set to the latest solution (0th
+                ! order continuation scheme) and the H0 constant to minus the free energy
+                H0prevguess(ipopul) = H0
+                Pprevguess(:,ipopul) = P
+    
+            endif
+            
+            ! Not finished yet, for now 0th order continuation to test the framework
+            H0newguess = H0 ! H0prevguess(ipopul)
+            Pnewguess = P ! Pprevguess(:,ipopul)
+        
+        end subroutine InitialGuessesContinuation
+
 end program
