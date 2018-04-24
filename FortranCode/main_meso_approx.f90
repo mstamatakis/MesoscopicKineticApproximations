@@ -20,6 +20,16 @@ program main
     logical check
     character(10) approx
 
+    real(8) x,y,dy
+    real(8) xa(2),ya(2)
+    xa = (/1.d0,2.d0/)
+    ya = (/2.d0,4.d0/)
+    x = 3.d0    
+    call polint(xa,ya,x,y,dy)
+    continue
+    stop
+    
+    
     !approx = 'BPEC'
     approx = 'K2NNC2'
     call obj_approx%init(trim(approx))

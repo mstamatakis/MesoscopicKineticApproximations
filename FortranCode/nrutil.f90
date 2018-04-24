@@ -51,6 +51,9 @@ MODULE nrutil
 	INTERFACE imaxloc
 		MODULE PROCEDURE imaxloc_r,imaxloc_d,imaxloc_i
 	END INTERFACE
+	INTERFACE iminloc
+		MODULE PROCEDURE iminloc_r,iminloc_d
+	END INTERFACE
 	! Routines for argument checking and error handling (nrerror is not currently overloaded):
 	INTERFACE assert
 		MODULE PROCEDURE assert1,assert2,assert3,assert4,assert_v
@@ -342,14 +345,22 @@ MODULE nrutil
 		imax=maxloc(iarr(:))
 		imaxloc_i=imax(1)
 	END FUNCTION imaxloc_i
-	FUNCTION iminloc(arr)
+	FUNCTION iminloc_r(arr)
 		! Index of minloc on an array.
 		REAL(SP), DIMENSION(:), INTENT(IN) :: arr
 		INTEGER(I4B), DIMENSION(1) :: imin
-		INTEGER(I4B) :: iminloc
+		INTEGER(I4B) :: iminloc_r
 		imin=minloc(arr(:))
-		iminloc=imin(1)
-	END FUNCTION iminloc
+		iminloc_r=imin(1)
+	END FUNCTION iminloc_r
+	FUNCTION iminloc_d(arr)
+		! Index of minloc on an array.
+		REAL(DP), DIMENSION(:), INTENT(IN) :: arr
+		INTEGER(I4B), DIMENSION(1) :: imin
+		INTEGER(I4B) :: iminloc_d
+		imin=minloc(arr(:))
+		iminloc_d=imin(1)
+	END FUNCTION iminloc_d
 	! Routines for argument checking and error handling:
 	SUBROUTINE assert1(n1,string)
 		! Report and die if any logical is false (used for arg range checking).

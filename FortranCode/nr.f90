@@ -52,7 +52,16 @@ MODULE nr
 			REAL(DP), DIMENSION(:), INTENT(INOUT) :: x
 			LOGICAL(LGT), INTENT(OUT) :: check
 		END SUBROUTINE newt
-	END INTERFACE
+    END INTERFACE
+    
+    INTERFACE
+        SUBROUTINE polint(xa,ya,x,y,dy)
+            USE nrtype
+            REAL(DP), DIMENSION(:), INTENT(IN) :: xa,ya
+            REAL(DP), INTENT(IN) :: x
+            REAL(DP), INTENT(OUT) :: y,dy
+        END SUBROUTINE polint
+    END INTERFACE
 
 END MODULE nr
 	
