@@ -1,4 +1,6 @@
 SUBROUTINE fdjac(x,fvec,df)
+    use meso_approx_inst
+    use parser_module
 	USE nrtype; USE nrutil, ONLY :assert_eq
 	IMPLICIT NONE
 	REAL(DP), DIMENSION(:), INTENT(IN) :: fvec
@@ -32,12 +34,18 @@ SUBROUTINE fdjac(x,fvec,df)
 		x(j)=xsav(j)
     end do
     
-    !write(*,*) ''
-    !do i=1,n
-    !    write(*,'(6ES30.16E3)') (df(i,j),j=1,n)
-    !enddo
-    !write(*,*) ''
-    !continue
+    write(*,*) '-----------------------'
+    write(*,*) 'Numerical Jacobian'
+    do i = 1,n
+        write(*,'(' // trim(int2str(N)) // 'ES15.5E3)') (df(i,j),j=1,N)
+    enddo
+    write(*,*) 'Function at original point: ', funcv(xsav)
+    call obj_approx%calc_resid()
+    write(*,*) 'Analytical Jacobian'
+    do i = 1,n
+        write(*,'(' // trim(int2str(N)) // 'ES15.5E3)') (obj_approx%eqns%jacobian(i,j),j=1,N)
+    enddo
+    write(*,*) '-----------------------'
     
     return
     

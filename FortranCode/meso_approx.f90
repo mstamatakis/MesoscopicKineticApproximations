@@ -150,7 +150,7 @@ module meso_approx
     end subroutine calculate_energies
     
     
-    subroutine calculate_residuals(this)
+    subroutine calculate_residuals(this,calcjac)
     
         use global_constants
 
@@ -159,6 +159,14 @@ module meso_approx
         class (approximation) :: this
         integer i, j, k
         real(8) lhsderivativeterm, rhsderivativeterm
+        logical, intent(in), optional :: calcjac
+        logical :: calculatejacobian
+        
+        if (present(calcjac)) then
+            calculatejacobian = calcjac
+        else
+            calculatejacobian = .true.
+        endif
         
         ! Preparatory steps: allocate and precompute stateprods
         if (.not. allocated(this%eqns%stateprods)) then
@@ -193,6 +201,9 @@ module meso_approx
         enddo
         
         this%eqns%jacobian = 0.d0
+        
+        if (.not.calculatejacobian) return
+        
         do i = 1,this%eqns%neqns
             do j = 1,this%eqns%neqns
                 lhsderivativeterm = sum(this%eqns%stateprods(:,this%eqns%lhs(i)) &

@@ -88,12 +88,12 @@ program main
 
     pause
     !continue
-    stop
+    !stop
     
     FTOL=1.D-12
 
-    call powell(p,xi,n,n,ftol,iter,fret)
-    !call newt(P,check)
+    !call powell(p,xi,n,n,ftol,iter,fret)
+    call newt(P,check)
 
     print *,' '
     print *,' -------------------------------'        
@@ -113,8 +113,8 @@ program main
         
         obj_approx%mu = mu
         
-        call powell(p,xi,n,n,ftol,iter,fret)
-        !call newt(P,check)
+        !call powell(p,xi,n,n,ftol,iter,fret)
+        call newt(P,check)
         print *,' ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'        
         print *,' Chemical potential:', mu
         print *,' Coverage:          ', obj_approx%eqns%corrlvalue(1)/obj_approx%partfcn
