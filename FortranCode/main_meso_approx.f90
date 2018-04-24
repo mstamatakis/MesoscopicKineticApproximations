@@ -21,8 +21,8 @@ program main
     logical check
     character(10) approx    
     
-    !approx = 'BPEC'
-    approx = 'K2NNC2'
+    approx = 'BPEC'
+    !approx = 'K2NNC2'
     call obj_approx%init(trim(approx))
     call obj_approx%prnt()
     
