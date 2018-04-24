@@ -107,7 +107,10 @@ module meso_approx
     
         enddo
     
-        allocate(this%nparticles(2**this%nsites),source=sum(this%allstates,2))
+        allocate(this%nparticles(2**this%nsites))
+        do i = 1,2**this%nsites
+            this%nparticles(i) = sum(this%allstates(i,:))
+        enddo
         
         return
     
@@ -141,9 +144,11 @@ module meso_approx
 
         this%allenergs = this%hamilt%H0
         do i = 1,this%hamilt%nterms                        
-            this%allenergs = this%allenergs + & 
-                (this%hamilt%origpars(this%hamilt%origterms(i)) + &
-                 this%hamilt%corcpars(this%hamilt%corcterms(i)))*this%hamilt%stateprods(:,i)
+            do j = 1,2**this%nsites
+                this%allenergs(j) = this%allenergs(j) + & 
+                    (this%hamilt%origpars(this%hamilt%origterms(i)) + &
+                     this%hamilt%corcpars(this%hamilt%corcterms(i)))*this%hamilt%stateprods(j,i)
+            enddo
         enddo
         
         return
@@ -243,6 +248,9 @@ module meso_approx
 
             case ('K2NNC2')
                 call approx_initialise_k2nnc2(this)
+                
+            case ('K3NNC2')
+                call approx_initialise_k3nnc2(this)
                 
             case default
                 write(*,*) 'Unknown approximation',approx_name

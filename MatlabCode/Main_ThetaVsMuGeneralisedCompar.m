@@ -125,7 +125,7 @@ ApproxColor{kAppr} = [0 0 255]/255; % FOR PLOTTING: color
 ApproxMarkr{kAppr} = 's'; % FOR PLOTTING: marker
 ApproxLinSpec{kAppr} = '-'; % FOR PLOTTING: line type
 ApproxMSize(kAppr) = 6; % FOR PLOTTING: marker size
-end
+
 % Next the K2NNC2 approximation
 kAppr = kAppr + 1; % index of the approximation
 ApproxName{kAppr} = 'K2NNC2'; % name of the approximation
@@ -138,6 +138,7 @@ ApproxColor{kAppr} = [0 100 255]/255; % FOR PLOTTING: color
 ApproxMarkr{kAppr} = 'd'; % FOR PLOTTING: marker
 ApproxLinSpec{kAppr} = '-'; % FOR PLOTTING: line type
 ApproxMSize(kAppr) = 6; % FOR PLOTTING: marker size
+end
 if 0
 % Next the K2NNC3 approximation
 kAppr = kAppr + 1; % index of the approximation
@@ -151,7 +152,7 @@ ApproxColor{kAppr} = [0 200 255]/255; % FOR PLOTTING: color
 ApproxMarkr{kAppr} = 'p'; % FOR PLOTTING: marker
 ApproxLinSpec{kAppr} = '-'; % FOR PLOTTING: line type
 ApproxMSize(kAppr) = 8; % FOR PLOTTING: marker size
-
+end
 % Next the K3NNC2 approximation
 kAppr = kAppr + 1; % index of the approximation
 ApproxName{kAppr} = 'K3NNC2'; % name of the approximation
@@ -164,7 +165,7 @@ ApproxColor{kAppr} = [200 200 0]/255; % FOR PLOTTING: color
 ApproxMarkr{kAppr} = 'h'; % FOR PLOTTING: marker
 ApproxLinSpec{kAppr} = '-'; % FOR PLOTTING: line type
 ApproxMSize(kAppr) = 8; % FOR PLOTTING: marker size
-
+if 0
 % Next the K3NNC3 approximation
 kAppr = kAppr + 1; % index of the approximation
 ApproxName{kAppr} = 'K3NNC3'; % name of the approximation
@@ -302,12 +303,12 @@ end
 % return
 
 %% SAVE RESULTS TO TEXT FILE
-fileID = fopen('../FortranCode/K2NNC2_Matlab_Theta_vs_Mu.txt','w');
-iK2NNC2 = 1;
-gsolK2NNC2 = gcsolnv{iK2NNC2}.';
+iApproxim = 1;
+fileID = fopen(['../FortranCode/' ApproxName{iApproxim} '_Matlab_Theta_vs_Mu.txt'],'w');
+gsolApproxim = gcsolnv{iApproxim}.';
 for i = 1:length(muOstarRange)
-    fprintf(fileID,[repmat('%32.13f',1,2+size(gsolK2NNC2,2)) '\r\n'], ...
-        [muOstarRange(i) Theta(iK2NNC2,i) gsolK2NNC2(i,:)]);
+    fprintf(fileID,[repmat('%32.13f',1,2+size(gsolApproxim,2)) '\r\n'], ...
+        [muOstarRange(i) Theta(iApproxim,i) gsolApproxim(i,:)]);
 end
 fclose(fileID);
 

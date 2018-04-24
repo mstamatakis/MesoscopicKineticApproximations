@@ -21,8 +21,9 @@ program main
     logical check
     character(10) approx    
     
-    approx = 'BPEC'
+    !approx = 'BPEC'
     !approx = 'K2NNC2'
+    approx = 'K3NNC2'
     call obj_approx%init(trim(approx))
     call obj_approx%prnt()
     
@@ -46,7 +47,7 @@ program main
 
     write(*,*) ' '
     write(*,*) ' -------------------------------'        
-    write(*,*) ' Chemical potential:', mu
+    write(*,*) ' Chemical potential:', obj_approx%mu
     write(*,*) ' Coverage:           ', obj_approx%eqns%corrlvalue(1)/obj_approx%partfcn
     write(*,*) ' Partition function: ', obj_approx%partfcn
     write(*,*) ' Residual norm:      ', sqrt(sum(obj_approx%eqns%residual**2))
