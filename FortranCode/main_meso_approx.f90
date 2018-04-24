@@ -16,7 +16,8 @@ program main
     real(DP) H0, H0newguess
     real(8), allocatable, dimension(:,:) :: XI
 	REAL(DP), allocatable, DIMENSION(:) :: fvec
-    real(8) FTOL, FRET    
+    real(8) FTOL, FRET
+    real(4) t1, t2
     logical check
     character(10) approx
 
@@ -120,10 +121,12 @@ program main
     print *,' '
 
     ! Degree of polynomial to be used in continuation of initial guesses
-    ndeg = 1
+    ndeg = 3
     allocate(Pnewguess(N),source=0.d0)
     
     open(unit=101,file=trim(approx) // '_Fortran_Theta_vs_Mu.txt')
+    
+    call cpu_Time(t1) ! function for calculating elapsed CPU time
     do mu = mu0,mu1,Dmu
     !do mu = -0.5d0,mu1,Dmu
         
@@ -160,6 +163,9 @@ program main
         continue
         
     enddo
+    call cpu_Time(t2) ! function for calculating elapsed CPU time
+    
+    write(*,*) 'Elapsed CPU-time',t2-t1
     
     pause
     continue    

@@ -58,6 +58,7 @@ options = optimoptions('fsolve',...
 kAppr = 0;
 ApproxName = {};
 
+if 0
 % The first approximation is the mean-field and is treated in a special way
 % since correlations are neglected
 kAppr = kAppr + 1; % index of the approximation
@@ -71,7 +72,7 @@ ApproxColor{kAppr} = [0 0 0]; % FOR PLOTTING: color
 ApproxMarkr{kAppr} = 'o'; % FOR PLOTTING: marker
 ApproxLinSpec{kAppr} = '-'; % FOR PLOTTING: line type
 ApproxMSize(kAppr) = 6; % FOR PLOTTING: marker size
-if 0
+% if 0
 % Next the BP approximation without edge interactions
 kAppr = kAppr + 1; % index of the approximation
 ApproxName{kAppr} = 'BP'; % name of the approximation
@@ -218,7 +219,7 @@ end
 % return
 
 %% Entering main loop
-
+tic
 for i = 1:length(muOstarRange);
     
     muOstar = muOstarRange(i);
@@ -270,7 +271,7 @@ for i = 1:length(muOstarRange);
     end
     
 end
-
+toc
 % Evaluation of rates
 
 for i = 1:kAppr
@@ -302,7 +303,7 @@ end
 
 %% SAVE RESULTS TO TEXT FILE
 fileID = fopen('../FortranCode/K2NNC2_Matlab_Theta_vs_Mu.txt','w');
-iK2NNC2 = 2;
+iK2NNC2 = 1;
 gsolK2NNC2 = gcsolnv{iK2NNC2}.';
 for i = 1:length(muOstarRange)
     fprintf(fileID,[repmat('%32.13f',1,2+size(gsolK2NNC2,2)) '\r\n'], ...
