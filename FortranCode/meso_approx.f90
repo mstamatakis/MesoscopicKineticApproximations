@@ -124,45 +124,46 @@ module meso_approx
         implicit none
         class (approximation) :: this
         integer i, j
-        real(8), dimension(:), allocatable :: thisallenergs
-        logical :: trick = .false.
         
-        ! Preparatory steps: allocate and precompute stateprods and sumstateprodscorc
-        if (.not. allocated(this%hamilt%stateprods)) then
-            allocate(this%hamilt%stateprods(2**this%nsites,this%hamilt%nterms),source=1)
-            do i = 1,this%hamilt%nterms
-                do j = 1,this%hamilt%internbody(i)
-                    this%hamilt%stateprods(:,i) = &
-                        this%hamilt%stateprods(:,i)*this%allstates(:,this%hamilt%interaction(i,j))
+        ! Preparatory steps: allocate and precompute stateprods, sumstateprodsorig, sumstateprodscorc
+        if (.not. (allocated(this%hamilt%sumstateprodsorig) .and. allocated(this%hamilt%sumstateprodscorc))) then 
+            if (.not. allocated(this%hamilt%stateprods)) then
+                allocate(this%hamilt%stateprods(2**this%nsites,this%hamilt%nterms),source=1)
+                do i = 1,this%hamilt%nterms
+                    do j = 1,this%hamilt%internbody(i)
+                        this%hamilt%stateprods(:,i) = &
+                            this%hamilt%stateprods(:,i)*this%allstates(:,this%hamilt%interaction(i,j))
+                    enddo
                 enddo
-            enddo
-        endif
-        if (.not. allocated(this%hamilt%sumstateprodsorig)) then
-            allocate(this%hamilt%sumstateprodsorig(2**this%nsites,this%hamilt%norig),source=0)
-            do i = 1,2**this%nsites
-                do j = 1,this%hamilt%norig
-                    this%hamilt%sumstateprodsorig(i,j) = sum(this%hamilt%stateprods(i,:),MASK=this%hamilt%origterms(1:)==j)
+            endif
+            if (.not. allocated(this%hamilt%sumstateprodsorig)) then
+                allocate(this%hamilt%sumstateprodsorig(2**this%nsites,this%hamilt%norig),source=0)
+                do i = 1,2**this%nsites
+                    do j = 1,this%hamilt%norig
+                        this%hamilt%sumstateprodsorig(i,j) = sum(this%hamilt%stateprods(i,:),MASK=this%hamilt%origterms(1:)==j)
+                    enddo
                 enddo
-            enddo
-        endif
-        if (.not. allocated(this%hamilt%sumstateprodscorc)) then
-            allocate(this%hamilt%sumstateprodscorc(2**this%nsites,this%hamilt%ncorc),source=0)
-            do i = 1,2**this%nsites
-                do j = 1,this%hamilt%ncorc
-                    this%hamilt%sumstateprodscorc(i,j) = sum(this%hamilt%stateprods(i,:),MASK=this%hamilt%corcterms(1:)==j)
+            endif
+            if (.not. allocated(this%hamilt%sumstateprodscorc)) then
+                allocate(this%hamilt%sumstateprodscorc(2**this%nsites,this%hamilt%ncorc),source=0)
+                do i = 1,2**this%nsites
+                    do j = 1,this%hamilt%ncorc
+                        this%hamilt%sumstateprodscorc(i,j) = sum(this%hamilt%stateprods(i,:),MASK=this%hamilt%corcterms(1:)==j)
+                    enddo
                 enddo
-            enddo
+            endif
+            deallocate(this%hamilt%stateprods) ! free up some memory; this array not needed anymore, unless we use the first method to calculate energies
         endif
         
-        allocate(thisallenergs(2**this%nsites))
-        thisallenergs = this%hamilt%H0
-        do i = 1,this%hamilt%nterms                        
-            do j = 1,2**this%nsites
-                thisallenergs(j) = thisallenergs(j) + & 
-                    (this%hamilt%origpars(this%hamilt%origterms(i)) + &
-                     this%hamilt%corcpars(this%hamilt%corcterms(i)))*this%hamilt%stateprods(j,i)
-            enddo
-        enddo
+        !this%allenergs = this%hamilt%H0
+        !do i = 1,this%hamilt%nterms                        
+        !    do j = 1,2**this%nsites
+        !        this%allenergs(j) = this%allenergs(j) + & 
+        !            (this%hamilt%origpars(this%hamilt%origterms(i)) + &
+        !             this%hamilt%corcpars(this%hamilt%corcterms(i)))*this%hamilt%stateprods(j,i)
+        !    enddo
+        !enddo
+        
         this%allenergs = this%hamilt%H0
         do i = 1,this%hamilt%norig
             do j = 1,2**this%nsites
@@ -176,11 +177,7 @@ module meso_approx
                     this%hamilt%corcpars(i)*this%hamilt%sumstateprodscorc(j,i)
             enddo
         enddo
-        if (trick) then
-        do j = 1,2**this%nsites
-            write(*,*) this%allenergs(j), thisallenergs(j), this%allenergs(j) - thisallenergs(j)
-        enddo
-        endif
+
         return
         
     end subroutine calculate_energies
