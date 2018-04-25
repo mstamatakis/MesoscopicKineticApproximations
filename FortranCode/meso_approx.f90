@@ -12,8 +12,9 @@ module meso_approx
 		integer, allocatable, dimension(:) :: origterms ! integers pointing to origpars (see below) to return original Hamiltonian parameters for each of the interaction terms in vector "interaction" above
 		integer, allocatable, dimension(:) :: corcterms ! integers pointing to corcpars (see below) to return correction parameters for each of the interaction terms in vector "interaction" above
 		integer, allocatable, dimension(:,:) :: stateprods ! array storing terms that appear in the Hamiltonian, like sigma(1)*sigma(2) etc, for each state.
-		integer, allocatable, dimension(:,:) :: sumstateprods ! array storing sums of the above, which make it faster to calculate dHamiltonian/dcorcpar, for each state.
-        ! Both the above are stored as members of the class for computational efficiency, but for large approximations it can be memory intensive!
+		integer, allocatable, dimension(:,:) :: sumstateprodsorig ! array storing sums of the above, which make it faster to calculate dHamiltonian/dcorcpar, for each state.
+		integer, allocatable, dimension(:,:) :: sumstateprodscorc ! array storing sums of the above, which make it faster to calculate dHamiltonian/dcorcpar, for each state.
+        ! All three of the above are stored as members of the class for computational efficiency, but for large approximations it can be memory intensive!
         
 		integer norig      ! number of original parameters in the Hamiltonian, e.g. = 2 if only adsorption energy and 1NN interaction energy are used
 		integer ncorc      ! number of correction terms in the Hamiltonian, e.g. = 1 if only one correction for adsorption energy is imposed (e.g. in BP, BPE)
@@ -27,7 +28,8 @@ module meso_approx
 		!    origpars(0:norig)
 		!    corcpars(0:ncorc) 
         !    stateprods(1:2**nsites,1:nterms)
-        !    sumstateprods(1:2**nsites,ncorc)
+        !    sumstateprodsorig(1:2**nsites,norig)
+        !    sumstateprodscorc(1:2**nsites,ncorc)
         ! In origpars and corcpars the zero-th element is there on purpose and must always be equal to zero. This is because for example, not all terms of corcpars are 
         ! referenced in corcterms(1:nterms), as some interactions are not corrected. Thus corcterms may contain zeros.
 		! The intention is to do a fast addition: origpars(origterms) + corcpars(corcterms) and then evaluate the Hamiltonian
@@ -66,7 +68,7 @@ module meso_approx
         real(8) mu ! chemical potential
         real(8) partfcn ! partition function
         integer, allocatable, dimension(:,:) :: allstates ! intended size (2^nsites,nsites) - we focus on 1-adsorbate approximations
-        integer, allocatable, dimension(:) :: nparticles ! intended size (2^nsites,nsites) - we focus on 1-adsorbate approximations
+        integer, allocatable, dimension(:) :: nparticles ! intended size (2^nsites) - we focus on 1-adsorbate approximations
         real(8), allocatable, dimension(:) :: allenergs ! intended size (2^nsites) 
         real(8), allocatable, dimension(:) :: expenergies ! intended size (2^nsites) - stores expressions exp(-(E-mu*N)/(kB*T)) for efficiency
         type (hamiltonian) :: hamilt
@@ -122,8 +124,10 @@ module meso_approx
         implicit none
         class (approximation) :: this
         integer i, j
+        real(8), dimension(:), allocatable :: thisallenergs
+        logical :: trick = .false.
         
-        ! Preparatory steps: allocate and precompute stateprods and sumstateprods
+        ! Preparatory steps: allocate and precompute stateprods and sumstateprodscorc
         if (.not. allocated(this%hamilt%stateprods)) then
             allocate(this%hamilt%stateprods(2**this%nsites,this%hamilt%nterms),source=1)
             do i = 1,this%hamilt%nterms
@@ -133,24 +137,50 @@ module meso_approx
                 enddo
             enddo
         endif
-        if (.not. allocated(this%hamilt%sumstateprods)) then
-            allocate(this%hamilt%sumstateprods(2**this%nsites,this%hamilt%ncorc),source=0)
+        if (.not. allocated(this%hamilt%sumstateprodsorig)) then
+            allocate(this%hamilt%sumstateprodsorig(2**this%nsites,this%hamilt%norig),source=0)
             do i = 1,2**this%nsites
-                do j = 1,this%hamilt%ncorc
-                    this%hamilt%sumstateprods(i,j) = sum(this%hamilt%stateprods(i,:),MASK=this%hamilt%corcterms(1:)==j)
+                do j = 1,this%hamilt%norig
+                    this%hamilt%sumstateprodsorig(i,j) = sum(this%hamilt%stateprods(i,:),MASK=this%hamilt%origterms(1:)==j)
                 enddo
             enddo
         endif
-
-        this%allenergs = this%hamilt%H0
+        if (.not. allocated(this%hamilt%sumstateprodscorc)) then
+            allocate(this%hamilt%sumstateprodscorc(2**this%nsites,this%hamilt%ncorc),source=0)
+            do i = 1,2**this%nsites
+                do j = 1,this%hamilt%ncorc
+                    this%hamilt%sumstateprodscorc(i,j) = sum(this%hamilt%stateprods(i,:),MASK=this%hamilt%corcterms(1:)==j)
+                enddo
+            enddo
+        endif
+        
+        allocate(thisallenergs(2**this%nsites))
+        thisallenergs = this%hamilt%H0
         do i = 1,this%hamilt%nterms                        
             do j = 1,2**this%nsites
-                this%allenergs(j) = this%allenergs(j) + & 
+                thisallenergs(j) = thisallenergs(j) + & 
                     (this%hamilt%origpars(this%hamilt%origterms(i)) + &
                      this%hamilt%corcpars(this%hamilt%corcterms(i)))*this%hamilt%stateprods(j,i)
             enddo
         enddo
-        
+        this%allenergs = this%hamilt%H0
+        do i = 1,this%hamilt%norig
+            do j = 1,2**this%nsites
+                this%allenergs(j) = this%allenergs(j) + & 
+                    this%hamilt%origpars(i)*this%hamilt%sumstateprodsorig(j,i)
+            enddo
+        enddo
+        do i = 1,this%hamilt%ncorc
+            do j = 1,2**this%nsites
+                this%allenergs(j) = this%allenergs(j) + & 
+                    this%hamilt%corcpars(i)*this%hamilt%sumstateprodscorc(j,i)
+            enddo
+        enddo
+        if (trick) then
+        do j = 1,2**this%nsites
+            write(*,*) this%allenergs(j), thisallenergs(j), this%allenergs(j) - thisallenergs(j)
+        enddo
+        endif
         return
         
     end subroutine calculate_energies
@@ -217,9 +247,9 @@ module meso_approx
         do i = 1,this%eqns%neqns
             do j = 1,this%eqns%neqns
                 lhsderivativeterm = sum(this%eqns%stateprods(:,this%eqns%lhs(i)) &
-                                        *this%expenergies*this%hamilt%sumstateprods(:,j))
+                                        *this%expenergies*this%hamilt%sumstateprodscorc(:,j))
                 rhsderivativeterm = sum(this%eqns%stateprods(:,this%eqns%rhs(i)) &
-                                        *this%expenergies*this%hamilt%sumstateprods(:,j))
+                                        *this%expenergies*this%hamilt%sumstateprodscorc(:,j))
                 this%eqns%jacobian(i,j) = 1.d0/this%eqns%corrlvalue(this%eqns%lhs(i))*lhsderivativeterm &
                     - 1.d0/this%eqns%corrlvalue(this%eqns%rhs(i))*rhsderivativeterm
             enddo

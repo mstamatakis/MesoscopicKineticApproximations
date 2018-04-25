@@ -1,0 +1,30 @@
+Largest arrays listed below:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+integer stateprods(2^nsites,ntermshamilt) ! for Hamiltonian
+integer sumstateprods(2^nsites,ncorc) ! for Hamiltonian
+
+
+integer stateprods(2^nsites,ntermsequat) ! for equations
+integer allstates(2^nsites,nsites)
+integer nparticles(2^nsites)
+real(8) allenergs(2^nsites) 
+real(8) expenergies(2^nsites)
+
+4-byte integer
+8-byte real
+
+
+For K3NNC2:
+-----------
+nsites = 19
+ntermshamilt = 85
+ncorc = 10
+ntermsequat = 13
+
+2^nsites*((ntermshamilt+ncorc+ntermsequat+nsites+1)*4 + 2*8)
+
+276,824,064 bytes = 264 Mebibytes approximately
+(Correct: 264.7 MB noted in "Task Manager")
+
+
