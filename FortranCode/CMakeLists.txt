@@ -11,14 +11,11 @@ include(VersionAndGitRef)
 set_version(0.01dev)
 get_gitref()
 
-set(F90_SOURCES BPEC.f90
-				fdjac.f90
+set(F90_SOURCES fdjac.f90
 				fminln.f90
 				func.f90
 				funcv.f90
 				global_constants.f90
-				K2NNC2.f90
-				K3NNC2.f90
 				lnsrch.f90
 				lubksb.f90
 				ludcmp.f90
@@ -32,14 +29,11 @@ set(F90_SOURCES BPEC.f90
 				polint.f90
 				powell.f90)
 
-set(FREELINE_SOURCES BPEC.f90
-				fdjac.f90
+set(FREELINE_SOURCES fdjac.f90
 				fminln.f90
 				func.f90
 				funcv.f90
 				global_constants.f90
-				K2NNC2.f90
-				K3NNC2.f90
 				lnsrch.f90
 				lubksb.f90
 				ludcmp.f90
