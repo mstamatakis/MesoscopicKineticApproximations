@@ -4,7 +4,7 @@ subroutine approx_initialise_k3nnc2(obj_approx)
     use global_constants
     
     implicit none
-    class (approximation) :: obj_approx
+    type (approximation) :: obj_approx
     integer nsites, nterms, norig, ncorc, nbodymax, ntm, i
         
     obj_approx%approxname = 'K3NNC2'

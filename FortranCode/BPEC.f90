@@ -4,7 +4,7 @@ subroutine approx_initialise_bpec(obj_approx)
     use global_constants
     
     implicit none
-    class (approximation) :: obj_approx
+    type (approximation) :: obj_approx
     integer nsites, nterms, norig, ncorc, nbodymax, i, ntm
         
     obj_approx%approxname = 'BPEC'
