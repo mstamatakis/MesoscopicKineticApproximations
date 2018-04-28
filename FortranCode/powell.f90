@@ -52,6 +52,7 @@ SUBROUTINE POWELL(P,XI,N,NP,FTOL,ITER,FRET)
 ! is used.
 !------------------------------------------------------------
   use global_constants
+  use, intrinsic:: iso_fortran_env, only: stdin=>input_unit
   IMPLICIT REAL*8 (A-H,O-Z)
   PARAMETER(NMAX=20,ITMAX=200)
   DIMENSION P(NP),XI(NP,NP),PT(NMAX),PTT(NMAX),XIT(NMAX)
@@ -80,7 +81,9 @@ SUBROUTINE POWELL(P,XI,N,NP,FTOL,ITER,FRET)
   END DO
   IF (2.D0*DABS(FP-FRET).LE.FTOL*(DABS(FP)+DABS(FRET))) RETURN !Termination criterion
   IF (ITER.EQ.ITMAX) Then
-    Pause ' Powell exceeding maximum iterations.'
+	print *, ' Powell exceeding maximum iterations.'
+	print *, ' Program paused, press Enter to continue.'
+	read(stdin,*)
     return
   END IF		 
   DO J=1,N
@@ -231,11 +234,12 @@ REAL*8 FUNCTION BRENT(AX,BX,CX,TOL,XMIN)
 !The abscissa of the minimum is returned in XMIN, and the minimum
 !function value is returned as BRENT, the returned function value.
 !-------------------------------------------------------------------
-PARAMETER(ITMAX=100,CGOLD=.3819660,ZEPS=1.D-10)
 !Maximum allowed number of iterations; golden ration; and a small
 !number which protects against trying to achieve fractional accuracy
 !for a minimum that happens to be exactly zero.
+use, intrinsic:: iso_fortran_env, only: stdin=>input_unit
 IMPLICIT REAL*8 (A-H,O-Z)
+PARAMETER(ITMAX=100,CGOLD=.3819660,ZEPS=1.D-10)
 A=MIN(AX,CX)
 B=MAX(AX,CX)
 V=BX
@@ -309,7 +313,9 @@ DO 11 ITER=1,ITMAX	                                !main loop
     ENDIF
   ENDIF
 11 CONTINUE
-Pause ' Brent exceed maximum iterations.'
+print *, ' Brent exceeding maximum iterations.'
+print *, ' Program paused, press Enter to continue.'
+read(stdin,*) 
 3 XMIN=X   !exit section
   BRENT=FX
   RETURN

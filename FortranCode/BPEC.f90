@@ -4,7 +4,7 @@ subroutine approx_initialise_bpec(obj_approx)
     use global_constants
     
     implicit none
-    type (approximation) :: obj_approx
+    class (approximation) :: obj_approx
     integer nsites, nterms, norig, ncorc, nbodymax, i, ntm
         
     obj_approx%approxname = 'BPEC'
@@ -26,7 +26,9 @@ subroutine approx_initialise_bpec(obj_approx)
 	allocate(obj_approx%hamilt%interaction(nterms,nbodymax),source=0) ! encoding interaction terms
 	allocate(obj_approx%hamilt%internbody(nterms),source=0) ! number of bodies for each interaction term
 	obj_approx%hamilt%H0 = 0.d0 ! constant term in the Hamiltonian
-	allocate(obj_approx%hamilt%origpars(0:norig),source=(/0.d0,hads,Jint/)) ! value of an original interaction term in the Hamiltonian
+	allocate(obj_approx%hamilt%origpars(0:norig),source=0.d0)
+	obj_approx%hamilt%origpars(1) = hads
+	obj_approx%hamilt%origpars(2) = Jint ! value of an original interaction term in the Hamiltonian
 	allocate(obj_approx%hamilt%corcpars(0:ncorc),source=0.d0) ! value of a correction interaction term in the Hamiltonian
 	allocate(obj_approx%hamilt%origterms(nterms),source=0) ! will be used as a pointer to an original interaction term in the Hamiltonian
 	allocate(obj_approx%hamilt%corcterms(nterms),source=0) ! will be used as a pointer to a correction interaction term in the Hamiltonian

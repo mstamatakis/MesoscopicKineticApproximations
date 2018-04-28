@@ -5,9 +5,10 @@ program main
     use parser_module
     use nrtype
     use nr
-    
+    use, intrinsic:: iso_fortran_env, only: stdin=>input_unit
+	
     implicit none
-    integer i,j,ndeg
+    integer i,j,imu,Nmu,ndeg
     real(8) mu, munext
     
     integer N, ITER
@@ -60,8 +61,11 @@ program main
     open(unit=101,file=trim(approx) // '_Fortran_Theta_vs_Mu.txt')
     
     call cpu_time(t1) ! function for calculating elapsed CPU time
-    do mu = mu0,mu1,Dmu
+	Nmu = nint((mu1-mu0)/Dmu)
+    do imu = 1,Nmu+1
         
+		mu = mu0 + (imu-1)*Dmu
+		
         obj_approx%mu = mu
         
         write(*,*) ' ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'        
@@ -99,7 +103,8 @@ program main
     
     write(*,*) 'Elapsed CPU-time',t2-t1
     
-    pause
+	print *, 'Program paused, press Enter to continue.'
+	read(stdin,*) 
     continue    
   
     stop    

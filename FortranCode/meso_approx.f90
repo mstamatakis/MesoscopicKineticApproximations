@@ -323,7 +323,7 @@ module meso_approx
 	    write(*,*) 'number of equations:        ',this%eqns%neqns
 	    write(*,*) 'list of equations:   ',this%eqns%nterms
         do i = 1,this%eqns%neqns
-            write(*,'(I3,a,5x,' // trim(int2str(this%eqns%corrlnbody(this%eqns%lhs(i)))) // '("s(",I3,")"),' &
+            write(*,'(I3,a,5x,' // trim(int2str(this%eqns%corrlnbody(this%eqns%lhs(i)))) // '("s(",I3,")")' &
                              // ', " = ", ' // trim(int2str(this%eqns%corrlnbody(this%eqns%rhs(i)))) // '("s(",I3,")"))' ) &
                 i,')', &
                 (this%eqns%correlation(this%eqns%lhs(i),j),j=1,this%eqns%corrlnbody(this%eqns%lhs(i))), &
