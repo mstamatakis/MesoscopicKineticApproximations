@@ -10,3 +10,5 @@ Release
 fort.*
 *.o
 *.mod
+*.vfproj
+*.sln
