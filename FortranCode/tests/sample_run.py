@@ -93,14 +93,15 @@ def test(inpath, execpath, testpath, resumetest=False, Neventstarget=0, execrunn
     fcalcin = open(join(directory,'calculation_input.dat'), 'r')
     # use readline() to read the first line which contains the approximation name
     line = fcalcin.readline()
-    
     s = ''
-    testdata = loadtxt(s.join((datapath, '\\', line, '_Fortran_Theta_vs_Mu.txt')))
-    outdata = loadtxt(s.join((directory, '\\', line, '_Fortran_Theta_vs_Mu.txt')))
+    filnam = s.join((line, '_Fortran_Theta_vs_Mu.txt'))
+    testdata = loadtxt(join(datapath, filnam))
+    outdata = loadtxt(join(directory, filnam))
+    # print(join(datapath, filnam))
     # print(s.join((datapath, '\\', line, '_Fortran_Theta_vs_Mu.txt')))
     # print(s.join((directory, '\\', line, '_Fortran_Theta_vs_Mu.txt')))
     assert len(testdata) == len(outdata)
-    assert all(abs(x-y) < 1e-6 for l0, l1 in zip(testdata, outdata)
+    assert all(abs(x-y) < 5e-6 for l0, l1 in zip(testdata, outdata)
                                for x, y in zip(l0, l1) )
     exit(process.returncode)
   finally:
