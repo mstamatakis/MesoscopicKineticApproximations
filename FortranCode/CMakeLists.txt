@@ -125,24 +125,24 @@ endif (RUNNING_ON_CRAY)
 SET(TEST_RUNNER_ARGS ${TEST_RUNNER_ARGS} CACHE STRING "MPI type runner passed to sample_run.py in tests")
 message(STATUS "Test runner is ${TEST_RUNNER_ARGS}")
 
-# if(PYTHONINTERP_FOUND AND PYTHON_VERSION_STRING VERSION_GREATER "2.7.0" )
-  # set(dotests TRUE)
-  # message(STATUS "Enabling tests")
-  # # Use include test to suppress warning about DART
-  # # We are not actually using DART but turn it on to get the XML files that
-  # # can be converted to JUNIT for Jenkins
-  # include(CTest)
-  # ENABLE_TESTING()
-  # add_subdirectory(tests)
-# else(PYTHONINTERP_FOUND AND PYTHON_VERSION_STRING VERSION_GREATER "2.7.0")
-  # if(PYTHONINTERP_FOUND)
-    # message(STATUS "At least Python 2.7 is needed, Found ${PYTHON_VERSION_STRING}. Cannot run tests.")
-  # else(PYTHONINTERP_FOUND)
-    # message(STATUS "Python not found. Cannot run tests.")
-  # endif(PYTHONINTERP_FOUND)
+if(PYTHONINTERP_FOUND AND PYTHON_VERSION_STRING VERSION_GREATER "2.7.0" )
+  set(dotests TRUE)
+  message(STATUS "Enabling tests")
+  # Use include test to suppress warning about DART
+  # We are not actually using DART but turn it on to get the XML files that
+  # can be converted to JUNIT for Jenkins
+  include(CTest)
+  ENABLE_TESTING()
+  add_subdirectory(tests)
+else(PYTHONINTERP_FOUND AND PYTHON_VERSION_STRING VERSION_GREATER "2.7.0")
+  if(PYTHONINTERP_FOUND)
+    message(STATUS "At least Python 2.7 is needed, Found ${PYTHON_VERSION_STRING}. Cannot run tests.")
+  else(PYTHONINTERP_FOUND)
+    message(STATUS "Python not found. Cannot run tests.")
+  endif(PYTHONINTERP_FOUND)
   
-  # set(dotests FALSE)
-# endif(PYTHONINTERP_FOUND AND PYTHON_VERSION_STRING VERSION_GREATER "2.7.0" )
+  set(dotests FALSE)
+endif(PYTHONINTERP_FOUND AND PYTHON_VERSION_STRING VERSION_GREATER "2.7.0" )
 
 install (TARGETS ${EXEC_NAME} DESTINATION bin)
 

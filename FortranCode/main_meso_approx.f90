@@ -22,9 +22,12 @@ program main
     logical check
     character(10) approx    
     
+	open(unit=501,file="calculation_input.dat",form="formatted",status="old",action="read")
+	read(501,"(a)") approx
+	close(501)
     !approx = 'BPEC'
     !approx = 'K2NNC2'
-    approx = 'K3NNC2'
+    !approx = 'K3NNC2'
     call obj_approx%init(trim(approx))
     call obj_approx%prnt()
     
@@ -103,9 +106,9 @@ program main
     
     write(*,*) 'Elapsed CPU-time',t2-t1
     
-	print *, 'Program paused, press Enter to continue.'
-	read(stdin,*) 
-    continue    
+	!print *, 'Program paused, press Enter to continue.'
+	!read(stdin,*) 
+    !continue    
   
     stop    
     
