@@ -16,6 +16,9 @@ set(F90_SOURCES fdjac.f90
 				func.f90
 				funcv.f90
 				global_constants.f90
+				init_BPEC.f90
+				init_K2NNC2.f90
+				init_K3NNC2.f90
 				lnsrch.f90
 				lubksb.f90
 				ludcmp.f90
@@ -34,6 +37,9 @@ set(FREELINE_SOURCES fdjac.f90
 				func.f90
 				funcv.f90
 				global_constants.f90
+				init_BPEC.f90
+				init_K2NNC2.f90
+				init_K3NNC2.f90
 				lnsrch.f90
 				lubksb.f90
 				ludcmp.f90
