@@ -58,7 +58,6 @@ options = optimoptions('fsolve',...
 kAppr = 0;
 ApproxName = {};
 
-if 0
 % The first approximation is the mean-field and is treated in a special way
 % since correlations are neglected
 kAppr = kAppr + 1; % index of the approximation
@@ -72,7 +71,7 @@ ApproxColor{kAppr} = [0 0 0]; % FOR PLOTTING: color
 ApproxMarkr{kAppr} = 'o'; % FOR PLOTTING: marker
 ApproxLinSpec{kAppr} = '-'; % FOR PLOTTING: line type
 ApproxMSize(kAppr) = 6; % FOR PLOTTING: marker size
-% if 0
+if 0
 % Next the BP approximation without edge interactions
 kAppr = kAppr + 1; % index of the approximation
 ApproxName{kAppr} = 'BP'; % name of the approximation
@@ -112,7 +111,7 @@ ApproxColor{kAppr} = [180 0 255]/255; % FOR PLOTTING: color
 ApproxMarkr{kAppr} = '^'; % FOR PLOTTING: marker
 ApproxLinSpec{kAppr} = '--'; % FOR PLOTTING: line type
 ApproxMSize(kAppr) = 6; % FOR PLOTTING: marker size
-
+if 0
 % Next the K2NNC1 approximation
 kAppr = kAppr + 1; % index of the approximation
 ApproxName{kAppr} = 'K2NNC1'; % name of the approximation
@@ -125,7 +124,7 @@ ApproxColor{kAppr} = [0 0 255]/255; % FOR PLOTTING: color
 ApproxMarkr{kAppr} = 's'; % FOR PLOTTING: marker
 ApproxLinSpec{kAppr} = '-'; % FOR PLOTTING: line type
 ApproxMSize(kAppr) = 6; % FOR PLOTTING: marker size
-
+end
 % Next the K2NNC2 approximation
 kAppr = kAppr + 1; % index of the approximation
 ApproxName{kAppr} = 'K2NNC2'; % name of the approximation
@@ -138,8 +137,7 @@ ApproxColor{kAppr} = [0 100 255]/255; % FOR PLOTTING: color
 ApproxMarkr{kAppr} = 'd'; % FOR PLOTTING: marker
 ApproxLinSpec{kAppr} = '-'; % FOR PLOTTING: line type
 ApproxMSize(kAppr) = 6; % FOR PLOTTING: marker size
-end
-if 0
+
 % Next the K2NNC3 approximation
 kAppr = kAppr + 1; % index of the approximation
 ApproxName{kAppr} = 'K2NNC3'; % name of the approximation
@@ -152,7 +150,7 @@ ApproxColor{kAppr} = [0 200 255]/255; % FOR PLOTTING: color
 ApproxMarkr{kAppr} = 'p'; % FOR PLOTTING: marker
 ApproxLinSpec{kAppr} = '-'; % FOR PLOTTING: line type
 ApproxMSize(kAppr) = 8; % FOR PLOTTING: marker size
-end
+
 % Next the K3NNC2 approximation
 kAppr = kAppr + 1; % index of the approximation
 ApproxName{kAppr} = 'K3NNC2'; % name of the approximation
@@ -165,7 +163,7 @@ ApproxColor{kAppr} = [200 200 0]/255; % FOR PLOTTING: color
 ApproxMarkr{kAppr} = 'h'; % FOR PLOTTING: marker
 ApproxLinSpec{kAppr} = '-'; % FOR PLOTTING: line type
 ApproxMSize(kAppr) = 8; % FOR PLOTTING: marker size
-if 0
+
 % Next the K3NNC3 approximation
 kAppr = kAppr + 1; % index of the approximation
 ApproxName{kAppr} = 'K3NNC3'; % name of the approximation
@@ -220,7 +218,7 @@ end
 % return
 
 %% Entering main loop
-tic
+
 for i = 1:length(muOstarRange);
     
     muOstar = muOstarRange(i);
@@ -272,7 +270,7 @@ for i = 1:length(muOstarRange);
     end
     
 end
-toc
+
 % Evaluation of rates
 
 for i = 1:kAppr
@@ -303,12 +301,12 @@ end
 % return
 
 %% SAVE RESULTS TO TEXT FILE
-iApproxim = 1;
-fileID = fopen(['../FortranCode/' ApproxName{iApproxim} '_Matlab_Theta_vs_Mu.txt'],'w');
-gsolApproxim = gcsolnv{iApproxim}.';
+fileID = fopen('../FortranCode/BPEC_Matlab_Theta_vs_Mu.txt','w');
+iBPEC = 2;
+gsolBPEC = gcsolnv{iBPEC}.';
 for i = 1:length(muOstarRange)
-    fprintf(fileID,[repmat('%32.13f',1,2+size(gsolApproxim,2)) '\r\n'], ...
-        [muOstarRange(i) Theta(iApproxim,i) gsolApproxim(i,:)]);
+    fprintf(fileID,[repmat('%32.13f',1,4) '\r\n'], ...
+        [muOstarRange(i) Theta(iBPEC,i) gsolBPEC(i,:)]);
 end
 fclose(fileID);
 
