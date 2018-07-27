@@ -42,8 +42,6 @@ program main
     !    XI(i,i) = 1.d0
     !enddo
     
-    ! Comment test...
-    
     FTOL=1.D-12
     ITER = 0
     FRET = 0.d0
