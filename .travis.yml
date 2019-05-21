@@ -38,7 +38,7 @@ script:
   - cd FortranCode
   - mkdir build
   - cd build
-  - cmake .. -DCMAKE_BUILD_TYPE=Release -Ddoopenmp=TRUE
+  - cmake .. -DCMAKE_BUILD_TYPE=Release -Ddoopenmp=OFF
   - make -j
   - while sleep 540 ; do echo "=========== tests are taking more than 9m - pinging travis =========="; done &
   - ctest --output-on-failure
