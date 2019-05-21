@@ -27,7 +27,7 @@ matrix:
       language: generic
 
     - os: windows
-      language: generic
+      language: cpp
 
 before_install:
   # Install stuff specifically for MacOS
