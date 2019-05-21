@@ -26,6 +26,9 @@ matrix:
     - os: linux
       language: generic
 
+    - os: windows
+      language: generic
+
 before_install:
   # Install stuff specifically for MacOS
   - if [ $TRAVIS_OS_NAME = osx ]; then brew update; rm '/usr/local/include/c++'; brew install gcc; fi
@@ -41,7 +44,9 @@ script:
   - cmake .. -DCMAKE_BUILD_TYPE=Release -Ddoopenmp=OFF
   - make -j
   - while sleep 540 ; do echo "=========== tests are taking more than 9m - pinging travis =========="; done &
-  - ctest --output-on-failure
+#  - ctest --output-on-failure
+  - ctest -L fast --output-on-failure
+#  - ctest -L "(fast|medium)" --output-on-failure
 
 after_success:
 
