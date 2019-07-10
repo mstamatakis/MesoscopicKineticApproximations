@@ -1,4 +1,4 @@
-language: python
+language: shell
 
 os:
   - linux
@@ -21,18 +21,15 @@ matrix:
 
   include:
     - os: osx
-      language: generic
       
     - os: linux
-      language: generic
 
     - os: windows
-      language: cpp
 
 before_install:
   # Install stuff specifically for MacOS
   - if [ $TRAVIS_OS_NAME = osx ]; then brew update; rm '/usr/local/include/c++'; brew install gcc; fi
-  - if [ $TRAVIS_OS_NAME = windows ]; then mingw-get install fortran gdb; fi
+  - if [ $TRAVIS_OS_NAME = windows ]; then choco install make; fi
 
 install:
 
@@ -42,12 +39,14 @@ script:
   - cd FortranCode
   - mkdir build
   - cd build
-  - cmake .. -DCMAKE_BUILD_TYPE=Release -Ddoopenmp=OFF
+  - cmake .. -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release -Ddoopenmp=OFF
   - make -j
   - while sleep 540 ; do echo "=========== tests are taking more than 9m - pinging travis =========="; done &
+  - PING_PID=$!
 #  - ctest --output-on-failure
   - ctest -L fast --output-on-failure
 #  - ctest -L "(fast|medium)" --output-on-failure
+  - kill $PING_PID
 
 after_success:
 
