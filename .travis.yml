@@ -43,9 +43,9 @@ script:
   - make -j
   - while sleep 540 ; do echo "=========== tests are taking more than 9m - pinging travis =========="; done &
   - PING_PID=$!
-#  - ctest --output-on-failure
-  - ctest -L fast --output-on-failure
-#  - ctest -L "(fast|medium)" --output-on-failure
+  - ctest --output-on-failure
+  # - ctest -L fast --output-on-failure
+  # - ctest -L "(fast|medium)" --output-on-failure
   - kill $PING_PID
 
 after_success:
