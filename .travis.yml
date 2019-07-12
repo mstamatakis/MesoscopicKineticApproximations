@@ -17,18 +17,18 @@ addons:
 env:
   global:
     # Intel Parallel Studio
-    - secure: "N8YVBgILBQxPLn87xezihfsAq9SCqksPyn+/mYWsuFSf6jw6DWhQIzEu6zm9qBVAVI3au5uFJZtN9a3Iz+ivY172d8ev3/VoBvIFr96e/i/xte0gEMSaRh3JE8HJrCX2l+wlnFFEkrUsnvXt6Kfkb80Ue+4jcbtEL/MQ4pvSYj1zJClv7S0tq4uDhOEoArJ2q56/n/pJqCuOKZNMANUImO/aj+/k7TbNmFuzXt9JCk6KiYAKeHu4iG78Wjb+fYAx1pcXEzu3l0Kw6ws7tycGOXhl56PvlxPYA4yNv0TLadETuoT8xAypWHZAGhluuO7CfZNgM+IzpPRdWlQt6pmirQjrt0Sx+UvTz1HePBWheaMYDoWYbomOF229EKLDjrQPdmh3r4ZcXJeoxmJUmrmyIY6hNXnU3zmOYaxAw3atLvqEyh4/fIoI1ocw3XLA2StQP7Bl8g+cG/HSJWAZGew4Ubr5t9kUGnXPgnvcCkN8dTRnDbUrnnzvPqeu2qMf/JHJNeJHCSGARjRYTpYHKahf88yjztm6EFbx3lF+eghKN8hKbgsciBwTiDSNYMoTSpsXceybGyMEod/SXymyz+goHqYr55AaNpAGKgkd/R22f7yOBMJG41gKEyr9Y/IAuQbSj9NY1IfhqNIjI+gfYaHjjhfAToDiEu86sE3/u6Yz/gk="
+    - secure: "QqPKeHzkLQTI2snytnWlKmeRVMQe9fAn382ehnYDgB8IxLYkNJ6wieAOVEESdqvIF2tJ5ciuwXVFReYTuS0JIk9poTljpXtYW9AQ5u6OvAvT2MbYhz2vuIFnMSiJMs+jX7q4+jipu+If11yUezKVp0/qFJV0SzgTp2TYtvRFi9JuiURWz5NxLvy0S9g5jRJljbiahi8Fgj9Rf/ZvZ0rdwCbYiwdkeqnL50f1mp9uBdpA1M6D9sgND1uT1aGwY1/AYpJ42cOtJ2e1wSdtmkfBN9NbkRODdC8tXKIKPtu/ID12aKiZrIuVPQdL6ZtesjxwIXvpON8vWb1SrkGwQVzXlszPuzwugoZBQSUsSzh4CAKyJadn3DGlOZJgm+jz7eLKyHmhtQwimN2ll2hTJNC8D6SOOm1QaCYnhJV9bfLn8a9LnZnLIbKoCqrtq+rmZBA9iFSCrO5kyTtsA/Nt7EUGWJPGM9i4im/Kc2bcRyZUzssCQg+mbu4TdZO8UVS4gOTqkOnll43iML5MX278go7MRihiYCRU4YXKCkH0auf6mmLDfnCsFqKQheOBMwVN0WfA2sT9U2ycoP5OzkmqvNUlVIZJDVqR6E/55PQ/2oTjRGgl/Vp5UwjjsHp7db8rqHERXI3TGzK6tzsoFO9U3dI0bC1bWPJyRqM7q0SbiozBWmc="
 
 matrix:
   # Don't wait for allowed failures - do we really need this? TODO
   fast_finish: true
 
   include:
-    - os: osx
+    # - os: osx
       
-    - os: linux
+    # - os: linux
 
-    - os: windows
+    # - os: windows
 
     - os: linux
       sudo: false
@@ -48,6 +48,7 @@ install:
 before_script:
 
 script:
+  - source ~/.bashrc
   - cd FortranCode
   - mkdir build
   - cd build
@@ -59,6 +60,9 @@ script:
   - ctest -L fast --output-on-failure
   # - ctest -L "(fast|medium)" --output-on-failure
   - kill $PING_PID
+
+after_script:
+  - '[[ ! -z "${INTEL_INSTALL_PATH}" ]] && uninstall_intel_software'
 
 after_success:
 
