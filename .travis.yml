@@ -14,24 +14,31 @@ addons:
       - gfortran
       - cmake
       - libgomp1
-env:
-  global:
-    # Intel Parallel Studio
-    - secure: "g0Qu2BZZcF1XWLoG+dMt3pVOoVzpdmyfeTFF8b6lvoanpWnnpb5N9fDz8VKOAywQNPVR7Dv6r8bgR3N8Zh1dxERrA83UIN4K0fbcGvtLPDDqKKWVGCzY0+TLXVN5y30/TB0NFv3i+96qTH5TEJSNS+7xZJBVD2UmXtEzm7CIuwtO0KIierOF8WgkWRKwomW5bW3Xs6rCak0RzqmN6hlDJ2ZQrXgeeBEgRwwinS9oIxs9dwebhMRL3HJdwj0BdThgfGFv3rCUp4fGJJniQKRmWh4ElA+GnQelcrvtmyVkw0lVFsT0+16xBPQC5k+pF2uIOovIzQXQh26d6GaL7Ij5ZpF9JuKtmtgvK/3UGVDsG+xwqrn1ugtjJiu/pFZj6mQe7oenfXBO+LBUVXvWTXrN/mQ7L7DRFsIvYrEUeg4e114EETDm3XEYJ21U9k8T1Da7lwy+XplI8fQwzCcNwMgn/l4yWsoij11lpuxrq7JN+TZQwupWmjWVxF2Q4F7262Xl7N9qig3fWdTwlbwFNCvpY3SW2CmjpaHwN5AKptsy9A2U22nfA4S2LXwGNeSgFbIpuoMAnFtjesmz3LHdUgTDixYrM9cQeg/jdaZ8Cb5caIWq10ceBM9lHL0WaOCvRTT7ZuJC9cVpdMf0B6dHZ9Vp0a51JStb2syA9DI/5GF/6yA="
+
 matrix:
   # Don't wait for allowed failures - do we really need this? TODO
   fast_finish: true
 
   include:
-    # - os: osx
+    - os: osx
+      env:
+        - TITLE="OSX - GFortran"
       
-    # - os: linux
-
-    # - os: windows
+    - os: linux
+      env:
+        - TITLE="Linux - GFortran"
 
     - os: linux
-      sudo: false
-      env: COMPONENTS=ifort
+      env:
+        - TITLE="Linux - IFort"
+        # Intel Parallel Studio serial (encrypted environment variable)
+        - secure: "g0Qu2BZZcF1XWLoG+dMt3pVOoVzpdmyfeTFF8b6lvoanpWnnpb5N9fDz8VKOAywQNPVR7Dv6r8bgR3N8Zh1dxERrA83UIN4K0fbcGvtLPDDqKKWVGCzY0+TLXVN5y30/TB0NFv3i+96qTH5TEJSNS+7xZJBVD2UmXtEzm7CIuwtO0KIierOF8WgkWRKwomW5bW3Xs6rCak0RzqmN6hlDJ2ZQrXgeeBEgRwwinS9oIxs9dwebhMRL3HJdwj0BdThgfGFv3rCUp4fGJJniQKRmWh4ElA+GnQelcrvtmyVkw0lVFsT0+16xBPQC5k+pF2uIOovIzQXQh26d6GaL7Ij5ZpF9JuKtmtgvK/3UGVDsG+xwqrn1ugtjJiu/pFZj6mQe7oenfXBO+LBUVXvWTXrN/mQ7L7DRFsIvYrEUeg4e114EETDm3XEYJ21U9k8T1Da7lwy+XplI8fQwzCcNwMgn/l4yWsoij11lpuxrq7JN+TZQwupWmjWVxF2Q4F7262Xl7N9qig3fWdTwlbwFNCvpY3SW2CmjpaHwN5AKptsy9A2U22nfA4S2LXwGNeSgFbIpuoMAnFtjesmz3LHdUgTDixYrM9cQeg/jdaZ8Cb5caIWq10ceBM9lHL0WaOCvRTT7ZuJC9cVpdMf0B6dHZ9Vp0a51JStb2syA9DI/5GF/6yA="
+        - COMPONENTS=ifort
+        - FC=ifort
+
+    - os: windows
+      env:
+        - TITLE="Windows (MinGW64) - GFortran"
 
 before_install:
   # Install stuff specifically for MacOS
@@ -39,17 +46,13 @@ before_install:
   # Install stuff specifically for Windows
   - if [ $TRAVIS_OS_NAME = windows ]; then choco install make; fi
   - chmod 777 ./install-icc.sh
-  - ./install-icc.sh --components "${COMPONENTS}"
-  - source ~/.bashrc
+  - if [ $FC = ifort ]; then ./install-icc.sh --components "${COMPONENTS}"; source ~/.bashrc; fi
 
 install:
 
 before_script:
 
 script:
-  - which ifort
-  - export FC=ifort
-  - source ~/.bashrc
   - cd FortranCode
   - mkdir build
   - cd build
@@ -60,6 +63,7 @@ script:
   # - ctest --output-on-failure
   - ctest -L fast --output-on-failure
   # - ctest -L "(fast|medium)" --output-on-failure
+  # The following kills the pinging process, otherwise Windows builds hang
   - kill $PING_PID
 
 after_script:
