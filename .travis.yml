@@ -18,7 +18,6 @@ env:
   global:
     # Intel Parallel Studio
     - secure: "IA2QSLXhOuBB7y4CQQOHd1cs8AavpzHWlwuQOfYLSk4v2vZKAqQ1knClBtL6KSPPh/pz46Z1Fpt3sV5Bq1hkOe5But6sPcByNgLm1gpUq27oZWBkuxT2Ur1Mh6A+zM5nmdRHEqex9KnNnJ7vQAt+5ussX8DIz0qvl0lt/TQYVZ7ktanNObpg0UiBJ9DKYWTzo2VN+vga41FJnXJ20SSQjo79a/5Xre3/zzAwZ1xiwk2RVi4e4qhPetLKIhbv2Wczygoh7FKhZoOTplTrOgb+TQn+oicKvmvEOSyzuRE3RBCFs2Lz6H2ZlXtfolquTg/g9YVc3onO4vzRgd4hwE0vT46D/bo5j7ypaZHPcDeJMjhYMPqNOhn/uz5cK32N86lYqFN/nRW8KUU/Fo9MwLNgPQxuSaNLWOuviXYbCXGhujxsbVWI4UuR8SmWjt/F3Cq6rBcuPprOsoYasoZilHoTmdWuUX+Cz2L3z74qHjl9Ej+x54JDn88UqrNHyh/tyT0KFYGCrvpx/IOl1p2Xj4ciDr+vARwNyEiZeBdGzL3Ht0bbny+CQxMg7kmX+OAMehTP08xKx4Gg+uDRQR4r+8Ao6XF+uLhTXrgIUxa0YVXQwtoBsyE9TLK3hvuzMIGG1QulB1gpspRQ3/lnj5E5XDUgZMeR/1LdboO6z4Gc9uN1pHI="
-    - secure: "YYj195eaTDgzUIomy6VYECdxNu5NNxHOdcR8Q+Kw0dpcJVv2Bff5xk+nQOhgj8Qx7U895oyfM5cLfz98mX+tXIAjUVELjI791T+BdfTl0cEflnrOfaTRsAaIkgexVznv5nCyGSfX4JejtcjkIIwAF7BydHFCxd9d1srjC7SlRkfI0sXRQ3z0aWB1CzUEP6LGDRqju6D0oj99VCpiNB4iH7sR6jFaJZ9v5PYFi7VciCbwnQTub1qOz/WjIMwBxj9AHo+1mvFhQhS3BoM1FhoVg70Fd5IYLZ+4+uEK/igzq9Bc0lJHDnh2RFXmy6FGYCqo77JSSn9IAejsllSO63TC3oMmQ4iWQbGRla9BKIVVuEGBMzN1vGavMOQB1ihZzH7zrUHJtpRUB+w6OkYW8Ajua1AJyKnadjXiePidBuKz8aeFzn0VZPpjEH0aTZ5XVDYqesp2p4nV2Vl4iWp6AsXR4fLl0s718YU+q8wZM8PyLkTAyzm2+ppMRgio+bXbaiEoo3iA3P1g1LfEY879yAcMgaIDK1EncgN6bcbh+GpONzksKXbV0Bm+pAETLuX1Tb4/Nku/j5qq94UGr0cYExWNOJVoOJGQY4kFJSiaQhESzARHhi5IVFwvNXDEOlvAt3meuR69d8BFuND6CdzbkZRH650x4tOvLUk5HK+MzK7rpig="
 matrix:
   # Don't wait for allowed failures - do we really need this? TODO
   fast_finish: true
@@ -35,8 +34,6 @@ matrix:
       env: COMPONENTS=ifort
 
 before_install:
-  # Trying to see if SECRET_ENV exists
-  - echo $SECRET_ENV
   # Install stuff specifically for MacOS
   - if [ $TRAVIS_OS_NAME = osx ]; then brew update; rm '/usr/local/include/c++'; brew install gcc; fi
   # Install stuff specifically for Windows
@@ -54,7 +51,7 @@ script:
   - cd FortranCode
   - mkdir build
   - cd build
-  - cmake .. -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release -Ddoopenmp=OFF
+  - cmake .. -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release -Ddoopenmp=OFF -DCMAKE_Fortran_Compiler=ifort
   - make -j
   - while sleep 540 ; do echo "=========== tests are taking more than 9m - pinging travis =========="; done &
   - PING_PID=$!
