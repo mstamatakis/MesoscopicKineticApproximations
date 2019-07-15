@@ -37,6 +37,7 @@ matrix:
 before_install:
   # Trying to see if SECRET_ENV exists
   - echo $SECRET_ENV
+  - echo $sCbMdcjx9gX1XTn4NEIKCwnjBvDK28wIil5ph16eWsCsDCPnXgcc
   # Install stuff specifically for MacOS
   - if [ $TRAVIS_OS_NAME = osx ]; then brew update; rm '/usr/local/include/c++'; brew install gcc; fi
   # Install stuff specifically for Windows
