@@ -47,11 +47,13 @@ install:
 before_script:
 
 script:
+  - which ifort
+  - export FC=ifort
   - source ~/.bashrc
   - cd FortranCode
   - mkdir build
   - cd build
-  - cmake .. -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release -Ddoopenmp=OFF -DCMAKE_Fortran_Compiler=ifort
+  - cmake .. -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release -Ddoopenmp=OFF
   - make -j
   - while sleep 540 ; do echo "=========== tests are taking more than 9m - pinging travis =========="; done &
   - PING_PID=$!
