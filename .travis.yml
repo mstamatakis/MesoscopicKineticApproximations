@@ -18,7 +18,7 @@ env:
   global:
     # Intel Parallel Studio
     - secure: fSRhzFpVG/pdOtPmlT2CQ96XwGrE00ErfXU9blBfkfAWnYnbqlmxJhH+c9RWoOw5+IQb5/i8kohq715HFLjDDPu7/+F/BW75muB1aK6dU/nz4cGah3drSDV5NVrEudiHX7GvNG3II7adU7JOA2duJjghx4k0mP7NA9sd5aOStnVwYBMNQC91/K5K82ijxsMtswByfjFIHPpJK0Yfkdipxl+xcl+UTI/eN63SJ6brzeDvXTbFtZN3eyxNvuf+Ry3gLXF8yaqFaEJHRwNS91ikDF4Ur3D0bw++8ZCH84UBfCXIFT5ev1xHVa8yuCbj4Nm++qACkwpy+xhwjlRsifSQpRZNBlLOVftgUS+wSkRgbA4FPyfEZ77AzS1NOMPx7deFRd+UP3ifiLW1z42WK+38wEMCAiWx5o9TWbdc7UPCTjF7sKx9Z4N7/2FJ6HEI2+Y7rkiFoAYmKni2DqRGdJsvCPeh5JhWcbHnZxiEsRb+49nYUx/Eb53pCLzn+dbeHCf7eTqV+We6rS69aeVEMZZqrbd8W5TK2iZUHyRA4pmcjknYuE+Ep3l3FYoZpFScXeEsDPPmXSCfc8OffGvED8GF4d/bqhn6LY3WqgOo9ngdVrgthSRkZviFpuVw6/LtjssjUNon8Mv4of4tPnpQzj4VlZHlsfjL28jgxHvtYrJTJUk=
-
+    - secure: "RCWxXrtsdZY8IAFzMvdL8RicEsvY6s9wPBSc2RJqCzcXvTckMFPnB0XIuX0vjZ3V4/BlWIXHyrtKMhmRJuCW9daINATO23eMDU2Ua7W+fq8iR/ok0nzp+p715RBWtTzhb2sZ5YoaxY1mXasLb5Ws9Al0G38C61MUmvvbHJK+kbIZpJ+Ajp9zfpLB9lojGtjb8fUAUzdgmrsqRo84eIPsP6CMZ4LWnLyLn76me/+wLWOmE55lENWQQ3HX3ZUk95tsYp0YtqKW6C6u/n/oxJvc4NUZpdEnuyvK8jzj7/5+rdmVnCT27OS3F8fJbsjln9qtf6tCg4fgusdiMiIwdpXdRpRfOrdJ0lXWWgyJCVQem2slrT/AG+rvgiGqitGNz+BlLBb9JxoFI4QBcYvVYSRkK57MxHyx70msFL5oVgESBoLuUYp2OfsxmAUoY+slmQg9gucHlaNMatvMLnofpgypK0ydxPQGB+tX8gydj+sQ+O6QdrYCz7ZTGDwb5KBGrWc32vh8VeUXuZqeEE0M07kqEeHtEYmeo8ijLumExt4L/l0qbnvV1TRrJ64FVHZmxjYLDi0cYczzGiMjNgBDD3rfssqypLZzmVNYJhL1FqI1E4nNtnMT8zp9mZ/sCbMdcjx9gX1XTn4NEIKCwnjBvDK28wIil5ph16eWsCsDCPnXgcc="
 matrix:
   # Don't wait for allowed failures - do we really need this? TODO
   fast_finish: true
@@ -35,6 +35,8 @@ matrix:
       env: COMPONENTS=ifort
 
 before_install:
+  # Trying to see if SECRET_ENV exists
+  - echo $SECRET_ENV
   # Install stuff specifically for MacOS
   - if [ $TRAVIS_OS_NAME = osx ]; then brew update; rm '/usr/local/include/c++'; brew install gcc; fi
   # Install stuff specifically for Windows
