@@ -67,6 +67,7 @@ script:
   - kill $PING_PID
 
 after_script:
+  - find . -name "uninstal*"
   - '[[ ! -z "${INTEL_INSTALL_PATH}" ]] && uninstall_intel_software'
 
 after_success:
