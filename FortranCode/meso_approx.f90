@@ -149,10 +149,14 @@ module meso_approx
     
         implicit none
         class (approximation) :: this
-        integer i, j
-        
+        integer i, j, upper_range
+        real(4) t1, t2, t3, t4
+        real(8) tmp_val
+        logical is_even_ncorc
+
         ! Preparatory steps: allocate and precompute stateprods, sumstateprodsorig, sumstateprodscorc
         if (.not. (allocated(this%hamilt%sumstateprodsorig) .and. allocated(this%hamilt%sumstateprodscorc))) then 
+            call cpu_time(t1) ! function for calculating elapsed CPU time
             if (.not. allocated(this%hamilt%stateprods)) then
                 allocate(this%hamilt%stateprods(2**this%nsites,this%hamilt%nterms),source=1)
                 do i = 1,this%hamilt%nterms
@@ -179,6 +183,8 @@ module meso_approx
                 enddo
             endif
             deallocate(this%hamilt%stateprods) ! free up some memory; this array not needed anymore, unless we use the first method to calculate energies
+            call cpu_time(t2) ! function for calculating elapsed CPU time
+            write(*,*) 'Elapsed CPU-time (residual 1)',t2-t1
         endif
         
         !this%allenergs = this%hamilt%H0
@@ -190,19 +196,100 @@ module meso_approx
         !    enddo
         !enddo
         
+        ! ! call cpu_time(t1) ! function for calculating elapsed CPU time
+        ! this%allenergs = this%hamilt%H0
+        ! do i = 1,this%hamilt%norig
+        !     tmp_val = this%hamilt%origpars(i)
+        !     do j = 1,2**this%nsites
+        !         this%allenergs(j) = this%allenergs(j) + & 
+        !             tmp_val*this%hamilt%sumstateprodsorig(j,i)
+        !     enddo
+        ! enddo
+        ! ! call cpu_time(t2) ! function for calculating elapsed CPU time
+        ! ! write(*,*) 'Elapsed CPU-time (residual 2)',t2-t1, this%hamilt%norig, 2**this%nsites
+
+        ! ! call cpu_time(t3) ! function for calculating elapsed CPU time
+        ! do i = 1,this%hamilt%ncorc
+        !     tmp_val = this%hamilt%corcpars(i)
+        !     do j = 1,2**this%nsites
+        !         this%allenergs(j) = this%allenergs(j) + & 
+        !             tmp_val * this%hamilt%sumstateprodscorc(j,i)
+        !     enddo
+        ! enddo
+        ! ! call cpu_time(t4) ! function for calculating elapsed CPU time
+        ! ! write(*,*) 'Elapsed CPU-time (residual 3)',t4-t3, this%hamilt%ncorc, 2**this%nsites
+
+        ! ! write(*,*) 'Elapsed CPU-time (residual full)',t4-t3 + t2-t1
+
+
+        !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        ! call cpu_time(t1) ! function for calculating elapsed CPU time
         this%allenergs = this%hamilt%H0
+        upper_range = 2**this%nsites
         do i = 1,this%hamilt%norig
-            do j = 1,2**this%nsites
+            tmp_val = this%hamilt%origpars(i)
+            do j = 1,upper_range
                 this%allenergs(j) = this%allenergs(j) + & 
-                    this%hamilt%origpars(i)*this%hamilt%sumstateprodsorig(j,i)
+                    tmp_val*this%hamilt%sumstateprodsorig(j,i)
             enddo
         enddo
+        ! call cpu_time(t2) ! function for calculating elapsed CPU time
+        ! write(*,*) 'Elapsed CPU-time (residual 2)',t2-t1, this%hamilt%norig, 2**this%nsites
+
+        ! call cpu_time(t3) ! function for calculating elapsed CPU time
         do i = 1,this%hamilt%ncorc
-            do j = 1,2**this%nsites
+            tmp_val = this%hamilt%corcpars(i)
+            do j = 1,upper_range
                 this%allenergs(j) = this%allenergs(j) + & 
-                    this%hamilt%corcpars(i)*this%hamilt%sumstateprodscorc(j,i)
+                    tmp_val * this%hamilt%sumstateprodscorc(j,i)
             enddo
         enddo
+        ! call cpu_time(t4) ! function for calculating elapsed CPU time
+        ! write(*,*) 'Elapsed CPU-time (residual 3)',t4-t3, this%hamilt%ncorc, 2**this%nsites
+
+        ! write(*,*) 'Elapsed CPU-time (residual full)',t4-t3 + t2-t1
+        !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+        ! call cpu_time(t3) ! function for calculating elapsed CPU time
+        ! this%allenergs = this%hamilt%H0
+        ! upper_range = 2**this%nsites
+        ! if (mod(this%hamilt%ncorc,2) .eq. 0) then
+        !     is_even_ncorc = .TRUE.
+        ! else
+        !     is_even_ncorc = .FALSE.
+        ! endif
+
+        ! do j = 1,upper_range
+        !     tmp_val = 0.
+        !     ! first loop
+        !     ! if (this%hamilt%norig == 2) then
+        !     !     tmp_val = tmp_val + & 
+        !     !     this%hamilt%origpars(1)*this%hamilt%sumstateprodsorig(j,1) + &
+        !     !     this%hamilt%origpars(2)*this%hamilt%sumstateprodsorig(j,2)
+        !     ! else
+        !         do i = 1,this%hamilt%norig
+        !             tmp_val = tmp_val + & 
+        !                     this%hamilt%origpars(i)*this%hamilt%sumstateprodsorig(j,i)
+        !         enddo
+        !     ! endif
+
+        !     ! second loop
+        !     ! if (is_even_ncorc) then
+        !     !     do i = 1,this%hamilt%ncorc,2
+        !     !         tmp_val = tmp_val + & 
+        !     !                 this%hamilt%corcpars(i) * this%hamilt%sumstateprodscorc(j,i) + &
+        !     !                 this%hamilt%corcpars(i + 1) * this%hamilt%sumstateprodscorc(j,i + 1)
+        !     !     enddo
+        !     ! else
+        !         do i = 1,this%hamilt%ncorc
+        !             tmp_val = tmp_val + & 
+        !                     this%hamilt%corcpars(i) * this%hamilt%sumstateprodscorc(j,i)
+        !         enddo
+        !     ! endif
+        !     this%allenergs(j) = this%allenergs(j) + tmp_val
+        ! enddo
+        ! call cpu_time(t4) ! function for calculating elapsed CPU time
+        ! write(*,*) 'Elapsed CPU-time (residual full)',t4-t3, this%hamilt%ncorc, 2**this%nsites
 
         return
         
@@ -220,7 +307,10 @@ module meso_approx
         real(8) lhsderivativeterm, rhsderivativeterm
         logical, intent(in), optional :: calcjac
         logical :: calculatejacobian
-        
+        real(4) t1, t2, t3, t4, t5, t6, t7, t8
+        integer lhs_i, rhs_i
+        real(8) tmp_var1, tmp_var2
+
         if (present(calcjac)) then
             calculatejacobian = calcjac
         else
@@ -241,12 +331,16 @@ module meso_approx
             allocate(this%expenergies(2**this%nsites),source=0.d0)
         endif
 
+        call cpu_time(t1) !!!
         call this%calc_energ() ! Note that we calculate the energies here, so if a program unit is calling the correlations subroutine,
         ! it would be unnecessary (and a waste of time) to compute the energies in the calling program unit
         this%expenergies = exp(-(this%allenergs-this%mu*this%nparticles)/(kboltz*this%temp))
-        
+        call cpu_time(t2) !!!
+        write(*,*) 'Elapsed CPU-time (residual 1)',t2-t1
+
         this%eqns%corrlvalue = 0.d0
 
+        call cpu_time(t3) !!!
         this%partfcn = sum(this%expenergies)
         do i = 1,this%eqns%nterms
             ! The following two expressions should give the same results (numerical accuracy issues excluded)
@@ -254,30 +348,64 @@ module meso_approx
             ! non-normalised partial sum that corresponds to that correlation
             this%eqns%corrlvalue(i) = sum(this%eqns%stateprods(:,i)*this%expenergies)
             ! this%eqns%corrlvalue(i) = sum(this%eqns%stateprods(:,i)*this%expenergies)/this%partfcn
-        enddo        
+        enddo  
+        call cpu_time(t4) !!!
+        write(*,*) 'Elapsed CPU-time (residual 2)',t4-t3, this%eqns%nterms
     
+        call cpu_time(t5) !!!
         this%eqns%residual = 0.d0
         do i = 1,this%eqns%neqns
             ! Again, two options. In Matlab we have used the version of the equations with the logarithms
             this%eqns%residual(i) = log(this%eqns%corrlvalue(this%eqns%lhs(i))) - log(this%eqns%corrlvalue(this%eqns%rhs(i)))
             ! this%eqns%residual(i) = this%eqns%corrlvalue(this%eqns%lhs(i)) - this%eqns%corrlvalue(this%eqns%rhs(i))
         enddo
-        
+        call cpu_time(t6) !!!
+        write(*,*) 'Elapsed CPU-time (residual 3)',t6-t5, this%eqns%neqns
+
         this%eqns%jacobian = 0.d0
         
         if (.not.calculatejacobian) return
         
+        call cpu_time(t7) !!!
+        ! do i = 1,this%eqns%neqns
+        !     do j = 1,this%eqns%neqns
+        !         lhsderivativeterm = sum(this%eqns%stateprods(:,this%eqns%lhs(i)) &
+        !                                 *this%expenergies*this%hamilt%sumstateprodscorc(:,j))
+        !         rhsderivativeterm = sum(this%eqns%stateprods(:,this%eqns%rhs(i)) &
+        !                                 *this%expenergies*this%hamilt%sumstateprodscorc(:,j))
+        !         this%eqns%jacobian(i,j) = &
+        !                 1.d0/this%eqns%corrlvalue(this%eqns%lhs(i))*lhsderivativeterm &
+        !               - 1.d0/this%eqns%corrlvalue(this%eqns%rhs(i))*rhsderivativeterm
+        !     enddo
+        ! enddo
         do i = 1,this%eqns%neqns
+            lhs_i = this%eqns%lhs(i)
+            rhs_i = this%eqns%rhs(i)
             do j = 1,this%eqns%neqns
-                lhsderivativeterm = sum(this%eqns%stateprods(:,this%eqns%lhs(i)) &
-                                        *this%expenergies*this%hamilt%sumstateprodscorc(:,j))
-                rhsderivativeterm = sum(this%eqns%stateprods(:,this%eqns%rhs(i)) &
-                                        *this%expenergies*this%hamilt%sumstateprodscorc(:,j))
-                this%eqns%jacobian(i,j) = 1.d0/this%eqns%corrlvalue(this%eqns%lhs(i))*lhsderivativeterm &
-                    - 1.d0/this%eqns%corrlvalue(this%eqns%rhs(i))*rhsderivativeterm
+                lhsderivativeterm = 0.
+                rhsderivativeterm = 0.
+                tmp_var1 = 0.
+                tmp_var2 = 0.
+                ! !$OMP SIMD
+                do k = 1,2**this%nsites,2
+                    tmp_var1 = this%expenergies(k) * this%hamilt%sumstateprodscorc(k, j)
+                    tmp_var2 = this%expenergies(k + 1) * this%hamilt%sumstateprodscorc(k + 1, j)
+                    lhsderivativeterm = lhsderivativeterm &
+                                    + this%eqns%stateprods(k,     lhs_i) * tmp_var1 &
+                                    + this%eqns%stateprods(k + 1, lhs_i) * tmp_var2
+                    rhsderivativeterm = rhsderivativeterm &
+                                    + this%eqns%stateprods(k,     rhs_i) * tmp_var1 &
+                                    + this%eqns%stateprods(k + 1, rhs_i) * tmp_var2
+                enddo
+                ! !$OMP END SIMD
+                this%eqns%jacobian(i,j) = &
+                        1.d0/this%eqns%corrlvalue(lhs_i)*lhsderivativeterm &
+                      - 1.d0/this%eqns%corrlvalue(rhs_i)*rhsderivativeterm
             enddo
         enddo
         this%eqns%jacobian = -1/(kboltz*this%temp)*this%eqns%jacobian
+        call cpu_time(t8) !!!
+        write(*,*) 'Elapsed CPU-time (residual 4)',t8-t7, this%eqns%neqns
 
         return
     
