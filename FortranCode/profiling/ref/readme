@@ -1,0 +1,7 @@
+This folder contains a reference performance measurements for the MKA code. Results in "gprof" and "memory"
+folders correspond to the compilartion with -O0 flags.
+
+Used hardware:
+	Machine: Cartesius 
+	CPU: Intel(R) Xeon(R) CPU E5-2690 v3 @ 2.60GHz (Haswell)
+	RAM: 64GB 

@@ -1,0 +1,294 @@
+Flat profile:
+
+Each sample counts as 0.01 seconds.
+  %   cumulative   self              self     total           
+ time   seconds   seconds    calls   s/call   s/call  name    
+ 82.22    200.72   200.72      880     0.23     0.28  __meso_approx_MOD_calculate_residuals
+ 17.67    243.85    43.13      880     0.05     0.05  __meso_approx_MOD_calculate_energies
+  0.10    244.09     0.24        1     0.24     0.24  __meso_approx_MOD_populate_allstates
+  0.00    244.10     0.01     3760     0.00     0.00  __nrutil_MOD_outerprod_d
+  0.00    244.11     0.01      376     0.00     0.00  ludcmp_
+  0.00    244.12     0.01     1364     0.00     0.00  polint_
+  0.00    244.12     0.01                             __parser_module_MOD_getrecord
+  0.00    244.12     0.00     3760     0.00     0.00  __nrutil_MOD_imaxloc_d
+  0.00    244.12     0.00     1784     0.00     0.00  __nrutil_MOD_swap_dv
+  0.00    244.12     0.00     1364     0.00     0.00  __nrutil_MOD_assert_eq2
+  0.00    244.12     0.00     1364     0.00     0.00  __nrutil_MOD_iminloc_d
+  0.00    244.12     0.00      878     0.00     0.00  __nrutil_MOD_vabs_d
+  0.00    244.12     0.00      752     0.00     0.00  __nrutil_MOD_assert_eq3
+  0.00    244.12     0.00      503     0.00     0.28  __fminln_MOD_fmin
+  0.00    244.12     0.00      503     0.00     0.28  funcv_
+  0.00    244.12     0.00      376     0.00     0.00  __nrutil_MOD_assert_eq4
+  0.00    244.12     0.00      376     0.00     0.28  jacobian_
+  0.00    244.12     0.00      376     0.00     0.28  lnsrch_
+  0.00    244.12     0.00      376     0.00     0.00  lubksb_
+  0.00    244.12     0.00      358     0.00     0.00  __parser_module_MOD_int2str
+  0.00    244.12     0.00      358     0.00     0.00  __parser_module_MOD_remove_leading_blanks
+  0.00    244.12     0.00      127     0.00     1.92  newt_
+  0.00    244.12     0.00      126     0.00     0.00  initialguessescontinuation.3499
+  0.00    244.12     0.00        1     0.00   244.12  MAIN__
+  0.00    244.12     0.00        1     0.00     0.24  __meso_approx_MOD_approx_initialise
+  0.00    244.12     0.00        1     0.00     0.00  __meso_approx_MOD_approx_print
+  0.00    244.12     0.00        1     0.00     0.24  approx_initialise_k3nnc2_
+
+ %         the percentage of the total running time of the
+time       program used by this function.
+
+cumulative a running sum of the number of seconds accounted
+ seconds   for by this function and those listed above it.
+
+ self      the number of seconds accounted for by this
+seconds    function alone.  This is the major sort for this
+           listing.
+
+calls      the number of times this function was invoked, if
+           this function is profiled, else blank.
+
+ self      the average number of milliseconds spent in this
+ms/call    function per call, if this function is profiled,
+	   else blank.
+
+ total     the average number of milliseconds spent in this
+ms/call    function and its descendents per call, if this
+	   function is profiled, else blank.
+
+name       the name of the function.  This is the minor sort
+           for this listing. The index shows the location of
+	   the function in the gprof listing. If the index is
+	   in parenthesis it shows where it would appear in
+	   the gprof listing if it were to be printed.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
+
+		     Call graph (explanation follows)
+
+
+granularity: each sample hit covers 2 byte(s) for 0.00% of 244.12 seconds
+
+index % time    self  children    called     name
+                0.00  244.12       1/1           main [2]
+[1]    100.0    0.00  244.12       1         MAIN__ [1]
+                0.00  243.59     127/127         newt_ [4]
+                0.23    0.05       1/880         __meso_approx_MOD_calculate_residuals [3]
+                0.00    0.24       1/1           __meso_approx_MOD_approx_initialise [11]
+                0.00    0.01     126/126         initialguessescontinuation.3499 [16]
+                0.00    0.00     253/358         __parser_module_MOD_int2str [33]
+                0.00    0.00       1/1           __meso_approx_MOD_approx_print [35]
+-----------------------------------------------
+                                                 <spontaneous>
+[2]    100.0    0.00  244.12                 main [2]
+                0.00  244.12       1/1           MAIN__ [1]
+-----------------------------------------------
+                0.23    0.05       1/880         MAIN__ [1]
+               85.76   18.43     376/880         jacobian_ [7]
+              114.73   24.65     503/880         funcv_ [5]
+[3]     99.9  200.72   43.13     880         __meso_approx_MOD_calculate_residuals [3]
+               43.13    0.00     880/880         __meso_approx_MOD_calculate_energies [9]
+-----------------------------------------------
+                0.00  243.59     127/127         MAIN__ [1]
+[4]     99.8    0.00  243.59     127         newt_ [4]
+                0.00  104.19     376/376         jacobian_ [7]
+                0.00  104.19     376/376         lnsrch_ [8]
+                0.00   35.19     127/503         __fminln_MOD_fmin [6]
+                0.01    0.01     376/376         ludcmp_ [13]
+                0.00    0.00     502/878         __nrutil_MOD_vabs_d [30]
+                0.00    0.00     376/376         lubksb_ [18]
+-----------------------------------------------
+                0.00  139.38     503/503         __fminln_MOD_fmin [6]
+[5]     57.1    0.00  139.38     503         funcv_ [5]
+              114.73   24.65     503/880         __meso_approx_MOD_calculate_residuals [3]
+-----------------------------------------------
+                0.00   35.19     127/503         newt_ [4]
+                0.00  104.19     376/503         lnsrch_ [8]
+[6]     57.1    0.00  139.38     503         __fminln_MOD_fmin [6]
+                0.00  139.38     503/503         funcv_ [5]
+-----------------------------------------------
+                0.00  104.19     376/376         newt_ [4]
+[7]     42.7    0.00  104.19     376         jacobian_ [7]
+               85.76   18.43     376/880         __meso_approx_MOD_calculate_residuals [3]
+-----------------------------------------------
+                0.00  104.19     376/376         newt_ [4]
+[8]     42.7    0.00  104.19     376         lnsrch_ [8]
+                0.00  104.19     376/503         __fminln_MOD_fmin [6]
+                0.00    0.00     376/376         __nrutil_MOD_assert_eq4 [32]
+                0.00    0.00     376/878         __nrutil_MOD_vabs_d [30]
+-----------------------------------------------
+               43.13    0.00     880/880         __meso_approx_MOD_calculate_residuals [3]
+[9]     17.7   43.13    0.00     880         __meso_approx_MOD_calculate_energies [9]
+-----------------------------------------------
+                0.00    0.24       1/1           __meso_approx_MOD_approx_initialise [11]
+[10]     0.1    0.00    0.24       1         approx_initialise_k3nnc2_ [10]
+                0.24    0.00       1/1           __meso_approx_MOD_populate_allstates [12]
+-----------------------------------------------
+                0.00    0.24       1/1           MAIN__ [1]
+[11]     0.1    0.00    0.24       1         __meso_approx_MOD_approx_initialise [11]
+                0.00    0.24       1/1           approx_initialise_k3nnc2_ [10]
+-----------------------------------------------
+                0.24    0.00       1/1           approx_initialise_k3nnc2_ [10]
+[12]     0.1    0.24    0.00       1         __meso_approx_MOD_populate_allstates [12]
+-----------------------------------------------
+                0.01    0.01     376/376         newt_ [4]
+[13]     0.0    0.01    0.01     376         ludcmp_ [13]
+                0.01    0.00    3760/3760        __nrutil_MOD_outerprod_d [14]
+                0.00    0.00    3760/3760        __nrutil_MOD_imaxloc_d [26]
+                0.00    0.00    1784/1784        __nrutil_MOD_swap_dv [27]
+                0.00    0.00     376/752         __nrutil_MOD_assert_eq3 [31]
+-----------------------------------------------
+                0.01    0.00    3760/3760        ludcmp_ [13]
+[14]     0.0    0.01    0.00    3760         __nrutil_MOD_outerprod_d [14]
+-----------------------------------------------
+                0.01    0.00    1364/1364        initialguessescontinuation.3499 [16]
+[15]     0.0    0.01    0.00    1364         polint_ [15]
+                0.00    0.00    1364/1364        __nrutil_MOD_assert_eq2 [28]
+                0.00    0.00    1364/1364        __nrutil_MOD_iminloc_d [29]
+-----------------------------------------------
+                0.00    0.01     126/126         MAIN__ [1]
+[16]     0.0    0.00    0.01     126         initialguessescontinuation.3499 [16]
+                0.01    0.00    1364/1364        polint_ [15]
+-----------------------------------------------
+                                                 <spontaneous>
+[17]     0.0    0.01    0.00                 __parser_module_MOD_getrecord [17]
+-----------------------------------------------
+                0.00    0.00     376/376         newt_ [4]
+[18]     0.0    0.00    0.00     376         lubksb_ [18]
+                0.00    0.00     376/752         __nrutil_MOD_assert_eq3 [31]
+-----------------------------------------------
+                0.00    0.00    3760/3760        ludcmp_ [13]
+[26]     0.0    0.00    0.00    3760         __nrutil_MOD_imaxloc_d [26]
+-----------------------------------------------
+                0.00    0.00    1784/1784        ludcmp_ [13]
+[27]     0.0    0.00    0.00    1784         __nrutil_MOD_swap_dv [27]
+-----------------------------------------------
+                0.00    0.00    1364/1364        polint_ [15]
+[28]     0.0    0.00    0.00    1364         __nrutil_MOD_assert_eq2 [28]
+-----------------------------------------------
+                0.00    0.00    1364/1364        polint_ [15]
+[29]     0.0    0.00    0.00    1364         __nrutil_MOD_iminloc_d [29]
+-----------------------------------------------
+                0.00    0.00     376/878         lnsrch_ [8]
+                0.00    0.00     502/878         newt_ [4]
+[30]     0.0    0.00    0.00     878         __nrutil_MOD_vabs_d [30]
+-----------------------------------------------
+                0.00    0.00     376/752         lubksb_ [18]
+                0.00    0.00     376/752         ludcmp_ [13]
+[31]     0.0    0.00    0.00     752         __nrutil_MOD_assert_eq3 [31]
+-----------------------------------------------
+                0.00    0.00     376/376         lnsrch_ [8]
+[32]     0.0    0.00    0.00     376         __nrutil_MOD_assert_eq4 [32]
+-----------------------------------------------
+                0.00    0.00     105/358         __meso_approx_MOD_approx_print [35]
+                0.00    0.00     253/358         MAIN__ [1]
+[33]     0.0    0.00    0.00     358         __parser_module_MOD_int2str [33]
+                0.00    0.00     358/358         __parser_module_MOD_remove_leading_blanks [34]
+-----------------------------------------------
+                0.00    0.00     358/358         __parser_module_MOD_int2str [33]
+[34]     0.0    0.00    0.00     358         __parser_module_MOD_remove_leading_blanks [34]
+-----------------------------------------------
+                0.00    0.00       1/1           MAIN__ [1]
+[35]     0.0    0.00    0.00       1         __meso_approx_MOD_approx_print [35]
+                0.00    0.00     105/358         __parser_module_MOD_int2str [33]
+-----------------------------------------------
+
+ This table describes the call tree of the program, and was sorted by
+ the total amount of time spent in each function and its children.
+
+ Each entry in this table consists of several lines.  The line with the
+ index number at the left hand margin lists the current function.
+ The lines above it list the functions that called this function,
+ and the lines below it list the functions this one called.
+ This line lists:
+     index	A unique number given to each element of the table.
+		Index numbers are sorted numerically.
+		The index number is printed next to every function name so
+		it is easier to look up where the function is in the table.
+
+     % time	This is the percentage of the `total' time that was spent
+		in this function and its children.  Note that due to
+		different viewpoints, functions excluded by options, etc,
+		these numbers will NOT add up to 100%.
+
+     self	This is the total amount of time spent in this function.
+
+     children	This is the total amount of time propagated into this
+		function by its children.
+
+     called	This is the number of times the function was called.
+		If the function called itself recursively, the number
+		only includes non-recursive calls, and is followed by
+		a `+' and the number of recursive calls.
+
+     name	The name of the current function.  The index number is
+		printed after it.  If the function is a member of a
+		cycle, the cycle number is printed between the
+		function's name and the index number.
+
+
+ For the function's parents, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the function into this parent.
+
+     children	This is the amount of time that was propagated from
+		the function's children into this parent.
+
+     called	This is the number of times this parent called the
+		function `/' the total number of times the function
+		was called.  Recursive calls to the function are not
+		included in the number after the `/'.
+
+     name	This is the name of the parent.  The parent's index
+		number is printed after it.  If the parent is a
+		member of a cycle, the cycle number is printed between
+		the name and the index number.
+
+ If the parents of the function cannot be determined, the word
+ `<spontaneous>' is printed in the `name' field, and all the other
+ fields are blank.
+
+ For the function's children, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the child into the function.
+
+     children	This is the amount of time that was propagated from the
+		child's children to the function.
+
+     called	This is the number of times the function called
+		this child `/' the total number of times the child
+		was called.  Recursive calls by the child are not
+		listed in the number after the `/'.
+
+     name	This is the name of the child.  The child's index
+		number is printed after it.  If the child is a
+		member of a cycle, the cycle number is printed
+		between the name and the index number.
+
+ If there are any cycles (circles) in the call graph, there is an
+ entry for the cycle-as-a-whole.  This entry shows who called the
+ cycle (as parents) and the members of the cycle (as children.)
+ The `+' recursive calls entry shows the number of function calls that
+ were internal to the cycle, and the calls entry for each member shows,
+ for that member, how many times it was called from other members of
+ the cycle.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
+
+Index by function name
+
+   [1] MAIN__                 [32] __nrutil_MOD_assert_eq4 [10] approx_initialise_k3nnc2_
+   [6] __fminln_MOD_fmin      [26] __nrutil_MOD_imaxloc_d  [5] funcv_
+  [11] __meso_approx_MOD_approx_initialise [29] __nrutil_MOD_iminloc_d [16] initialguessescontinuation.3499
+  [35] __meso_approx_MOD_approx_print [14] __nrutil_MOD_outerprod_d [7] jacobian_
+   [9] __meso_approx_MOD_calculate_energies [27] __nrutil_MOD_swap_dv [8] lnsrch_
+   [3] __meso_approx_MOD_calculate_residuals [30] __nrutil_MOD_vabs_d [18] lubksb_
+  [12] __meso_approx_MOD_populate_allstates [17] __parser_module_MOD_getrecord [13] ludcmp_
+  [28] __nrutil_MOD_assert_eq2 [33] __parser_module_MOD_int2str [4] newt_
+  [31] __nrutil_MOD_assert_eq3 [34] __parser_module_MOD_remove_leading_blanks [15] polint_

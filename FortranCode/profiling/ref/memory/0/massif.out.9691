@@ -1,0 +1,847 @@
+desc: (none)
+cmd: ./mesoapprox_0.x
+time_unit: i
+#-----------
+snapshot=0
+#-----------
+time=0
+mem_heap_B=0
+mem_heap_extra_B=0
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=1
+#-----------
+time=1615466
+mem_heap_B=64129
+mem_heap_extra_B=831
+mem_stacks_B=0
+heap_tree=peak
+n12: 64129 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n4: 39312 0x4040F03: _gfortrani_xmalloc (memory.c:42)
+  n1: 29232 0x41A38D9: _gfortrani_parse_format (format.c:1319)
+   n7: 29232 0x41B2DB6: data_transfer_init (transfer.c:2793)
+    n1: 8352 0x406E05: __meso_approx_MOD_approx_print (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+     n1: 8352 0x40237E: MAIN__ (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+      n0: 8352 0x4037AE: main (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+    n1: 4176 0x4029AD: MAIN__ (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+     n0: 4176 0x4037AE: main (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+    n1: 4176 0x403325: MAIN__ (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+     n0: 4176 0x4037AE: main (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+    n1: 4176 0x4075EF: __meso_approx_MOD_approx_print (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+     n1: 4176 0x40237E: MAIN__ (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+      n0: 4176 0x4037AE: main (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+    n1: 4176 0x40AB63: newt_ (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+     n1: 4176 0x40253E: MAIN__ (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+      n0: 4176 0x4037AE: main (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+    n1: 4176 0x40B0F0: newt_ (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+     n1: 4176 0x40253E: MAIN__ (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+      n0: 4176 0x4037AE: main (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+    n0: 0 in 1 place, below massif's threshold (1.00%)
+  n1: 8192 0x41B573F: fd_to_stream (unix.c:760)
+   n1: 8192 0x41B64CF: _gfortrani_open_external (unix.c:1560)
+    n1: 8192 0x41AC11A: _gfortrani_new_unit (open.c:534)
+     n2: 8192 0x41AC9C3: _gfortran_st_open (open.c:704)
+      n1: 8192 0x402C89: MAIN__ (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+       n0: 8192 0x4037AE: main (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+      n0: 0 in 1 place, below massif's threshold (1.00%)
+  n1: 1792 0x41BCD06: _gfortrani_fbuf_init (fbuf.c:42)
+   n0: 1792 in 5 places, all below massif's threshold (1.00%)
+  n0: 96 in 1 place, below massif's threshold (1.00%)
+ n2: 5576 0x4040FA1: _gfortrani_xcalloc (memory.c:83)
+  n6: 5208 0x41B4295: insert_unit (unit.c:229)
+   n2: 1488 0x41B44F6: get_gfc_unit (unit.c:350)
+    n2: 744 0x41AC956: _gfortran_st_open (open.c:875)
+     n1: 744 0x402C89: MAIN__ (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+      n0: 744 0x4037AE: main (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+     n0: 0 in 1 place, below massif's threshold (1.00%)
+    n1: 744 0x41B4E12: _gfortrani_get_unit (unit.c:551)
+     n1: 744 0x41B2B8E: data_transfer_init (transfer.c:2680)
+      n1: 744 0x41C443: __parser_module_MOD_int2str (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+       n1: 744 0x406D0B: __meso_approx_MOD_approx_print (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+        n1: 744 0x40237E: MAIN__ (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+         n0: 744 0x4037AE: main (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+   n1: 744 0x41B48BE: _gfortrani_init_units (unit.c:599)
+    n1: 744 0x4040016: init (main.c:98)
+     n1: 744 0x400F991: _dl_init (in /usr/lib64/ld-2.17.so)
+      n0: 744 0x4001178: ??? (in /usr/lib64/ld-2.17.so)
+   n1: 744 0x41B4997: _gfortrani_init_units (unit.c:631)
+    n1: 744 0x4040016: init (main.c:98)
+     n1: 744 0x400F991: _dl_init (in /usr/lib64/ld-2.17.so)
+      n0: 744 0x4001178: ??? (in /usr/lib64/ld-2.17.so)
+   n1: 744 0x41B4A62: _gfortrani_init_units (unit.c:662)
+    n1: 744 0x4040016: init (main.c:98)
+     n1: 744 0x400F991: _dl_init (in /usr/lib64/ld-2.17.so)
+      n0: 744 0x4001178: ??? (in /usr/lib64/ld-2.17.so)
+   n1: 744 0x41B4B32: _gfortrani_init_units (unit.c:691)
+    n1: 744 0x4040016: init (main.c:98)
+     n1: 744 0x400F991: _dl_init (in /usr/lib64/ld-2.17.so)
+      n0: 744 0x4001178: ??? (in /usr/lib64/ld-2.17.so)
+   n1: 744 0x41B4B3C: _gfortrani_init_units (unit.c:693)
+    n1: 744 0x4040016: init (main.c:98)
+     n1: 744 0x400F991: _dl_init (in /usr/lib64/ld-2.17.so)
+      n0: 744 0x4001178: ??? (in /usr/lib64/ld-2.17.so)
+  n0: 368 in 3 places, all below massif's threshold (1.00%)
+ n1: 4096 0x51DA9BA: register_printf_specifier (in /usr/lib64/libc-2.17.so)
+  n1: 4096 0x514B9B0: register_printf_flt128 (quadmath-printf.c:396)
+   n1: 4096 0x400F991: _dl_init (in /usr/lib64/ld-2.17.so)
+    n0: 4096 0x4001178: ??? (in /usr/lib64/ld-2.17.so)
+ n1: 3584 0x409F36: __meso_approx_MOD_populate_allstates (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+  n1: 3584 0x41EAA6: approx_initialise_bpec_ (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+   n1: 3584 0x407947: __meso_approx_MOD_approx_initialise (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+    n1: 3584 0x402340: MAIN__ (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+     n0: 3584 0x4037AE: main (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+ n1: 2048 0x407BDB: __meso_approx_MOD_calculate_residuals (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+  n1: 2048 0x4023A8: MAIN__ (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+   n0: 2048 0x4037AE: main (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+ n1: 2040 0x51DC753: register_printf_modifier (in /usr/lib64/libc-2.17.so)
+  n1: 2040 0x514B989: register_printf_flt128 (quadmath-printf.c:393)
+   n1: 2040 0x400F991: _dl_init (in /usr/lib64/ld-2.17.so)
+    n0: 2040 0x4001178: ??? (in /usr/lib64/ld-2.17.so)
+ n1: 1984 0x51DCA0D: register_printf_type (in /usr/lib64/libc-2.17.so)
+  n1: 1984 0x514B96E: register_printf_flt128 (quadmath-printf.c:390)
+   n1: 1984 0x400F991: _dl_init (in /usr/lib64/ld-2.17.so)
+    n0: 1984 0x4001178: ??? (in /usr/lib64/ld-2.17.so)
+ n0: 1393 in 48 places, all below massif's threshold (1.00%)
+ n1: 1024 0x408041: __meso_approx_MOD_calculate_residuals (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+  n1: 1024 0x4023A8: MAIN__ (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+   n0: 1024 0x4037AE: main (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+ n1: 1024 0x4093AF: __meso_approx_MOD_calculate_energies (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+  n1: 1024 0x408129: __meso_approx_MOD_calculate_residuals (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+   n1: 1024 0x4023A8: MAIN__ (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+    n0: 1024 0x4037AE: main (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+ n1: 1024 0x4097E3: __meso_approx_MOD_calculate_energies (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+  n1: 1024 0x408129: __meso_approx_MOD_calculate_residuals (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+   n1: 1024 0x4023A8: MAIN__ (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+    n0: 1024 0x4037AE: main (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+ n1: 1024 0x41EBAF: approx_initialise_bpec_ (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+  n1: 1024 0x407947: __meso_approx_MOD_approx_initialise (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+   n1: 1024 0x402340: MAIN__ (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+    n0: 1024 0x4037AE: main (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+#-----------
+snapshot=2
+#-----------
+time=2648965
+mem_heap_B=64320
+mem_heap_extra_B=912
+mem_stacks_B=0
+heap_tree=detailed
+n12: 64320 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n4: 39312 0x4040F03: _gfortrani_xmalloc (memory.c:42)
+  n1: 29232 0x41A38D9: _gfortrani_parse_format (format.c:1319)
+   n7: 29232 0x41B2DB6: data_transfer_init (transfer.c:2793)
+    n1: 8352 0x406E05: __meso_approx_MOD_approx_print (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+     n1: 8352 0x40237E: MAIN__ (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+      n0: 8352 0x4037AE: main (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+    n1: 4176 0x4029AD: MAIN__ (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+     n0: 4176 0x4037AE: main (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+    n1: 4176 0x403325: MAIN__ (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+     n0: 4176 0x4037AE: main (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+    n1: 4176 0x4075EF: __meso_approx_MOD_approx_print (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+     n1: 4176 0x40237E: MAIN__ (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+      n0: 4176 0x4037AE: main (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+    n1: 4176 0x40AB63: newt_ (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+     n1: 4176 0x40253E: MAIN__ (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+      n0: 4176 0x4037AE: main (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+    n1: 4176 0x40B0F0: newt_ (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+     n1: 4176 0x40253E: MAIN__ (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+      n0: 4176 0x4037AE: main (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+    n0: 0 in 1 place, below massif's threshold (1.00%)
+  n1: 8192 0x41B573F: fd_to_stream (unix.c:760)
+   n1: 8192 0x41B64CF: _gfortrani_open_external (unix.c:1560)
+    n1: 8192 0x41AC11A: _gfortrani_new_unit (open.c:534)
+     n2: 8192 0x41AC9C3: _gfortran_st_open (open.c:704)
+      n1: 8192 0x402C89: MAIN__ (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+       n0: 8192 0x4037AE: main (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+      n0: 0 in 1 place, below massif's threshold (1.00%)
+  n1: 1792 0x41BCD06: _gfortrani_fbuf_init (fbuf.c:42)
+   n0: 1792 in 5 places, all below massif's threshold (1.00%)
+  n0: 96 in 1 place, below massif's threshold (1.00%)
+ n2: 5576 0x4040FA1: _gfortrani_xcalloc (memory.c:83)
+  n6: 5208 0x41B4295: insert_unit (unit.c:229)
+   n2: 1488 0x41B44F6: get_gfc_unit (unit.c:350)
+    n2: 744 0x41AC956: _gfortran_st_open (open.c:875)
+     n1: 744 0x402C89: MAIN__ (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+      n0: 744 0x4037AE: main (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+     n0: 0 in 1 place, below massif's threshold (1.00%)
+    n1: 744 0x41B4E12: _gfortrani_get_unit (unit.c:551)
+     n1: 744 0x41B2B8E: data_transfer_init (transfer.c:2680)
+      n1: 744 0x41C443: __parser_module_MOD_int2str (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+       n1: 744 0x406D0B: __meso_approx_MOD_approx_print (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+        n1: 744 0x40237E: MAIN__ (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+         n0: 744 0x4037AE: main (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+   n1: 744 0x41B48BE: _gfortrani_init_units (unit.c:599)
+    n1: 744 0x4040016: init (main.c:98)
+     n1: 744 0x400F991: _dl_init (in /usr/lib64/ld-2.17.so)
+      n0: 744 0x4001178: ??? (in /usr/lib64/ld-2.17.so)
+   n1: 744 0x41B4997: _gfortrani_init_units (unit.c:631)
+    n1: 744 0x4040016: init (main.c:98)
+     n1: 744 0x400F991: _dl_init (in /usr/lib64/ld-2.17.so)
+      n0: 744 0x4001178: ??? (in /usr/lib64/ld-2.17.so)
+   n1: 744 0x41B4A62: _gfortrani_init_units (unit.c:662)
+    n1: 744 0x4040016: init (main.c:98)
+     n1: 744 0x400F991: _dl_init (in /usr/lib64/ld-2.17.so)
+      n0: 744 0x4001178: ??? (in /usr/lib64/ld-2.17.so)
+   n1: 744 0x41B4B32: _gfortrani_init_units (unit.c:691)
+    n1: 744 0x4040016: init (main.c:98)
+     n1: 744 0x400F991: _dl_init (in /usr/lib64/ld-2.17.so)
+      n0: 744 0x4001178: ??? (in /usr/lib64/ld-2.17.so)
+   n1: 744 0x41B4B3C: _gfortrani_init_units (unit.c:693)
+    n1: 744 0x4040016: init (main.c:98)
+     n1: 744 0x400F991: _dl_init (in /usr/lib64/ld-2.17.so)
+      n0: 744 0x4001178: ??? (in /usr/lib64/ld-2.17.so)
+  n0: 368 in 3 places, all below massif's threshold (1.00%)
+ n1: 4096 0x51DA9BA: register_printf_specifier (in /usr/lib64/libc-2.17.so)
+  n1: 4096 0x514B9B0: register_printf_flt128 (quadmath-printf.c:396)
+   n1: 4096 0x400F991: _dl_init (in /usr/lib64/ld-2.17.so)
+    n0: 4096 0x4001178: ??? (in /usr/lib64/ld-2.17.so)
+ n1: 3584 0x409F36: __meso_approx_MOD_populate_allstates (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+  n1: 3584 0x41EAA6: approx_initialise_bpec_ (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+   n1: 3584 0x407947: __meso_approx_MOD_approx_initialise (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+    n1: 3584 0x402340: MAIN__ (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+     n0: 3584 0x4037AE: main (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+ n1: 2048 0x407BDB: __meso_approx_MOD_calculate_residuals (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+  n1: 2048 0x4023A8: MAIN__ (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+   n0: 2048 0x4037AE: main (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+ n1: 2040 0x51DC753: register_printf_modifier (in /usr/lib64/libc-2.17.so)
+  n1: 2040 0x514B989: register_printf_flt128 (quadmath-printf.c:393)
+   n1: 2040 0x400F991: _dl_init (in /usr/lib64/ld-2.17.so)
+    n0: 2040 0x4001178: ??? (in /usr/lib64/ld-2.17.so)
+ n1: 1984 0x51DCA0D: register_printf_type (in /usr/lib64/libc-2.17.so)
+  n1: 1984 0x514B96E: register_printf_flt128 (quadmath-printf.c:390)
+   n1: 1984 0x400F991: _dl_init (in /usr/lib64/ld-2.17.so)
+    n0: 1984 0x4001178: ??? (in /usr/lib64/ld-2.17.so)
+ n0: 1584 in 56 places, all below massif's threshold (1.00%)
+ n1: 1024 0x408041: __meso_approx_MOD_calculate_residuals (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+  n1: 1024 0x4023A8: MAIN__ (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+   n0: 1024 0x4037AE: main (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+ n1: 1024 0x4093AF: __meso_approx_MOD_calculate_energies (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+  n1: 1024 0x408129: __meso_approx_MOD_calculate_residuals (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+   n1: 1024 0x4023A8: MAIN__ (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+    n0: 1024 0x4037AE: main (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+ n1: 1024 0x4097E3: __meso_approx_MOD_calculate_energies (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+  n1: 1024 0x408129: __meso_approx_MOD_calculate_residuals (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+   n1: 1024 0x4023A8: MAIN__ (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+    n0: 1024 0x4037AE: main (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+ n1: 1024 0x41EBAF: approx_initialise_bpec_ (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+  n1: 1024 0x407947: __meso_approx_MOD_approx_initialise (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+   n1: 1024 0x402340: MAIN__ (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+    n0: 1024 0x4037AE: main (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+#-----------
+snapshot=3
+#-----------
+time=3978198
+mem_heap_B=64336
+mem_heap_extra_B=920
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=4
+#-----------
+time=4583337
+mem_heap_B=64320
+mem_heap_extra_B=912
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=5
+#-----------
+time=5971646
+mem_heap_B=64320
+mem_heap_extra_B=912
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=6
+#-----------
+time=6887419
+mem_heap_B=64336
+mem_heap_extra_B=920
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=7
+#-----------
+time=7906371
+mem_heap_B=64320
+mem_heap_extra_B=912
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=8
+#-----------
+time=9375978
+mem_heap_B=64336
+mem_heap_extra_B=920
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=9
+#-----------
+time=10393976
+mem_heap_B=64320
+mem_heap_extra_B=912
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=10
+#-----------
+time=11449984
+mem_heap_B=64336
+mem_heap_extra_B=920
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=11
+#-----------
+time=12279836
+mem_heap_B=64336
+mem_heap_extra_B=920
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=12
+#-----------
+time=13109219
+mem_heap_B=64336
+mem_heap_extra_B=920
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=13
+#-----------
+time=13939233
+mem_heap_B=64336
+mem_heap_extra_B=920
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=14
+#-----------
+time=14768339
+mem_heap_B=64336
+mem_heap_extra_B=920
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=15
+#-----------
+time=15786261
+mem_heap_B=64320
+mem_heap_extra_B=912
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=16
+#-----------
+time=17028792
+mem_heap_B=64320
+mem_heap_extra_B=912
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=17
+#-----------
+time=17857948
+mem_heap_B=64320
+mem_heap_extra_B=912
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=18
+#-----------
+time=19101699
+mem_heap_B=64320
+mem_heap_extra_B=912
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=19
+#-----------
+time=19931472
+mem_heap_B=64320
+mem_heap_extra_B=912
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=20
+#-----------
+time=21176221
+mem_heap_B=64320
+mem_heap_extra_B=912
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=21
+#-----------
+time=22084907
+mem_heap_B=64336
+mem_heap_extra_B=920
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=22
+#-----------
+time=23329219
+mem_heap_B=64336
+mem_heap_extra_B=920
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=23
+#-----------
+time=24574412
+mem_heap_B=64336
+mem_heap_extra_B=920
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=24
+#-----------
+time=25818904
+mem_heap_B=64336
+mem_heap_extra_B=920
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=25
+#-----------
+time=27064525
+mem_heap_B=64336
+mem_heap_extra_B=920
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=26
+#-----------
+time=28308597
+mem_heap_B=64336
+mem_heap_extra_B=920
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=27
+#-----------
+time=29552704
+mem_heap_B=64336
+mem_heap_extra_B=920
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=28
+#-----------
+time=30305092
+mem_heap_B=64320
+mem_heap_extra_B=912
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=29
+#-----------
+time=31552255
+mem_heap_B=64320
+mem_heap_extra_B=912
+mem_stacks_B=0
+heap_tree=detailed
+n12: 64320 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n4: 39312 0x4040F03: _gfortrani_xmalloc (memory.c:42)
+  n1: 29232 0x41A38D9: _gfortrani_parse_format (format.c:1319)
+   n7: 29232 0x41B2DB6: data_transfer_init (transfer.c:2793)
+    n1: 8352 0x406E05: __meso_approx_MOD_approx_print (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+     n1: 8352 0x40237E: MAIN__ (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+      n0: 8352 0x4037AE: main (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+    n1: 4176 0x4029AD: MAIN__ (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+     n0: 4176 0x4037AE: main (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+    n1: 4176 0x403325: MAIN__ (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+     n0: 4176 0x4037AE: main (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+    n1: 4176 0x4075EF: __meso_approx_MOD_approx_print (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+     n1: 4176 0x40237E: MAIN__ (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+      n0: 4176 0x4037AE: main (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+    n1: 4176 0x40AB63: newt_ (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+     n1: 4176 0x40253E: MAIN__ (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+      n0: 4176 0x4037AE: main (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+    n1: 4176 0x40B0F0: newt_ (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+     n1: 4176 0x40253E: MAIN__ (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+      n0: 4176 0x4037AE: main (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+    n0: 0 in 1 place, below massif's threshold (1.00%)
+  n1: 8192 0x41B573F: fd_to_stream (unix.c:760)
+   n1: 8192 0x41B64CF: _gfortrani_open_external (unix.c:1560)
+    n1: 8192 0x41AC11A: _gfortrani_new_unit (open.c:534)
+     n2: 8192 0x41AC9C3: _gfortran_st_open (open.c:704)
+      n1: 8192 0x402C89: MAIN__ (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+       n0: 8192 0x4037AE: main (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+      n0: 0 in 1 place, below massif's threshold (1.00%)
+  n1: 1792 0x41BCD06: _gfortrani_fbuf_init (fbuf.c:42)
+   n0: 1792 in 5 places, all below massif's threshold (1.00%)
+  n0: 96 in 1 place, below massif's threshold (1.00%)
+ n2: 5576 0x4040FA1: _gfortrani_xcalloc (memory.c:83)
+  n6: 5208 0x41B4295: insert_unit (unit.c:229)
+   n2: 1488 0x41B44F6: get_gfc_unit (unit.c:350)
+    n2: 744 0x41AC956: _gfortran_st_open (open.c:875)
+     n1: 744 0x402C89: MAIN__ (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+      n0: 744 0x4037AE: main (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+     n0: 0 in 1 place, below massif's threshold (1.00%)
+    n1: 744 0x41B4E12: _gfortrani_get_unit (unit.c:551)
+     n1: 744 0x41B2B8E: data_transfer_init (transfer.c:2680)
+      n1: 744 0x41C443: __parser_module_MOD_int2str (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+       n1: 744 0x406D0B: __meso_approx_MOD_approx_print (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+        n1: 744 0x40237E: MAIN__ (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+         n0: 744 0x4037AE: main (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+   n1: 744 0x41B48BE: _gfortrani_init_units (unit.c:599)
+    n1: 744 0x4040016: init (main.c:98)
+     n1: 744 0x400F991: _dl_init (in /usr/lib64/ld-2.17.so)
+      n0: 744 0x4001178: ??? (in /usr/lib64/ld-2.17.so)
+   n1: 744 0x41B4997: _gfortrani_init_units (unit.c:631)
+    n1: 744 0x4040016: init (main.c:98)
+     n1: 744 0x400F991: _dl_init (in /usr/lib64/ld-2.17.so)
+      n0: 744 0x4001178: ??? (in /usr/lib64/ld-2.17.so)
+   n1: 744 0x41B4A62: _gfortrani_init_units (unit.c:662)
+    n1: 744 0x4040016: init (main.c:98)
+     n1: 744 0x400F991: _dl_init (in /usr/lib64/ld-2.17.so)
+      n0: 744 0x4001178: ??? (in /usr/lib64/ld-2.17.so)
+   n1: 744 0x41B4B32: _gfortrani_init_units (unit.c:691)
+    n1: 744 0x4040016: init (main.c:98)
+     n1: 744 0x400F991: _dl_init (in /usr/lib64/ld-2.17.so)
+      n0: 744 0x4001178: ??? (in /usr/lib64/ld-2.17.so)
+   n1: 744 0x41B4B3C: _gfortrani_init_units (unit.c:693)
+    n1: 744 0x4040016: init (main.c:98)
+     n1: 744 0x400F991: _dl_init (in /usr/lib64/ld-2.17.so)
+      n0: 744 0x4001178: ??? (in /usr/lib64/ld-2.17.so)
+  n0: 368 in 3 places, all below massif's threshold (1.00%)
+ n1: 4096 0x51DA9BA: register_printf_specifier (in /usr/lib64/libc-2.17.so)
+  n1: 4096 0x514B9B0: register_printf_flt128 (quadmath-printf.c:396)
+   n1: 4096 0x400F991: _dl_init (in /usr/lib64/ld-2.17.so)
+    n0: 4096 0x4001178: ??? (in /usr/lib64/ld-2.17.so)
+ n1: 3584 0x409F36: __meso_approx_MOD_populate_allstates (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+  n1: 3584 0x41EAA6: approx_initialise_bpec_ (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+   n1: 3584 0x407947: __meso_approx_MOD_approx_initialise (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+    n1: 3584 0x402340: MAIN__ (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+     n0: 3584 0x4037AE: main (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+ n1: 2048 0x407BDB: __meso_approx_MOD_calculate_residuals (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+  n1: 2048 0x4023A8: MAIN__ (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+   n0: 2048 0x4037AE: main (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+ n1: 2040 0x51DC753: register_printf_modifier (in /usr/lib64/libc-2.17.so)
+  n1: 2040 0x514B989: register_printf_flt128 (quadmath-printf.c:393)
+   n1: 2040 0x400F991: _dl_init (in /usr/lib64/ld-2.17.so)
+    n0: 2040 0x4001178: ??? (in /usr/lib64/ld-2.17.so)
+ n1: 1984 0x51DCA0D: register_printf_type (in /usr/lib64/libc-2.17.so)
+  n1: 1984 0x514B96E: register_printf_flt128 (quadmath-printf.c:390)
+   n1: 1984 0x400F991: _dl_init (in /usr/lib64/ld-2.17.so)
+    n0: 1984 0x4001178: ??? (in /usr/lib64/ld-2.17.so)
+ n0: 1584 in 56 places, all below massif's threshold (1.00%)
+ n1: 1024 0x408041: __meso_approx_MOD_calculate_residuals (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+  n1: 1024 0x4023A8: MAIN__ (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+   n0: 1024 0x4037AE: main (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+ n1: 1024 0x4093AF: __meso_approx_MOD_calculate_energies (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+  n1: 1024 0x408129: __meso_approx_MOD_calculate_residuals (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+   n1: 1024 0x4023A8: MAIN__ (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+    n0: 1024 0x4037AE: main (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+ n1: 1024 0x4097E3: __meso_approx_MOD_calculate_energies (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+  n1: 1024 0x408129: __meso_approx_MOD_calculate_residuals (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+   n1: 1024 0x4023A8: MAIN__ (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+    n0: 1024 0x4037AE: main (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+ n1: 1024 0x41EBAF: approx_initialise_bpec_ (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+  n1: 1024 0x407947: __meso_approx_MOD_approx_initialise (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+   n1: 1024 0x402340: MAIN__ (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+    n0: 1024 0x4037AE: main (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+#-----------
+snapshot=30
+#-----------
+time=32797427
+mem_heap_B=64320
+mem_heap_extra_B=912
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=31
+#-----------
+time=34269894
+mem_heap_B=64336
+mem_heap_extra_B=920
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=32
+#-----------
+time=35512656
+mem_heap_B=64336
+mem_heap_extra_B=920
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=33
+#-----------
+time=36755159
+mem_heap_B=64336
+mem_heap_extra_B=920
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=34
+#-----------
+time=37583556
+mem_heap_B=64336
+mem_heap_extra_B=920
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=35
+#-----------
+time=38412571
+mem_heap_B=64336
+mem_heap_extra_B=920
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=36
+#-----------
+time=39241371
+mem_heap_B=64336
+mem_heap_extra_B=920
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=37
+#-----------
+time=40364713
+mem_heap_B=64336
+mem_heap_extra_B=920
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=38
+#-----------
+time=41489072
+mem_heap_B=64336
+mem_heap_extra_B=920
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=39
+#-----------
+time=42613157
+mem_heap_B=64336
+mem_heap_extra_B=920
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=40
+#-----------
+time=43737331
+mem_heap_B=64336
+mem_heap_extra_B=920
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=41
+#-----------
+time=44861112
+mem_heap_B=64336
+mem_heap_extra_B=920
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=42
+#-----------
+time=46399131
+mem_heap_B=64336
+mem_heap_extra_B=920
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=43
+#-----------
+time=47522713
+mem_heap_B=64336
+mem_heap_extra_B=920
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=44
+#-----------
+time=48645729
+mem_heap_B=64336
+mem_heap_extra_B=920
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=45
+#-----------
+time=49354690
+mem_heap_B=64336
+mem_heap_extra_B=920
+mem_stacks_B=0
+heap_tree=detailed
+n12: 64336 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n4: 39312 0x4040F03: _gfortrani_xmalloc (memory.c:42)
+  n1: 29232 0x41A38D9: _gfortrani_parse_format (format.c:1319)
+   n7: 29232 0x41B2DB6: data_transfer_init (transfer.c:2793)
+    n1: 8352 0x406E05: __meso_approx_MOD_approx_print (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+     n1: 8352 0x40237E: MAIN__ (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+      n0: 8352 0x4037AE: main (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+    n1: 4176 0x4029AD: MAIN__ (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+     n0: 4176 0x4037AE: main (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+    n1: 4176 0x403325: MAIN__ (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+     n0: 4176 0x4037AE: main (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+    n1: 4176 0x4075EF: __meso_approx_MOD_approx_print (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+     n1: 4176 0x40237E: MAIN__ (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+      n0: 4176 0x4037AE: main (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+    n1: 4176 0x40AB63: newt_ (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+     n1: 4176 0x40253E: MAIN__ (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+      n0: 4176 0x4037AE: main (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+    n1: 4176 0x40B0F0: newt_ (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+     n1: 4176 0x40253E: MAIN__ (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+      n0: 4176 0x4037AE: main (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+    n0: 0 in 1 place, below massif's threshold (1.00%)
+  n1: 8192 0x41B573F: fd_to_stream (unix.c:760)
+   n1: 8192 0x41B64CF: _gfortrani_open_external (unix.c:1560)
+    n1: 8192 0x41AC11A: _gfortrani_new_unit (open.c:534)
+     n2: 8192 0x41AC9C3: _gfortran_st_open (open.c:704)
+      n1: 8192 0x402C89: MAIN__ (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+       n0: 8192 0x4037AE: main (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+      n0: 0 in 1 place, below massif's threshold (1.00%)
+  n1: 1792 0x41BCD06: _gfortrani_fbuf_init (fbuf.c:42)
+   n0: 1792 in 5 places, all below massif's threshold (1.00%)
+  n0: 96 in 1 place, below massif's threshold (1.00%)
+ n2: 5576 0x4040FA1: _gfortrani_xcalloc (memory.c:83)
+  n6: 5208 0x41B4295: insert_unit (unit.c:229)
+   n2: 1488 0x41B44F6: get_gfc_unit (unit.c:350)
+    n2: 744 0x41AC956: _gfortran_st_open (open.c:875)
+     n1: 744 0x402C89: MAIN__ (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+      n0: 744 0x4037AE: main (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+     n0: 0 in 1 place, below massif's threshold (1.00%)
+    n1: 744 0x41B4E12: _gfortrani_get_unit (unit.c:551)
+     n1: 744 0x41B2B8E: data_transfer_init (transfer.c:2680)
+      n1: 744 0x41C443: __parser_module_MOD_int2str (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+       n1: 744 0x406D0B: __meso_approx_MOD_approx_print (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+        n1: 744 0x40237E: MAIN__ (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+         n0: 744 0x4037AE: main (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+   n1: 744 0x41B48BE: _gfortrani_init_units (unit.c:599)
+    n1: 744 0x4040016: init (main.c:98)
+     n1: 744 0x400F991: _dl_init (in /usr/lib64/ld-2.17.so)
+      n0: 744 0x4001178: ??? (in /usr/lib64/ld-2.17.so)
+   n1: 744 0x41B4997: _gfortrani_init_units (unit.c:631)
+    n1: 744 0x4040016: init (main.c:98)
+     n1: 744 0x400F991: _dl_init (in /usr/lib64/ld-2.17.so)
+      n0: 744 0x4001178: ??? (in /usr/lib64/ld-2.17.so)
+   n1: 744 0x41B4A62: _gfortrani_init_units (unit.c:662)
+    n1: 744 0x4040016: init (main.c:98)
+     n1: 744 0x400F991: _dl_init (in /usr/lib64/ld-2.17.so)
+      n0: 744 0x4001178: ??? (in /usr/lib64/ld-2.17.so)
+   n1: 744 0x41B4B32: _gfortrani_init_units (unit.c:691)
+    n1: 744 0x4040016: init (main.c:98)
+     n1: 744 0x400F991: _dl_init (in /usr/lib64/ld-2.17.so)
+      n0: 744 0x4001178: ??? (in /usr/lib64/ld-2.17.so)
+   n1: 744 0x41B4B3C: _gfortrani_init_units (unit.c:693)
+    n1: 744 0x4040016: init (main.c:98)
+     n1: 744 0x400F991: _dl_init (in /usr/lib64/ld-2.17.so)
+      n0: 744 0x4001178: ??? (in /usr/lib64/ld-2.17.so)
+  n0: 368 in 3 places, all below massif's threshold (1.00%)
+ n1: 4096 0x51DA9BA: register_printf_specifier (in /usr/lib64/libc-2.17.so)
+  n1: 4096 0x514B9B0: register_printf_flt128 (quadmath-printf.c:396)
+   n1: 4096 0x400F991: _dl_init (in /usr/lib64/ld-2.17.so)
+    n0: 4096 0x4001178: ??? (in /usr/lib64/ld-2.17.so)
+ n1: 3584 0x409F36: __meso_approx_MOD_populate_allstates (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+  n1: 3584 0x41EAA6: approx_initialise_bpec_ (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+   n1: 3584 0x407947: __meso_approx_MOD_approx_initialise (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+    n1: 3584 0x402340: MAIN__ (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+     n0: 3584 0x4037AE: main (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+ n1: 2048 0x407BDB: __meso_approx_MOD_calculate_residuals (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+  n1: 2048 0x4023A8: MAIN__ (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+   n0: 2048 0x4037AE: main (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+ n1: 2040 0x51DC753: register_printf_modifier (in /usr/lib64/libc-2.17.so)
+  n1: 2040 0x514B989: register_printf_flt128 (quadmath-printf.c:393)
+   n1: 2040 0x400F991: _dl_init (in /usr/lib64/ld-2.17.so)
+    n0: 2040 0x4001178: ??? (in /usr/lib64/ld-2.17.so)
+ n1: 1984 0x51DCA0D: register_printf_type (in /usr/lib64/libc-2.17.so)
+  n1: 1984 0x514B96E: register_printf_flt128 (quadmath-printf.c:390)
+   n1: 1984 0x400F991: _dl_init (in /usr/lib64/ld-2.17.so)
+    n0: 1984 0x4001178: ??? (in /usr/lib64/ld-2.17.so)
+ n0: 1600 in 56 places, all below massif's threshold (1.00%)
+ n1: 1024 0x408041: __meso_approx_MOD_calculate_residuals (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+  n1: 1024 0x4023A8: MAIN__ (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+   n0: 1024 0x4037AE: main (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+ n1: 1024 0x4093AF: __meso_approx_MOD_calculate_energies (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+  n1: 1024 0x408129: __meso_approx_MOD_calculate_residuals (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+   n1: 1024 0x4023A8: MAIN__ (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+    n0: 1024 0x4037AE: main (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+ n1: 1024 0x4097E3: __meso_approx_MOD_calculate_energies (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+  n1: 1024 0x408129: __meso_approx_MOD_calculate_residuals (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+   n1: 1024 0x4023A8: MAIN__ (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+    n0: 1024 0x4037AE: main (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+ n1: 1024 0x41EBAF: approx_initialise_bpec_ (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+  n1: 1024 0x407947: __meso_approx_MOD_approx_initialise (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+   n1: 1024 0x402340: MAIN__ (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+    n0: 1024 0x4037AE: main (in /nfs/home5/maximm/pragma/MesoscopicKineticApproximations/FortranCode/bin/bin/mesoapprox_0.x)
+#-----------
+snapshot=46
+#-----------
+time=50478258
+mem_heap_B=64336
+mem_heap_extra_B=920
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=47
+#-----------
+time=51305160
+mem_heap_B=64336
+mem_heap_extra_B=920
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=48
+#-----------
+time=52428618
+mem_heap_B=64336
+mem_heap_extra_B=920
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=49
+#-----------
+time=53551357
+mem_heap_B=64336
+mem_heap_extra_B=920
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=50
+#-----------
+time=54170898
+mem_heap_B=64320
+mem_heap_extra_B=912
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=51
+#-----------
+time=54789717
+mem_heap_B=64216
+mem_heap_extra_B=856
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=52
+#-----------
+time=55413440
+mem_heap_B=64320
+mem_heap_extra_B=912
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=53
+#-----------
+time=56030582
+mem_heap_B=64216
+mem_heap_extra_B=856
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=54
+#-----------
+time=56653201
+mem_heap_B=64320
+mem_heap_extra_B=912
+mem_stacks_B=0
+heap_tree=empty
