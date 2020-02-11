@@ -21,10 +21,22 @@ program main
     real(4) t1, t2
     logical check
     character(10) approx    
-    
-	open(unit=501,file="calculation_input.dat",form="formatted",status="old",action="read")
-	read(501,"(a)") approx
-	close(501)
+    character(100) input_file_path    ! used to indicate the name and the path of the input file
+
+    !First, make sure the right number of inputs have been provided
+    if (command_argument_count() .ne. 1) then
+        write(*,*) 'Error! Please specify the path to the input file. Nested paths should also work'
+        write(*,*) 'The program will proceed with the standard (root) path'
+        input_file_path = "calculation_input.dat"
+    else
+        call get_command_argument(1, input_file_path)
+    endif
+
+    write(*,*) 'Specified input file: ', input_file_path
+        
+    open(unit=501,file=input_file_path,form="formatted",status="old",action="read")
+    read(501,"(a)") approx
+    close(501)
     !approx = 'BPEC'
     !approx = 'K2NNC2'
     !approx = 'K3NNC2'

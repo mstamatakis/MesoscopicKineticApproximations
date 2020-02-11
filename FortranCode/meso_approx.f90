@@ -184,7 +184,7 @@ module meso_approx
             endif
             deallocate(this%hamilt%stateprods) ! free up some memory; this array not needed anymore, unless we use the first method to calculate energies
             call cpu_time(t2) ! function for calculating elapsed CPU time
-            write(*,*) 'Elapsed CPU-time (residual 1)',t2-t1
+            write(*,*) 'time (energy 1)',t2-t1
         endif
         
         !this%allenergs = this%hamilt%H0
@@ -336,7 +336,7 @@ module meso_approx
         ! it would be unnecessary (and a waste of time) to compute the energies in the calling program unit
         this%expenergies = exp(-(this%allenergs-this%mu*this%nparticles)/(kboltz*this%temp))
         call cpu_time(t2) !!!
-        write(*,*) 'Elapsed CPU-time (residual 1)',t2-t1
+        write(*,*) 'time (residual 1)',t2-t1
 
         this%eqns%corrlvalue = 0.d0
 
@@ -350,7 +350,7 @@ module meso_approx
             ! this%eqns%corrlvalue(i) = sum(this%eqns%stateprods(:,i)*this%expenergies)/this%partfcn
         enddo  
         call cpu_time(t4) !!!
-        write(*,*) 'Elapsed CPU-time (residual 2)',t4-t3, this%eqns%nterms
+        write(*,*) 'time (residual 2)',t4-t3, this%eqns%nterms
     
         call cpu_time(t5) !!!
         this%eqns%residual = 0.d0
@@ -360,7 +360,7 @@ module meso_approx
             ! this%eqns%residual(i) = this%eqns%corrlvalue(this%eqns%lhs(i)) - this%eqns%corrlvalue(this%eqns%rhs(i))
         enddo
         call cpu_time(t6) !!!
-        write(*,*) 'Elapsed CPU-time (residual 3)',t6-t5, this%eqns%neqns
+        write(*,*) 'time (residual 3)',t6-t5, this%eqns%neqns
 
         this%eqns%jacobian = 0.d0
         
@@ -405,7 +405,7 @@ module meso_approx
         enddo
         this%eqns%jacobian = -1/(kboltz*this%temp)*this%eqns%jacobian
         call cpu_time(t8) !!!
-        write(*,*) 'Elapsed CPU-time (residual 4)',t8-t7, this%eqns%neqns
+        write(*,*) 'time (residual 4)',t8-t7, this%eqns%neqns
 
         return
     
