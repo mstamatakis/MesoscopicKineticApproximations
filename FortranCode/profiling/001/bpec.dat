@@ -1,0 +1,3525 @@
+ Specified input file: ../bin/bin/data/0/calculation_input.dat                                                             
+ Approximation name:BPEC      
+ Number of sites:           7
+ HAMILTONIAN
+ original parameters:     -1.1719556131742499       0.29999999999999999     
+ correction parameters:    0.0000000000000000        0.0000000000000000     
+ nterms:          19
+ Original par pointers, values; correction par pointers, values; table of terms:
+  1)  1     -1.17195561  0      0.00000000     1
+  2)  1     -1.17195561  1      0.00000000     2
+  3)  1     -1.17195561  1      0.00000000     3
+  4)  1     -1.17195561  1      0.00000000     4
+  5)  1     -1.17195561  1      0.00000000     5
+  6)  1     -1.17195561  1      0.00000000     6
+  7)  1     -1.17195561  1      0.00000000     7
+  8)  2      0.30000000  0      0.00000000     1     2
+  9)  2      0.30000000  0      0.00000000     1     3
+ 10)  2      0.30000000  0      0.00000000     1     4
+ 11)  2      0.30000000  0      0.00000000     1     5
+ 12)  2      0.30000000  0      0.00000000     1     6
+ 13)  2      0.30000000  0      0.00000000     1     7
+ 14)  2      0.30000000  2      0.00000000     2     3
+ 15)  2      0.30000000  2      0.00000000     3     4
+ 16)  2      0.30000000  2      0.00000000     4     5
+ 17)  2      0.30000000  2      0.00000000     5     6
+ 18)  2      0.30000000  2      0.00000000     6     7
+ 19)  2      0.30000000  2      0.00000000     7     2
+ EQUATIONS
+ number of distinct terms:              4
+ number of equations:                   2
+ list of equations:              4
+  1)     s(  1) = s(  2)
+  2)     s(  1)s(  2) = s(  2)s(  3)
+ time (energy 1)   1.49998814E-05
+ time (residual 1)   5.39999455E-05
+ time (residual 2)   2.00001523E-06           4
+ time (residual 3)   8.99983570E-06           2
+ time (residual 4)   2.00001523E-06           2
+ time (residual 1)   4.99980524E-06
+ time (residual 2)   2.00001523E-06           4
+ time (residual 3)   2.00001523E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.99980524E-06
+ time (residual 2)   2.00001523E-06           4
+ time (residual 3)   2.00001523E-06           2
+ time (residual 4)   2.00001523E-06           2
+ time (residual 1)   6.00004569E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   0.00000000               2
+                1            1  0.74821E-09
+ time (residual 1)   5.00027090E-06
+ time (residual 2)   2.00001523E-06           4
+ time (residual 3)   0.00000000               2
+ time (residual 4)   2.00001523E-06           2
+ time (residual 1)   4.99980524E-06
+ time (residual 2)   0.00000000               4
+ time (residual 3)   0.00000000               2
+                2            1  0.26645E-14
+  
+  -------------------------------
+  Chemical potential:  -1.5000000000000000     
+  Coverage:              3.5859056319159882E-004
+  Partition function:    1.0025152857540414     
+  Residual norm:         2.6645352591003757E-015
+  at point:                  0.0000445110764                -0.0000148247396
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential:  -1.5000000000000000     
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   2.00001523E-06           4
+ time (residual 3)   2.00001523E-06           2
+  Coverage:              3.5859056319159882E-004
+  Partition function:    1.0025152857540414     
+  Residual norm:         2.6645352591003757E-015
+  at point:                  0.0000445110764                -0.0000148247396
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential:  -1.4800000000000000     
+ time (residual 1)   6.00004569E-06
+ time (residual 2)   2.00001523E-06           4
+ time (residual 3)   2.00001523E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99774784E-07           4
+ time (residual 3)   9.99774784E-07           2
+ time (residual 4)   1.00024045E-06           2
+ time (residual 1)   6.00004569E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.99774784E-07           2
+                1            1  0.46595E-09
+ time (residual 1)   4.99980524E-06
+ time (residual 2)   9.99774784E-07           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   9.99774784E-07           2
+ time (residual 1)   4.99980524E-06
+ time (residual 2)   2.00001523E-06           4
+ time (residual 3)   2.00001523E-06           2
+                2            1  0.39721E-14
+  Coverage:              5.8064852399932875E-004
+  Partition function:    1.0015588562843987     
+  Residual norm:         3.9720546451956370E-015
+  at point:                  0.0000721200303                -0.0000240183179
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential:  -1.4600000000000000     
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99774784E-07           4
+ time (residual 3)   1.00024045E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.99980524E-06
+ time (residual 2)   2.00001523E-06           4
+ time (residual 3)   2.00001523E-06           2
+ time (residual 4)   2.00001523E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.99774784E-07           2
+                1            1  0.19731E-08
+ time (residual 1)   5.00027090E-06
+ time (residual 2)   2.00001523E-06           4
+ time (residual 3)   2.00001523E-06           2
+ time (residual 4)   2.00001523E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99774784E-07           4
+ time (residual 3)   1.00024045E-06           2
+                2            1  0.35527E-14
+  Coverage:              9.3931332943383839E-004
+  Partition function:    1.0025222988124320     
+  Residual norm:         3.5527136788005009E-015
+  at point:                  0.0001167871001                -0.0000388892323
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential:  -1.4399999999999999     
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99774784E-07           4
+ time (residual 3)   0.00000000               2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.99980524E-06
+ time (residual 2)   2.00001523E-06           4
+ time (residual 3)   2.00001523E-06           2
+ time (residual 4)   2.00001523E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.99774784E-07           2
+                1            1  0.17368E-09
+ time (residual 1)   4.99980524E-06
+ time (residual 2)   2.00001523E-06           4
+ time (residual 3)   2.00001523E-06           2
+ time (residual 4)   2.00001523E-06           2
+ time (residual 1)   2.99979001E-06
+ time (residual 2)   9.99774784E-07           4
+ time (residual 3)   0.00000000               2
+                2            1  0.26645E-14
+  Coverage:              1.5171753076378054E-003
+  Partition function:    1.0005866946981432     
+  Residual norm:         2.6645352591003757E-015
+  at point:                  0.0001889438870                -0.0000629047071
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential:  -1.4199999999999999     
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.99774784E-07           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.99980524E-06
+ time (residual 2)   2.00001523E-06           4
+ time (residual 3)   2.00001523E-06           2
+ time (residual 4)   2.00001523E-06           2
+ time (residual 1)   2.99979001E-06
+ time (residual 2)   2.00001523E-06           4
+ time (residual 3)   0.00000000               2
+                1            1  0.71174E-09
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99774784E-07           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   9.99774784E-07           2
+ time (residual 1)   5.00027090E-06
+ time (residual 2)   2.00001523E-06           4
+ time (residual 3)   2.00001523E-06           2
+                2            1  0.36621E-14
+  Coverage:              2.4444666394071476E-003
+  Partition function:    1.0009336829521838     
+  Residual norm:         3.6620534388177900E-015
+  at point:                  0.0003052298968                -0.0001015879015
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential:  -1.3999999999999999     
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   2.00001523E-06           4
+ time (residual 3)   2.00001523E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.99980524E-06
+ time (residual 2)   2.00001523E-06           4
+ time (residual 3)   2.00001523E-06           2
+ time (residual 4)   2.00001523E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99774784E-07           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.28463E-08
+ time (residual 1)   5.00027090E-06
+ time (residual 2)   2.00001523E-06           4
+ time (residual 3)   2.00001523E-06           2
+ time (residual 4)   2.00001523E-06           2
+ time (residual 1)   3.00025567E-06
+ time (residual 2)   0.00000000               4
+ time (residual 3)   0.00000000               2
+                2            1  0.00000E+00
+  Coverage:              3.9230017475268128E-003
+  Partition function:    1.0014688130201199     
+  Residual norm:         0.0000000000000000     
+  at point:                  0.0004919197052                -0.0001636411771
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential:  -1.3799999999999999     
+ time (residual 1)   5.00027090E-06
+ time (residual 2)   2.00001523E-06           4
+ time (residual 3)   0.00000000               2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   8.00006092E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.99774784E-07           2
+ time (residual 4)   2.00001523E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99774784E-07           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.10949E-07
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99774784E-07           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   9.99774784E-07           2
+ time (residual 1)   3.99956480E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.99774784E-07           2
+                2            1  0.35527E-14
+  Coverage:              6.2568468565692911E-003
+  Partition function:    1.0022683787786000     
+  Residual norm:         3.5527136788005009E-015
+  at point:                  0.0007898390725                -0.0002625387820
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential:  -1.3599999999999999     
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   2.00001523E-06           4
+ time (residual 3)   1.99954957E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.99774784E-07           2
+ time (residual 4)   1.00024045E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.99774784E-07           2
+                1            1  0.39625E-07
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   2.00001523E-06           4
+ time (residual 3)   9.99774784E-07           2
+ time (residual 4)   2.00001523E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.99774784E-07           2
+                2            1  0.39721E-14
+  Coverage:              9.8837344633100049E-003
+  Partition function:    1.0034022872849864     
+  Residual norm:         3.9720546451956370E-015
+  at point:                  0.0012608334666                -0.0004185762731
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential:  -1.3400000000000001     
+ time (residual 1)   4.99980524E-06
+ time (residual 2)   2.00001523E-06           4
+ time (residual 3)   9.99774784E-07           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99774784E-07           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   9.99774784E-07           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99774784E-07           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.13047E-06
+ time (residual 1)   3.99956480E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.99774784E-07           2
+ time (residual 4)   1.00024045E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   2.00001523E-06           4
+ time (residual 3)   9.99774784E-07           2
+                2            1  0.18115E-13
+  Coverage:              1.5388792617827012E-002
+  Partition function:    1.0048750084298270     
+  Residual norm:         1.8115356374411762E-014
+  at point:                  0.0019949720862                -0.0006610399161
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential:  -1.3200000000000001     
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.99774784E-07           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   5.00027090E-06
+ time (residual 2)   2.00001523E-06           4
+ time (residual 3)   9.99774784E-07           2
+ time (residual 4)   2.00001523E-06           2
+ time (residual 1)   4.99980524E-06
+ time (residual 2)   2.00001523E-06           4
+ time (residual 3)   0.00000000               2
+                1            1  0.37250E-06
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99774784E-07           4
+ time (residual 3)   9.99774784E-07           2
+ time (residual 4)   2.00001523E-06           2
+ time (residual 1)   4.99980524E-06
+ time (residual 2)   2.00001523E-06           4
+ time (residual 3)   1.00024045E-06           2
+                2            1  0.47207E-14
+  Coverage:              2.3463326458057279E-002
+  Partition function:    1.0065109234539469     
+  Residual norm:         4.7207330545682824E-015
+  at point:                  0.0031158145307                -0.0010295105879
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential:  -1.3000000000000000     
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99774784E-07           4
+ time (residual 3)   1.00024045E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99774784E-07           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   2.00001523E-06           2
+ time (residual 1)   3.99956480E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.99774784E-07           2
+                1            1  0.86297E-06
+ time (residual 1)   4.99980524E-06
+ time (residual 2)   2.00001523E-06           4
+ time (residual 3)   0.00000000               2
+ time (residual 4)   2.00001523E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.99774784E-07           2
+                2            1  0.30831E-13
+  Coverage:              3.4761351983821728E-002
+  Partition function:    1.0078187241405956     
+  Residual norm:         3.0831435107554097E-014
+  at point:                  0.0047785352792                -0.0015725073291
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential:  -1.2800000000000000     
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.99774784E-07           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.99980524E-06
+ time (residual 2)   2.00001523E-06           4
+ time (residual 3)   9.99774784E-07           2
+ time (residual 4)   2.00001523E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   2.00001523E-06           4
+ time (residual 3)   9.99774784E-07           2
+                1            1  0.14869E-05
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.99774784E-07           2
+ time (residual 4)   1.00024045E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.99774784E-07           2
+                2            1  0.96441E-13
+  Coverage:              4.9644168065670222E-002
+  Partition function:    1.0080017041687026     
+  Residual norm:         9.6441004182775045E-014
+  at point:                  0.0071547842440                -0.0023416058363
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential:  -1.2600000000000000     
+ time (residual 1)   4.99980524E-06
+ time (residual 2)   2.00001523E-06           4
+ time (residual 3)   9.99774784E-07           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99774784E-07           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   2.00001523E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99774784E-07           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.16954E-05
+ time (residual 1)   5.00027090E-06
+ time (residual 2)   2.00001523E-06           4
+ time (residual 3)   0.00000000               2
+ time (residual 4)   2.00001523E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   2.00001523E-06           4
+ time (residual 3)   1.00024045E-06           2
+                2            1  0.14122E-12
+  Coverage:              6.7913584629325244E-002
+  Partition function:    1.0063571304339503     
+  Residual norm:         1.4122036873231991E-013
+  at point:                  0.0104029960747                -0.0033812808201
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential:  -1.2400000000000000     
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   2.00001523E-06           4
+ time (residual 3)   2.00001523E-06           2
+ time (residual 4)   2.00001523E-06           2
+ time (residual 1)   4.99980524E-06
+ time (residual 2)   2.00001523E-06           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.10484E-05
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.99774784E-07           2
+ time (residual 4)   1.00024045E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.99774784E-07           2
+                2            1  0.64047E-13
+  Coverage:              8.8732051658002298E-002
+  Partition function:    1.0029664924958741     
+  Residual norm:         6.4047456679787537E-014
+  at point:                  0.0146339167584                -0.0047187851801
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential:  -1.2200000000000000     
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99774784E-07           4
+ time (residual 3)   1.00024045E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99774784E-07           4
+ time (residual 3)   9.99774784E-07           2
+ time (residual 4)   2.00001523E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.99774784E-07           2
+                1            1  0.17381E-06
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   9.99774784E-07           2
+ time (residual 4)   2.00001523E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.99774784E-07           2
+                2            1  0.53291E-14
+  Coverage:             0.11084271567197167     
+  Partition function:   0.99893708601313791     
+  Residual norm:         5.3290705182007514E-015
+  at point:                  0.0198887634421                -0.0063603588320
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential:  -1.2000000000000000     
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   2.00001523E-06           4
+ time (residual 3)   1.00024045E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.99774784E-07           2
+ time (residual 4)   1.99954957E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99774784E-07           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.83846E-07
+ time (residual 1)   5.00027090E-06
+ time (residual 2)   2.00001523E-06           4
+ time (residual 3)   0.00000000               2
+ time (residual 4)   2.00001523E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   2.00001523E-06           4
+ time (residual 3)   1.00024045E-06           2
+                2            1  0.48850E-14
+  Coverage:             0.13296024900504766     
+  Partition function:   0.99568190684221103     
+  Residual norm:         4.8849813083506888E-015
+  at point:                  0.0261406728520                -0.0082962289456
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential:  -1.1799999999999999     
+ time (residual 1)   4.99980524E-06
+ time (residual 2)   2.00001523E-06           4
+ time (residual 3)   1.00024045E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99774784E-07           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   9.99774784E-07           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.99774784E-07           2
+                1            1  0.71388E-06
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99774784E-07           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   2.00001523E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99774784E-07           4
+ time (residual 3)   9.99774784E-07           2
+                2            1  0.29843E-13
+  Coverage:             0.15408582371498461     
+  Partition function:   0.99395855757816853     
+  Residual norm:         2.9843323574872190E-014
+  at point:                  0.0333144501291                -0.0105105260630
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential:  -1.1599999999999999     
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.99774784E-07           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99774784E-07           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   2.00001523E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99774784E-07           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.12942E-05
+ time (residual 1)   4.99980524E-06
+ time (residual 2)   2.00001523E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   2.00001523E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   2.00001523E-06           4
+ time (residual 3)   1.00024045E-06           2
+                2            1  0.91150E-13
+  Coverage:             0.17362074659163954     
+  Partition function:   0.99365470909451425     
+  Residual norm:         9.1149783618984508E-014
+  at point:                  0.0413111839232                -0.0129899904197
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential:  -1.1400000000000001     
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   2.00001523E-06           4
+ time (residual 3)   9.99774784E-07           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.99774784E-07           2
+ time (residual 4)   2.00001523E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   2.00001523E-06           4
+ time (residual 3)   9.99774784E-07           2
+                1            1  0.14372E-05
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   2.00001523E-06           4
+ time (residual 3)   0.00000000               2
+ time (residual 4)   2.00001523E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.99774784E-07           2
+                2            1  0.10570E-12
+  Coverage:             0.19131961878879691     
+  Partition function:   0.99423158808961820     
+  Residual norm:         1.0570466009290691E-013
+  at point:                  0.0500276074240                -0.0157280363316
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential:  -1.1200000000000001     
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   2.00001523E-06           4
+ time (residual 3)   9.99774784E-07           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   3.99956480E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.99774784E-07           2
+ time (residual 4)   1.00024045E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.99774784E-07           2
+                1            1  0.12510E-05
+ time (residual 1)   3.99956480E-06
+ time (residual 2)   2.00001523E-06           4
+ time (residual 3)   9.99774784E-07           2
+ time (residual 4)   2.00001523E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.99774784E-07           2
+                2            1  0.72380E-13
+  Coverage:             0.20717929461729753     
+  Partition function:   0.99517556224487447     
+  Residual norm:         7.2379729700881995E-014
+  at point:                  0.0593672756510                -0.0187243388292
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential:  -1.1000000000000001     
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99774784E-07           4
+ time (residual 3)   1.00024045E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99774784E-07           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   1.99954957E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.99774784E-07           2
+                1            1  0.95663E-06
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   2.00001523E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   2.00001523E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.99774784E-07           2
+                2            1  0.33582E-13
+  Coverage:             0.22133080523230422     
+  Partition function:   0.99616554012630254     
+  Residual norm:         3.3581631404981098E-014
+  at point:                  0.0692451161198                -0.0219818691525
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential:  -1.0800000000000001     
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99774784E-07           4
+ time (residual 3)   1.00024045E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99774784E-07           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   9.99774784E-07           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99774784E-07           4
+ time (residual 3)   9.99774784E-07           2
+                1            1  0.68607E-06
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99774784E-07           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   2.00001523E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99774784E-07           4
+ time (residual 3)   9.99774784E-07           2
+                2            1  0.12251E-13
+  Coverage:             0.23396008341893343     
+  Partition function:   0.99705106695322610     
+  Residual norm:         1.2250746394334408E-014
+  at point:                  0.0795880255881                -0.0255033154824
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential:  -1.0600000000000001     
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.99774784E-07           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99774784E-07           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   9.99774784E-07           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99774784E-07           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.47973E-06
+ time (residual 1)   3.99956480E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.99774784E-07           2
+ time (residual 4)   2.00001523E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   2.00001523E-06           4
+ time (residual 3)   9.99774784E-07           2
+                2            1  0.15952E-13
+  Coverage:             0.24525927352125662     
+  Partition function:   0.99778226715988527     
+  Residual norm:         1.5951706671712359E-014
+  at point:                  0.0903336530438                -0.0292881060809
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential:  -1.0400000000000000     
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99774784E-07           4
+ time (residual 3)   1.00024045E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99774784E-07           4
+ time (residual 3)   9.99774784E-07           2
+ time (residual 4)   2.00001523E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   2.00001523E-06           4
+ time (residual 3)   9.99774784E-07           2
+                1            1  0.33408E-06
+ time (residual 1)   4.99980524E-06
+ time (residual 2)   2.00001523E-06           4
+ time (residual 3)   0.00000000               2
+ time (residual 4)   2.00001523E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   2.00001523E-06           4
+ time (residual 3)   9.99774784E-07           2
+                2            1  0.17902E-14
+  Coverage:             0.25540177510123768     
+  Partition function:   0.99835842338923153     
+  Residual norm:         1.7901808365247238E-015
+  at point:                  0.1014286541633                -0.0333305084509
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential:  -1.0200000000000000     
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99774784E-07           4
+ time (residual 3)   1.00024045E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   2.00001523E-06           4
+ time (residual 3)   9.99309123E-07           2
+ time (residual 4)   1.99954957E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.23381E-06
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   5.00027090E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   0.00000000               2
+                2            1  0.54931E-14
+  Coverage:             0.26453305011017120     
+  Partition function:   0.99879828953493555     
+  Residual norm:         5.4930801582266845E-015
+  at point:                  0.1128270366868                -0.0376187675296
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential:  -1.0000000000000000     
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99309123E-07           4
+ time (residual 3)   1.00024045E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   5.00027090E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   9.99309123E-07           2
+ time (residual 4)   1.99954957E-06           2
+ time (residual 1)   5.00027090E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   9.99309123E-07           2
+                1            1  0.16470E-06
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99309123E-07           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   0.00000000               2
+                2            1  0.44409E-14
+  Coverage:             0.27277063755577491     
+  Partition function:   0.99912505245542282     
+  Residual norm:         4.4408920985006262E-015
+  at point:                  0.1244888140066                -0.0421349877606
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential: -0.97999999999999998     
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.99309123E-07           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   1.99954957E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.11661E-06
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99309123E-07           4
+ time (residual 3)   1.00024045E-06           2
+                2            1  0.61695E-14
+  Coverage:             0.28020868827848244     
+  Partition function:   0.99936321619856827     
+  Residual norm:         6.1694844741610151E-015
+  at point:                  0.1363789824788                -0.0468553956440
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential: -0.95999999999999996     
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.99309123E-07           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.99309123E-07           2
+ time (residual 4)   1.00024045E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.83032E-07
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   1.00024045E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99309123E-07           4
+ time (residual 3)   1.00024045E-06           2
+                2            1  0.12347E-13
+  Coverage:             0.28692398955714682     
+  Partition function:   0.99953434145845488     
+  Residual norm:         1.2346957922256014E-014
+  at point:                  0.1484667589551                -0.0517506672909
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential: -0.93999999999999995     
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   1.00024045E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   9.99309123E-07           2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   5.00027090E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   9.99309123E-07           2
+                1            1  0.59956E-07
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   1.99954957E-06           2
+ time (residual 1)   4.99933958E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   0.00000000               2
+                2            1  0.81886E-14
+  Coverage:             0.29298173836895658     
+  Partition function:   0.99965735451920301     
+  Residual norm:         8.1886004264334452E-015
+  at point:                  0.1607250001112                -0.0567861121346
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential: -0.92000000000000004     
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.99309123E-07           2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.99309123E-07           2
+                1            1  0.45029E-07
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+                2            1  0.27013E-14
+  Coverage:             0.29844024243525319     
+  Partition function:   0.99974732085845652     
+  Residual norm:         2.7012892057857038E-015
+  at point:                  0.1731297373967                -0.0619216360893
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential: -0.90000000000000002     
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   2.00048089E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   2.00048089E-06           2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   5.00027090E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.37284E-07
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+                2            1  0.11580E-13
+  Coverage:             0.30335432667231083     
+  Partition function:   0.99981534345167289     
+  Residual norm:         1.1580429779916289E-014
+  at point:                  0.1856597808347                -0.0671115526609
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential: -0.88000000000000000     
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   1.00024045E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   1.99954957E-06           2
+ time (residual 1)   5.00027090E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.37654E-07
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99309123E-07           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   1.00024045E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99309123E-07           4
+ time (residual 3)   1.00024045E-06           2
+                2            1  0.76404E-14
+  Coverage:             0.30777756308425974     
+  Partition function:   0.99986977803047250     
+  Residual norm:         7.6403996614283779E-015
+  at point:                  0.1982963626175                -0.0723044642159
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential: -0.85999999999999999     
+ time (residual 1)   5.00027090E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.99933958E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   0.00000000               2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   5.00027090E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   0.00000000               2
+                1            1  0.48350E-07
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99309123E-07           4
+ time (residual 3)   9.99309123E-07           2
+ time (residual 4)   1.99954957E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.99309123E-07           2
+                2            1  0.61695E-14
+  Coverage:             0.31176359156829758     
+  Partition function:   0.99991773046144194     
+  Residual norm:         6.1694844741610151E-015
+  at point:                  0.2110228049932                -0.0774435805087
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential: -0.83999999999999997     
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   0.00000000               2
+ time (residual 4)   1.99954957E-06           2
+ time (residual 1)   3.99909914E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.68843E-07
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   9.99309123E-07           2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   5.00027090E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   0.00000000               2
+                2            1  0.11724E-13
+  Coverage:             0.31536681953377971     
+  Partition function:   0.99996283394989793     
+  Residual norm:         1.1724291566434251E-014
+  at point:                  0.2238242067334                -0.0824679256051
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential: -0.81999999999999995     
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   1.99954957E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.92765E-07
+ time (residual 1)   5.00027090E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   0.00000000               2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99309123E-07           4
+ time (residual 3)   1.00024045E-06           2
+                2            1  0.28866E-14
+  Coverage:             0.31864273333460513     
+  Partition function:    1.0000074426270422     
+  Residual norm:         2.8865798640254070E-015
+  at point:                  0.2366871494791                -0.0873148156026
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential: -0.79999999999999993     
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.99309123E-07           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   9.99309123E-07           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.10759E-06
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99309123E-07           4
+ time (residual 3)   1.00024045E-06           2
+                2            1  0.91551E-15
+  Coverage:             0.32164797116837235     
+  Partition function:    1.0000542054263946     
+  Residual norm:         9.1551335970444749E-016
+  at point:                  0.2495994296081                -0.0919236798949
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential: -0.78000000000000003     
+ time (residual 1)   5.00027090E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   9.99309123E-07           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.99309123E-07           2
+ time (residual 4)   1.00024045E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.99897E-07
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99309123E-07           4
+ time (residual 3)   1.00024045E-06           2
+                2            1  0.55511E-14
+  Coverage:             0.32444023633929742     
+  Partition function:    1.0001059365851470     
+  Residual norm:         5.5511151231257827E-015
+  at point:                  0.2625498219546                -0.0962407667757
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential: -0.76000000000000001     
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99309123E-07           4
+ time (residual 3)   9.99309123E-07           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.99309123E-07           2
+ time (residual 4)   1.99954957E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.67263E-07
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   1.00024045E-06           2
+                2            1  0.99723E-14
+  Coverage:             0.32707809974998864     
+  Partition function:    1.0001628519692956     
+  Residual norm:         9.9722503911817115E-015
+  at point:                  0.2755278778317                -0.1002237358746
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential: -0.73999999999999999     
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99309123E-07           4
+ time (residual 3)   1.00024045E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   5.00027090E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   0.00000000               2
+ time (residual 4)   1.99954957E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   9.99309123E-07           2
+                1            1  0.25972E-07
+ time (residual 1)   4.99933958E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+                2            1  0.73543E-14
+  Coverage:             0.32962075283607606     
+  Partition function:    1.0002277615169852     
+  Residual norm:         7.3543372110758990E-015
+  at point:                  0.2885237525499                -0.1038449403978
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential: -0.71999999999999997     
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99309123E-07           4
+ time (residual 3)   1.00024045E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99309123E-07           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.27694E-08
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   1.99954957E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+                2            1  0.49651E-14
+  Coverage:             0.33212779848036783     
+  Partition function:    1.0003002039649744     
+  Residual norm:         4.9650683064945462E-015
+  at point:                  0.3015280508379                -0.1070925500634
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential: -0.69999999999999996     
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99309123E-07           4
+ time (residual 3)   1.00024045E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99309123E-07           4
+ time (residual 3)   9.99309123E-07           2
+                1            1  0.88309E-08
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   1.99954957E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+                2            1  0.54931E-14
+  Coverage:             0.33465917002861467     
+  Partition function:    1.0003837516858087     
+  Residual norm:         5.4930801582266845E-015
+  at point:                  0.3145316764167                -0.1099694045843
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential: -0.67999999999999994     
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   1.00024045E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99309123E-07           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.45115E-07
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   1.99954957E-06           2
+ time (residual 1)   8.99937004E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   1.00024045E-06           2
+                2            1  0.45288E-14
+  Coverage:             0.33727523140576554     
+  Partition function:    1.0004767714289231     
+  Residual norm:         4.5288390936029406E-015
+  at point:                  0.3275256755417                -0.1124901928244
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential: -0.66000000000000003     
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   9.99309123E-07           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   1.99954957E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.91926E-07
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99309123E-07           4
+ time (residual 3)   9.99309123E-07           2
+ time (residual 4)   1.00024045E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.99309123E-07           2
+                2            1  0.84260E-14
+  Coverage:             0.34003705004614015     
+  Partition function:    1.0005797703322898     
+  Residual norm:         8.4260003245840825E-015
+  at point:                  0.3405010710728                -0.1146778794103
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential: -0.64000000000000001     
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   1.00024045E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   1.99954957E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99309123E-07           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.13317E-06
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.99309123E-07           2
+ time (residual 4)   1.00024045E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+                2            1  0.10556E-13
+  Coverage:             0.34300677699064352     
+  Partition function:    1.0006948902244590     
+  Residual norm:         1.0555880013644903E-014
+  at point:                  0.3534486899934                -0.1165602098526
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential: -0.62000000000000000     
+ time (residual 1)   4.99933958E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   1.00024045E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   1.00024045E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99309123E-07           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.16088E-06
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.99309123E-07           2
+ time (residual 4)   1.99954957E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   1.00024045E-06           2
+                2            1  0.36146E-14
+  Coverage:             0.34624803234653961     
+  Partition function:    1.0008240761787586     
+  Residual norm:         3.6146242879064219E-015
+  at point:                  0.3663589913966                -0.1181668091557
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential: -0.59999999999999998     
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   3.99909914E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   5.00027090E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   0.00000000               2
+                1            1  0.17456E-06
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   1.99954957E-06           2
+ time (residual 1)   5.00027090E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   1.00024045E-06           2
+                2            1  0.85422E-14
+  Coverage:             0.34982617935638283     
+  Partition function:    1.0009650924925659     
+  Residual norm:         8.5422265091101150E-015
+  at point:                  0.3792219041030                -0.1195270625469
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential: -0.57999999999999996     
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   1.00024045E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   1.00024045E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.17742E-06
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.99309123E-07           2
+ time (residual 4)   1.99954957E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   1.00024045E-06           2
+                2            1  0.48850E-14
+  Coverage:             0.35380836734781568     
+  Partition function:    1.0011208930036362     
+  Residual norm:         4.8849813083506888E-015
+  at point:                  0.3920266846790                -0.1206687445490
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential: -0.55999999999999994     
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   1.00024045E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   1.99954957E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.17343E-06
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.99309123E-07           2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   0.00000000               2
+                2            1  0.63584E-14
+  Coverage:             0.35826322410283673     
+  Partition function:    1.0012884533910194     
+  Residual norm:         6.3583898427649792E-015
+  at point:                  0.4047618090802                -0.1216172578754
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential: -0.54000000000000004     
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.99309123E-07           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   1.99954957E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.16591E-06
+ time (residual 1)   5.00027090E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   1.00024045E-06           2
+                2            1  0.60403E-14
+  Coverage:             0.36326007820648781     
+  Partition function:    1.0014691255015191     
+  Residual norm:         6.0402662910232525E-015
+  at point:                  0.4174149153665                -0.1223953220106
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential: -0.52000000000000002     
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.99309123E-07           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.99309123E-07           2
+ time (residual 4)   1.99954957E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.15728E-06
+ time (residual 1)   5.00027090E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   1.00024045E-06           2
+                2            1  0.53579E-14
+  Coverage:             0.36886759403042979     
+  Partition function:    1.0016582592803254     
+  Residual norm:         5.3579045697976356E-015
+  at point:                  0.4299728214570                -0.1230229727239
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential: -0.50000000000000000     
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   1.00024045E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   1.99954957E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99309123E-07           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.14911E-06
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.99309123E-07           2
+ time (residual 4)   1.99954957E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+                2            1  0.62804E-15
+  Coverage:             0.37515171352568821     
+  Partition function:    1.0018488665403127     
+  Residual norm:         6.2803698347351007E-016
+  at point:                  0.4424216509766                -0.1235177699986
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential: -0.47999999999999998     
+ time (residual 1)   5.00027090E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   1.00024045E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   1.00024045E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.14230E-06
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.99309123E-07           2
+ time (residual 4)   1.99954957E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.99309123E-07           2
+                2            1  0.17342E-14
+  Coverage:             0.38217283156864851     
+  Partition function:    1.0020324884178109     
+  Residual norm:         1.7342238036525468E-015
+  at point:                  0.4547471119521                -0.1238951482026
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential: -0.45999999999999996     
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   1.00024045E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.13714E-06
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99309123E-07           4
+ time (residual 3)   9.99309123E-07           2
+ time (residual 4)   1.99954957E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.99309123E-07           2
+                2            1  0.26483E-14
+  Coverage:             0.38998219975621262     
+  Partition function:    1.0021934568286430     
+  Residual norm:         2.6482950148124658E-015
+  at point:                  0.4669349870051                -0.1241688727751
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential: -0.43999999999999995     
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   1.99954957E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.13313E-06
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99309123E-07           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   1.49998814E-05
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   9.99309123E-07           2
+                2            1  0.80059E-14
+  Coverage:             0.39861767045095647     
+  Partition function:    1.0023084960793058     
+  Residual norm:         8.0059320849734421E-015
+  at point:                  0.4789719080553                -0.1243515899974
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential: -0.41999999999999993     
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   0.00000000               2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99309123E-07           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.12863E-06
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.99309123E-07           2
+ time (residual 4)   1.99954957E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+                2            1  0.12995E-14
+  Coverage:             0.40809906028320375     
+  Partition function:    1.0023476999489827     
+  Residual norm:         1.2994827337208943E-015
+  at point:                  0.4908464985425                -0.1244554675505
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential: -0.39999999999999991     
+ time (residual 1)   3.99909914E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99309123E-07           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.12009E-06
+ time (residual 1)   5.00027090E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   9.99309123E-07           2
+ time (residual 4)   1.99954957E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   1.00024045E-06           2
+                2            1  0.44755E-14
+  Coverage:             0.41842360415689339     
+  Partition function:    1.0022721984502203     
+  Residual norm:         4.4754520913118096E-015
+  at point:                  0.5025509599719                -0.1244929160193
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential: -0.37999999999999989     
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   3.99909914E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.10087E-06
+ time (residual 1)   5.00027090E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   9.99309123E-07           2
+ time (residual 4)   1.99954957E-06           2
+ time (residual 1)   5.00027090E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+                2            1  0.29142E-14
+  Coverage:             0.42956211891310964     
+  Partition function:    1.0020354356309740     
+  Residual norm:         2.9142032672361679E-015
+  at point:                  0.5140831320787                -0.1244773407906
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential: -0.35999999999999988     
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   9.99309123E-07           2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.99309123E-07           2
+                1            1  0.60423E-07
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   1.00024045E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+                2            1  0.33399E-14
+  Coverage:             0.44145650194393460     
+  Partition function:    1.0015883894951092     
+  Residual norm:         3.3399081181809284E-015
+  at point:                  0.5254489232736                -0.1244237821322
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential: -0.34000000000000008     
+ time (residual 1)   5.00027090E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   0.00000000               2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   5.00027090E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   9.99309123E-07           2
+                1            1  0.12546E-07
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   9.99309123E-07           2
+ time (residual 1)   3.99909914E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+                2            1  0.34844E-14
+  Coverage:             0.45401899479817526     
+  Partition function:    1.0008971097961215     
+  Residual norm:         3.4844027277880974E-015
+  at point:                  0.5366647377392                -0.1243491576140
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential: -0.32000000000000006     
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   1.00024045E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99309123E-07           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   1.00024045E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99309123E-07           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.11255E-06
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   1.99954957E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+                2            1  0.12212E-14
+  Coverage:             0.46713333581880934     
+  Partition function:   0.99997045421492381     
+  Residual norm:         1.2212453270876722E-015
+  at point:                  0.5477591139376                -0.1242716864698
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential: -0.30000000000000004     
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   1.00024045E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99309123E-07           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.19878E-06
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   1.99954957E-06           2
+ time (residual 1)   4.99933958E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   1.00024045E-06           2
+                2            1  0.62843E-14
+  Coverage:             0.48065776893250528     
+  Partition function:   0.99889059114210599     
+  Residual norm:         6.2842938400131246E-015
+  at point:                  0.5587724070585                -0.1242091175625
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential: -0.28000000000000003     
+ time (residual 1)   5.00027090E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   1.00024045E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99309123E-07           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   1.00024045E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.99309123E-07           2
+                1            1  0.20957E-06
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   1.99954957E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+                2            1  0.38202E-14
+  Coverage:             0.49443003296967303     
+  Partition function:   0.99783462776655496     
+  Residual norm:         3.8201998307141890E-015
+  at point:                  0.5697534337334                -0.1241758137622
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential: -0.26000000000000001     
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99309123E-07           4
+ time (residual 3)   1.00024045E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99309123E-07           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99309123E-07           4
+ time (residual 3)   9.99309123E-07           2
+                1            1  0.27266E-06
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   1.99954957E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   1.00024045E-06           2
+                2            1  0.15006E-12
+  Coverage:             0.50827459731043212     
+  Partition function:   0.99702963171960013     
+  Residual norm:         1.5006392255647819E-013
+  at point:                  0.5807530150628                -0.1241795420070
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential: -0.23999999999999999     
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99309123E-07           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99309123E-07           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.54835E-06
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   9.99309123E-07           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+                2            1  0.61669E-12
+  Coverage:             0.52201190678511189     
+  Partition function:   0.99666715250340177     
+  Residual norm:         6.1669147522793290E-013
+  at point:                  0.5918160773393                -0.1242194272654
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential: -0.21999999999999997     
+ time (residual 1)   4.99933958E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.75430E-06
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   1.99954957E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+                2            1  0.11203E-11
+  Coverage:             0.53546835003269311     
+  Partition function:   0.99679437746820276     
+  Residual norm:         1.1203310215913655E-012
+  at point:                  0.6029751111461                -0.1242861937768
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential: -0.19999999999999996     
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   1.00024045E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   9.99309123E-07           2
+                1            1  0.70997E-06
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   1.99954957E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99309123E-07           4
+ time (residual 3)   1.00024045E-06           2
+                2            1  0.10631E-11
+  Coverage:             0.54848517948071485     
+  Partition function:   0.99729060624258525     
+  Residual norm:         1.0631365194704122E-012
+  at point:                  0.6142471271548                -0.1243645544874
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential: -0.17999999999999994     
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.99309123E-07           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   1.99954957E-06           2
+ time (residual 1)   4.99933958E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.46977E-06
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99309123E-07           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   1.00024045E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.99309123E-07           2
+                2            1  0.54046E-12
+  Coverage:             0.56092529842534733     
+  Partition function:   0.99796911169956370     
+  Residual norm:         5.4046313663502323E-013
+  at point:                  0.6256342463579                -0.1244364685437
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential: -0.15999999999999992     
+ time (residual 1)   5.00027090E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   1.99954957E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.20237E-06
+ time (residual 1)   5.00027090E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   0.00000000               2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   9.99309123E-07           2
+                2            1  0.12833E-12
+  Coverage:             0.57267784084384665     
+  Partition function:   0.99866527826679341     
+  Residual norm:         1.2832665444666259E-013
+  at point:                  0.6371264532816                -0.1244838726931
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential: -0.13999999999999990     
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.99309123E-07           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   1.99954957E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.26867E-07
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99309123E-07           4
+ time (residual 3)   1.00024045E-06           2
+                2            1  0.29205E-14
+  Coverage:             0.58366081597293240     
+  Partition function:   0.99929287761365848     
+  Residual norm:         2.9205407954182373E-015
+  at point:                  0.6487048040188                -0.1244902033499
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential: -0.11999999999999988     
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.99309123E-07           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.99309123E-07           2
+ time (residual 4)   9.99309123E-07           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.47853E-07
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99309123E-07           4
+ time (residual 3)   1.00024045E-06           2
+                2            1  0.13369E-14
+  Coverage:             0.59382189361447557     
+  Partition function:   0.99983721864521691     
+  Residual norm:         1.3368855554576670E-015
+  at point:                  0.6603440624227                -0.1244407768264
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential:  -9.9999999999999867E-002
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.99309123E-07           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.99309123E-07           2
+ time (residual 4)   1.00024045E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.48355E-07
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99309123E-07           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.99309123E-07           2
+                2            1  0.35544E-14
+  Coverage:             0.60313730342826721     
+  Partition function:    1.0003149385104915     
+  Residual norm:         3.5544479789666730E-015
+  at point:                  0.6720144750000                -0.1243224391701
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential:  -8.0000000000000071E-002
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   1.00024045E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   1.99954957E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.34442E-07
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.99309123E-07           2
+ time (residual 4)   1.00024045E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.99309123E-07           2
+                2            1  0.10919E-13
+  Coverage:             0.61160902980764087     
+  Partition function:    1.0007429252781976     
+  Residual norm:         1.0919200073868484E-014
+  at point:                  0.6836827887750                -0.1241228867596
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential:  -6.0000000000000053E-002
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.50049E-07
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   9.99309123E-07           2
+ time (residual 4)   1.99954957E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.99309123E-07           2
+                2            1  0.54683E-13
+  Coverage:             0.61926078500488280     
+  Partition function:    1.0011484982555214     
+  Residual norm:         5.4683414934085797E-014
+  at point:                  0.6953127142913                -0.1238299128694
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential:  -4.0000000000000036E-002
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   1.99954957E-06           2
+ time (residual 1)   3.99909914E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.71517E-07
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   9.99309123E-07           2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   5.00027090E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   0.00000000               2
+                2            1  0.12088E-12
+  Coverage:             0.62613340000347706     
+  Partition function:    1.0015471469883868     
+  Residual norm:         1.2087582178934192E-013
+  at point:                  0.7068650050820                -0.1234306999135
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential:  -2.0000000000000018E-002
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.83209E-07
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   1.99954957E-06           2
+ time (residual 1)   5.00027090E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   1.00024045E-06           2
+                2            1  0.18891E-12
+  Coverage:             0.63228023133754407     
+  Partition function:    1.0019502305397954     
+  Residual norm:         1.8890545085088299E-013
+  at point:                  0.7182972754408                -0.1229111964627
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential:   0.0000000000000000     
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   3.99909914E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.84771E-07
+ time (residual 1)   5.00027090E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   0.00000000               2
+ time (residual 4)   1.99954957E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   9.99309123E-07           2
+                2            1  0.23509E-12
+  Coverage:             0.63776301806187763     
+  Partition function:    1.0023673595848412     
+  Residual norm:         2.3508810010273632E-013
+  at point:                  0.7295636493460                -0.1222555853459
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential:   2.0000000000000018E-002
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.99933958E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   1.99954957E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.79258E-07
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   9.99309123E-07           2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   9.99309123E-07           2
+                2            1  0.25696E-12
+  Coverage:             0.64264843206237410     
+  Partition function:    1.0028020006859744     
+  Residual norm:         2.5696425494870861E-013
+  at point:                  0.7406143290203                -0.1214458461696
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential:   4.0000000000000036E-002
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.99933958E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   1.99954957E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99309123E-07           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.70074E-07
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.99954957E-06           2
+ time (residual 4)   2.99979001E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+                2            1  0.25223E-12
+  Coverage:             0.64700540645009808     
+  Partition function:    1.0032572138833580     
+  Residual norm:         2.5223260471126364E-013
+  at point:                  0.7513951875545                -0.1204614293047
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential:   6.0000000000000053E-002
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.99309123E-07           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   5.00027090E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   9.99309123E-07           2
+ time (residual 4)   1.99954957E-06           2
+ time (residual 1)   4.99933958E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.60008E-07
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99309123E-07           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   1.00024045E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.99309123E-07           2
+                2            1  0.22390E-12
+  Coverage:             0.65090322010693280     
+  Partition function:    1.0037163790790173     
+  Residual norm:         2.2390476350886263E-013
+  at point:                  0.7618475235912                -0.1192790824329
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential:   8.0000000000000071E-002
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   1.00024045E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   9.99309123E-07           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.50911E-07
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   9.99309123E-07           2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   5.00027090E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   0.00000000               2
+                2            1  0.20228E-12
+  Coverage:             0.65441025643448048     
+  Partition function:    1.0041609237515845     
+  Residual norm:         2.0228312256055068E-013
+  at point:                  0.7719081661940                -0.1178729025807
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential:  0.10000000000000009     
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   9.99309123E-07           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   1.99954957E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.43661E-07
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99309123E-07           4
+ time (residual 3)   9.99309123E-07           2
+ time (residual 4)   1.99954957E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.99309123E-07           2
+                2            1  0.17849E-12
+  Coverage:             0.65759332699069406     
+  Partition function:    1.0045463800684531     
+  Residual norm:         1.7848923357540389E-013
+  at point:                  0.7815101807972                -0.1162147235527
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential:  0.12000000000000011     
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   1.00024045E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   1.00024045E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99309123E-07           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.38513E-07
+ time (residual 1)   5.00027090E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   1.99954957E-06           2
+ time (residual 1)   4.99933958E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   1.00024045E-06           2
+                2            1  0.17035E-12
+  Coverage:             0.66051744181401906     
+  Partition function:    1.0048066882631239     
+  Residual norm:         1.7035119693599428E-013
+  at point:                  0.7905844882894                -0.1142749835449
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential:  0.14000000000000012     
+ time (residual 1)   3.99909914E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   5.00027090E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   0.00000000               2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.35862E-07
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   1.99954957E-06           2
+ time (residual 1)   5.00027090E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   0.00000000               2
+                2            1  0.17178E-12
+  Coverage:             0.66324590697665131     
+  Partition function:    1.0048592763280371     
+  Residual norm:         1.7177544323740666E-013
+  at point:                  0.7990627345301                -0.1120242333600
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential:  0.16000000000000014     
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   3.99909914E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.36460E-07
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   1.99954957E-06           2
+ time (residual 1)   5.00027090E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   1.00024045E-06           2
+                2            1  0.20046E-12
+  Coverage:             0.66584062984923564     
+  Partition function:    1.0045885061430506     
+  Residual norm:         2.0045992907060913E-013
+  at point:                  0.8068816747839                -0.1094354111532
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential:  0.17999999999999994     
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.39949E-07
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   1.99954957E-06           2
+ time (residual 1)   5.00027090E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   1.00024045E-06           2
+                2            1  0.25368E-12
+  Coverage:             0.66836251246248890     
+  Partition function:    1.0038873855910859     
+  Residual norm:         2.5368210446941123E-013
+  at point:                  0.8139890837641                -0.1064868838421
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential:  0.19999999999999996     
+ time (residual 1)   4.99933958E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   1.00024045E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   1.00024045E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99309123E-07           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.43891E-07
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.99309123E-07           2
+ time (residual 4)   1.99954957E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+                2            1  0.31873E-12
+  Coverage:             0.67087181786297490     
+  Partition function:    1.0026791792975447     
+  Residual norm:         3.1873256380259415E-013
+  at point:                  0.8203507077885                -0.1031660090139
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential:  0.21999999999999997     
+ time (residual 1)   5.00027090E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   1.00024045E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   1.00024045E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.45550E-07
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.99309123E-07           2
+ time (residual 4)   1.99954957E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.99309123E-07           2
+                2            1  0.41483E-12
+  Coverage:             0.67342841286013866     
+  Partition function:    1.0009851465790782     
+  Residual norm:         4.1482523576900833E-013
+  at point:                  0.8259570989326                -0.0994726340694
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential:  0.23999999999999999     
+ time (residual 1)   5.00027090E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   1.00024045E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   1.00024045E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.44283E-07
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99309123E-07           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   1.00024045E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   9.99309123E-07           2
+                2            1  0.51003E-12
+  Coverage:             0.67609183134630801     
+  Partition function:   0.99892769748239796     
+  Residual norm:         5.1002737071314788E-013
+  at point:                  0.8308285847938                -0.0954216584966
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential:  0.26000000000000001     
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.99933958E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   1.00024045E-06           2
+ time (residual 1)   5.00027090E-06
+ time (residual 2)   9.99309123E-07           4
+ time (residual 3)   0.00000000               2
+                1            1  0.42234E-07
+ time (residual 1)   5.00027090E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   0.00000000               2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   0.00000000               4
+ time (residual 3)   9.99309123E-07           2
+                2            1  0.65728E-12
+  Coverage:             0.67892116241618172     
+  Partition function:   0.99678516797418049     
+  Residual norm:         6.5728077009814854E-013
+  at point:                  0.8350165810407                -0.0910437652729
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential:  0.28000000000000003     
+ time (residual 1)   5.00027090E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   0.00000000               4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   9.99309123E-07           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.42407E-07
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   9.99309123E-07           2
+ time (residual 4)   1.00024045E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+                2            1  0.87079E-12
+  Coverage:             0.68197482628298700     
+  Partition function:   0.99488802411319188     
+  Residual norm:         8.7079284690114363E-013
+  at point:                  0.8386002754931                -0.0863838413960
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential:  0.30000000000000004     
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   3.99909914E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.46373E-07
+ time (residual 1)   5.00027090E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   9.99309123E-07           2
+ time (residual 4)   1.99954957E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   9.99309123E-07           2
+                2            1  0.12867E-11
+  Coverage:             0.68531033071592296     
+  Partition function:   0.99353521237576048     
+  Residual norm:         1.2867450226746078E-012
+  at point:                  0.8416792029782                -0.0814973540640
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential:  0.32000000000000006     
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   1.00024045E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.54786E-07
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   1.00024045E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+                2            1  0.20168E-11
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99309123E-07           4
+ time (residual 3)   9.99309123E-07           2
+ time (residual 4)   1.00024045E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.99309123E-07           2
+                3            1  0.16947E-14
+  Coverage:             0.68898409121015003     
+  Partition function:   0.99288574805243535     
+  Residual norm:         1.6946818973100072E-015
+  at point:                  0.8443636171198                -0.0764456408499
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential:  0.34000000000000008     
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   1.99954957E-06           2
+ time (residual 1)   3.99909914E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.67963E-07
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   9.99309123E-07           2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   9.99309123E-07           2
+                2            1  0.33607E-11
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   0.00000000               2
+ time (residual 4)   1.99954957E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   1.00024045E-06           2
+                3            1  0.11171E-13
+  Coverage:             0.69305137137065798     
+  Partition function:   0.99292695695179012     
+  Residual norm:         1.1171403689612729E-014
+  at point:                  0.8467650537702                -0.0712913128606
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential:  0.36000000000000010     
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.85387E-07
+ time (residual 1)   3.99909914E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   1.99954957E-06           2
+ time (residual 1)   4.99933958E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   1.00024045E-06           2
+                2            1  0.56077E-11
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.99309123E-07           2
+ time (residual 4)   1.00024045E-06           2
+ time (residual 1)   5.00027090E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+                3            1  0.16439E-14
+  Coverage:             0.69756639449252034     
+  Partition function:   0.99352965923546799     
+  Residual norm:         1.6439175459749098E-015
+  at point:                  0.8489889054641                -0.0660946787958
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential:  0.38000000000000012     
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   9.99309123E-07           2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   9.99309123E-07           2
+                1            1  0.10615E-06
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   1.00024045E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+                2            1  0.93748E-11
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99309123E-07           4
+ time (residual 3)   9.99309123E-07           2
+ time (residual 4)   1.00024045E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.99309123E-07           2
+                3            1  0.11171E-14
+  Coverage:             0.70258271646947756     
+  Partition function:   0.99448865522746810     
+  Residual norm:         1.1171403689612729E-015
+  at point:                  0.8511297035385                -0.0609115349539
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential:  0.40000000000000013     
+ time (residual 1)   5.00027090E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   1.00024045E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   1.99954957E-06           2
+ time (residual 1)   3.99909914E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.12955E-06
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.99309123E-07           2
+                2            1  0.15463E-10
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   1.99954957E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+                3            1  0.12164E-13
+  Coverage:             0.70815402616590417     
+  Partition function:   0.99564056548921809     
+  Residual norm:         1.2164037365259407E-014
+  at point:                  0.8532688051446                -0.0557921672792
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential:  0.41999999999999993     
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   5.00027090E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   9.99309123E-07           2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.15513E-06
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   1.99954957E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   1.00024045E-06           2
+                2            1  0.24978E-10
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   9.99309123E-07           2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   9.99309123E-07           2
+                3            1  0.45681E-14
+  Coverage:             0.71433562062407641     
+  Partition function:   0.99688581396479037     
+  Residual norm:         4.5681326746740378E-015
+  at point:                  0.8554736597662                -0.0507811526975
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential:  0.43999999999999995     
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.99309123E-07           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.99933958E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   1.99954957E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.18234E-06
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   9.99309123E-07           2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   5.00027090E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   9.99309123E-07           2
+                2            1  0.39470E-10
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   1.99954957E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+                3            1  0.20053E-14
+  Coverage:             0.72118684650626630     
+  Partition function:   0.99816989168882064     
+  Residual norm:         2.0053283331865004E-015
+  at point:                  0.8577977610045                -0.0459175163095
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential:  0.45999999999999996     
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.21038E-06
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   1.99954957E-06           2
+ time (residual 1)   4.99933958E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   1.00024045E-06           2
+                2            1  0.61045E-10
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   6.99982047E-06
+ time (residual 2)   9.99309123E-07           4
+ time (residual 3)   1.00024045E-06           2
+                3            1  0.37894E-14
+  Coverage:             0.72877475799390068     
+  Partition function:   0.99951833904021548     
+  Residual norm:         3.7894239226234942E-015
+  at point:                  0.8602805832128                -0.0412349031477
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential:  0.47999999999999998     
+ time (residual 1)   5.00027090E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.99309123E-07           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   9.99309123E-07           2
+ time (residual 4)   1.99954957E-06           2
+ time (residual 1)   3.99909914E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.23806E-06
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99309123E-07           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   1.00024045E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.99309123E-07           2
+                2            1  0.92744E-10
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   1.99954957E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+                3            1  0.49255E-14
+  Coverage:             0.73717905970095199     
+  Partition function:    1.0009711606394895     
+  Residual norm:         4.9255004135069498E-015
+  at point:                  0.8629470869142                -0.0367615725692
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential:  0.50000000000000000     
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99309123E-07           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99309123E-07           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.26377E-06
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   1.99954957E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   1.00024045E-06           2
+                2            1  0.13929E-09
+ time (residual 1)   5.00027090E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   0.00000000               2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99309123E-07           4
+ time (residual 3)   1.00024045E-06           2
+                3            1  0.16736E-14
+  Coverage:             0.74649801759087364     
+  Partition function:    1.0026056035205799     
+  Residual norm:         1.6736404963781187E-015
+  at point:                  0.8658066638830                -0.0325201760205
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential:  0.52000000000000002     
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.99309123E-07           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   9.99309123E-07           2
+ time (residual 4)   1.99954957E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.28522E-06
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   5.00027090E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   1.00024045E-06           2
+                2            1  0.20876E-09
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   9.99309123E-07           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   1.00024045E-06           2
+                3            1  0.50840E-14
+  Coverage:             0.75685436418291208     
+  Partition function:    1.0044731893836054     
+  Residual norm:         5.0840456919300218E-015
+  at point:                  0.8688516598299                -0.0285274219301
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential:  0.54000000000000004     
+ time (residual 1)   4.99933958E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   0.00000000               2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99309123E-07           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   9.99309123E-07           2
+                1            1  0.29885E-06
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   1.99954957E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   1.00024045E-06           2
+                2            1  0.31498E-09
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99309123E-07           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   9.99309123E-07           2
+                3            1  0.22037E-14
+  Coverage:             0.76839923474769523     
+  Partition function:    1.0066336750246965     
+  Residual norm:         2.2037297810228127E-015
+  at point:                  0.8720558609700                -0.0247938601301
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential:  0.56000000000000005     
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   1.00024045E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   1.99954957E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.29900E-06
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99309123E-07           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   1.00024045E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99309123E-07           4
+ time (residual 3)   1.00024045E-06           2
+                2            1  0.48057E-09
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   9.99309123E-07           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+                3            1  0.18380E-14
+  Coverage:             0.78131080754196458     
+  Partition function:    1.0090859575558144     
+  Residual norm:         1.8379556911022670E-015
+  at point:                  0.8753735517320                -0.0213241167374
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential:  0.58000000000000007     
+ time (residual 1)   4.99933958E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   1.00024045E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   1.99954957E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.27808E-06
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99309123E-07           4
+ time (residual 3)   9.99309123E-07           2
+ time (residual 4)   1.99954957E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   9.99309123E-07           2
+                2            1  0.73622E-09
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   5.00027090E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   1.00024045E-06           2
+                3            1  0.11779E-14
+  Coverage:             0.79578260178133575     
+  Partition function:    1.0117847546624321     
+  Residual norm:         1.1778964011900897E-015
+  at point:                  0.8787399094371                -0.0181179408704
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential:  0.60000000000000009     
+ time (residual 1)   5.00027090E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.99309123E-07           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.99309123E-07           2
+ time (residual 4)   1.00024045E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.23404E-06
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99309123E-07           4
+ time (residual 3)   1.00024045E-06           2
+                2            1  0.11026E-08
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   9.99309123E-07           2
+ time (residual 4)   1.99954957E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+                3            1  0.50047E-14
+  Coverage:             0.81199452792931592     
+  Partition function:    1.0145930700147638     
+  Residual norm:         5.0047081945648820E-015
+  at point:                  0.8820735375254                -0.0151723251869
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential:  0.62000000000000011     
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   3.99909914E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.20272E-06
+ time (residual 1)   5.00027090E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   0.00000000               2
+ time (residual 4)   1.99954957E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.99309123E-07           2
+                2            1  0.15282E-08
+ time (residual 1)   4.99933958E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   1.00024045E-06           2
+                3            1  0.45302E-14
+  Coverage:             0.83005863440268812     
+  Partition function:    1.0172378725595324     
+  Residual norm:         4.5301997182674392E-015
+  at point:                  0.8852817817865                -0.0124846584450
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential:  0.64000000000000012     
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99309123E-07           4
+ time (residual 3)   1.00024045E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   5.00027090E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   9.99309123E-07           2
+ time (residual 4)   1.99954957E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.25932E-06
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   1.00024045E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99309123E-07           4
+ time (residual 3)   1.00024045E-06           2
+                2            1  0.17865E-08
+ time (residual 1)   6.99982047E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   9.99309123E-07           2
+ time (residual 4)   1.99954957E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   0.00000000               2
+                3            1  0.14258E-13
+  Coverage:             0.84993357557046068     
+  Partition function:    1.0192753227162634     
+  Residual norm:         1.4257966522258715E-014
+  at point:                  0.8882690662764                -0.0100563060096
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential:  0.66000000000000014     
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99309123E-07           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.33781E-06
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   9.99309123E-07           2
+ time (residual 1)   3.99909914E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+                2            1  0.15169E-08
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99309123E-07           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   1.00024045E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   9.99309123E-07           2
+                3            1  0.16226E-13
+  Coverage:             0.87131282389547671     
+  Partition function:    1.0200009715698837     
+  Residual norm:         1.6226285525443693E-014
+  at point:                  0.8909477981307                -0.0078952439088
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential:  0.68000000000000016     
+ time (residual 1)   5.00027090E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   9.99309123E-07           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.30288E-06
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99309123E-07           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   9.99309123E-07           4
+ time (residual 3)   1.00024045E-06           2
+                2            1  0.72104E-09
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   1.99954957E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   1.00024045E-06           2
+                3            1  0.32498E-14
+  Coverage:             0.89351946466553078     
+  Partition function:    1.0184293814633105     
+  Residual norm:         3.2497737525929164E-015
+  at point:                  0.8932504366685                -0.0060157235837
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential:  0.70000000000000018     
+ time (residual 1)   5.00027090E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   1.00024045E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.99309123E-07           2
+ time (residual 4)   1.00024045E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.99309123E-07           2
+                1            1  0.13788E-06
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   1.00024045E-06           2
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+                2            1  0.10537E-09
+ time (residual 1)   4.00003046E-06
+ time (residual 2)   1.99954957E-06           4
+ time (residual 3)   9.99309123E-07           2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   4.00096178E-06
+ time (residual 2)   1.99861825E-06           4
+ time (residual 3)   1.00024045E-06           2
+                3            1  0.39003E-14
+  Coverage:             0.91548319039275206     
+  Partition function:    1.0135187387470099     
+  Residual norm:         3.9002509747120863E-015
+  at point:                  0.8951402146350                -0.0044332188363
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential:  0.72000000000000020     
+ time (residual 1)   4.00096178E-06
+ time (residual 2)   9.98377800E-07           4
+ time (residual 3)   1.00024045E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   3.99909914E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   3.99909914E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   9.98377800E-07           2
+                1            1  0.53538E-08
+ time (residual 1)   4.99933958E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   0.00000000               2
+ time (residual 4)   1.99861825E-06           2
+ time (residual 1)   3.99909914E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   1.00024045E-06           2
+                2            1  0.12627E-12
+  Coverage:             0.93589408276786246     
+  Partition function:    1.0048772868129445     
+  Residual norm:         1.2627231753670464E-013
+  at point:                  0.8966171428970                -0.0031550884037
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential:  0.74000000000000021     
+ time (residual 1)   3.99909914E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00096178E-06
+ time (residual 2)   9.98377800E-07           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   4.00096178E-06
+ time (residual 2)   9.98377800E-07           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.57599E-07
+ time (residual 1)   3.99909914E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   3.99909914E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+                2            1  0.12832E-10
+ time (residual 1)   4.00096178E-06
+ time (residual 2)   1.99861825E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   4.00096178E-06
+ time (residual 2)   1.99861825E-06           4
+ time (residual 3)   1.00024045E-06           2
+                3            1  0.00000E+00
+  Coverage:             0.95354833732412736     
+  Partition function:   0.99375059801244225     
+  Residual norm:         0.0000000000000000     
+  at point:                  0.8977162514208                -0.0021711196040
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential:  0.76000000000000023     
+ time (residual 1)   5.00120223E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   1.00024045E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   3.99909914E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   1.00024045E-06           2
+ time (residual 1)   4.00096178E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.19903E-06
+ time (residual 1)   3.99909914E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.98377800E-07           2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   3.99909914E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.98377800E-07           2
+                2            1  0.14164E-09
+ time (residual 1)   4.99933958E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   3.99909914E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   1.00024045E-06           2
+                3            1  0.54733E-14
+  Coverage:             0.96772526757924160     
+  Partition function:   0.98319291437813372     
+  Residual norm:         5.4732744198720230E-015
+  at point:                  0.8984975829607                -0.0014501211367
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential:  0.78000000000000025     
+ time (residual 1)   3.99909914E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   9.98377800E-07           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00096178E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   4.00096178E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.24088E-06
+ time (residual 1)   4.00096178E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   1.00024045E-06           2
+ time (residual 1)   4.00096178E-06
+ time (residual 2)   9.98377800E-07           4
+ time (residual 3)   1.00024045E-06           2
+                2            1  0.19863E-09
+ time (residual 1)   3.99909914E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   9.98377800E-07           2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   3.99909914E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+                3            1  0.23039E-13
+  Coverage:             0.97835109109683138     
+  Partition function:   0.97648353364548579     
+  Residual norm:         2.3039176942566119E-014
+  at point:                  0.8990314463652                -0.0009453408157
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential:  0.80000000000000027     
+ time (residual 1)   3.99909914E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   3.99909914E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   1.00024045E-06           2
+ time (residual 1)   4.00096178E-06
+ time (residual 2)   9.98377800E-07           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.17037E-06
+ time (residual 1)   4.99933958E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   4.99933958E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   0.00000000               2
+                2            1  0.96940E-10
+ time (residual 1)   3.99909914E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   4.99933958E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   1.00024045E-06           2
+                3            1  0.13108E-13
+  Coverage:             0.98586749964006326     
+  Partition function:   0.97504114376316253     
+  Residual norm:         1.3108459496808625E-014
+  at point:                  0.8993848518647                -0.0006051001750
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential:  0.81999999999999984     
+ time (residual 1)   4.99933958E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   1.00024045E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00096178E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   1.99861825E-06           2
+ time (residual 1)   5.00120223E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.84153E-07
+ time (residual 1)   4.00096178E-06
+ time (residual 2)   9.98377800E-07           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   1.00024045E-06           2
+ time (residual 1)   4.00096178E-06
+ time (residual 2)   9.98377800E-07           4
+ time (residual 3)   1.00024045E-06           2
+                2            1  0.23320E-10
+ time (residual 1)   3.99909914E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   8.00006092E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+                3            1  0.20037E-14
+  Coverage:             0.99095294246642518     
+  Partition function:   0.97776993694160930     
+  Residual norm:         2.0037069921318940E-015
+  at point:                  0.8996133453403                -0.0003823242586
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential:  0.83999999999999986     
+ time (residual 1)   3.99909914E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00096178E-06
+ time (residual 2)   1.99861825E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   1.99861825E-06           2
+ time (residual 1)   5.00120223E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   0.00000000               2
+                1            1  0.32348E-07
+ time (residual 1)   4.00096178E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   4.00096178E-06
+ time (residual 2)   1.99861825E-06           4
+ time (residual 3)   0.00000000               2
+                2            1  0.34261E-11
+ time (residual 1)   4.99933958E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   0.00000000               2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   3.99909914E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.98377800E-07           2
+                3            1  0.00000E+00
+  Coverage:             0.99428545384923572     
+  Partition function:   0.98247755542890114     
+  Residual norm:         0.0000000000000000     
+  at point:                  0.8997586510524                -0.0002394541911
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential:  0.85999999999999988     
+ time (residual 1)   4.00096178E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   1.00024045E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00096178E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   0.00000000               2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   3.99909914E-06
+ time (residual 2)   1.99861825E-06           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.10461E-07
+ time (residual 1)   3.99909914E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.98377800E-07           2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   4.99933958E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   0.00000000               2
+                2            1  0.35906E-12
+  Coverage:             0.99642217702215918     
+  Partition function:   0.98721557231271917     
+  Residual norm:         3.5906147849368171E-013
+  at point:                  0.8998514235852                -0.0001498088042
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential:  0.87999999999999989     
+ time (residual 1)   3.99909914E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.98377800E-07           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00096178E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   9.98377800E-07           2
+ time (residual 1)   4.00096178E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.30130E-08
+ time (residual 1)   4.00096178E-06
+ time (residual 2)   9.98377800E-07           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   4.00096178E-06
+ time (residual 2)   9.98377800E-07           4
+ time (residual 3)   2.00048089E-06           2
+                2            1  0.30277E-13
+  Coverage:             0.99777266945777543     
+  Partition function:   0.99159990212470861     
+  Residual norm:         3.0277075092009386E-014
+  at point:                  0.8999073859096                -0.0000926655172
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential:  0.89999999999999991     
+ time (residual 1)   4.00096178E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.99933958E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   9.98377800E-07           2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   3.99909914E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.80444E-09
+ time (residual 1)   4.99933958E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   0.00000000               2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   3.99909914E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+                2            1  0.23040E-14
+  Coverage:             0.99861839376726003     
+  Partition function:   0.99404407021079022     
+  Residual norm:         2.3040342587979457E-015
+  at point:                  0.8999425886560                -0.0000572914806
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential:  0.91999999999999993     
+ time (residual 1)   4.99933958E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.98377800E-07           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00096178E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   4.99933958E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   0.00000000               2
+                1            1  0.20460E-09
+ time (residual 1)   3.99909914E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   1.99861825E-06           2
+ time (residual 1)   4.99933958E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   0.00000000               2
+                2            1  0.15762E-15
+  Coverage:             0.99914493047180086     
+  Partition function:   0.99637063437927265     
+  Residual norm:         1.5762375645498324E-016
+  at point:                  0.8999644894849                -0.0000353884700
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential:  0.93999999999999995     
+ time (residual 1)   3.99909914E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   4.00096178E-06
+ time (residual 2)   9.98377800E-07           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   4.00096178E-06
+ time (residual 2)   9.98377800E-07           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.50461E-10
+ time (residual 1)   3.99909914E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   3.99909914E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+                2            1  0.11146E-15
+  Coverage:             0.99947154711603114     
+  Partition function:   0.99768174340218541     
+  Residual norm:         1.1145598333150986E-016
+  at point:                  0.8999780732534                -0.0000218502803
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential:  0.95999999999999996     
+ time (residual 1)   3.99909914E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   1.00024045E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   3.99909914E-06
+ time (residual 2)   2.00048089E-06           4
+ time (residual 3)   0.00000000               2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   3.99909914E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.12208E-10
+ time (residual 1)   4.00096178E-06
+ time (residual 2)   9.98377800E-07           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   1.99861825E-06           2
+ time (residual 1)   4.00096178E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+                2            1  0.11146E-15
+  Coverage:             0.99967368949652113     
+  Partition function:   0.99854613257551084     
+  Residual norm:         1.1145598333150986E-016
+  at point:                  0.8999865126843                -0.0000135066009
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential:  0.97999999999999998     
+ time (residual 1)   4.00096178E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   3.99909914E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.98377800E-07           2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   3.99909914E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+                1            1  0.29184E-11
+ time (residual 1)   3.99909914E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+ time (residual 4)   2.00048089E-06           2
+ time (residual 1)   3.99909914E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   1.00024045E-06           2
+                2            1  0.15732E-15
+  Coverage:             0.99979861805897918     
+  Partition function:   0.99912150208989259     
+  Residual norm:         1.5731590455171417E-016
+  at point:                  0.8999914010702                -0.0000081935239
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Chemical potential:   1.0000000000000000     
+ time (residual 1)   5.00120223E-06
+ time (residual 2)   9.98377800E-07           4
+ time (residual 3)   1.00024045E-06           2
+        Iteration   Func-count       |f(x)|
+ time (residual 1)   3.99909914E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.98377800E-07           2
+ time (residual 4)   1.00024045E-06           2
+ time (residual 1)   3.99909914E-06
+ time (residual 2)   1.00024045E-06           4
+ time (residual 3)   9.98377800E-07           2
+                1            1  0.69250E-12
+  Coverage:             0.99987575911729365     
+  Partition function:   0.99948950674196080     
+  Residual norm:         6.9250083464465139E-013
+  at point:                  0.8999931847518                -0.0000042980544
+ Elapsed CPU-time   1.12640001E-02

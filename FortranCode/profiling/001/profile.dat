@@ -1,0 +1,7 @@
+# Elapsed CPU time of the main loop, based on the provided test cases (see tests/data/(0,1,2) folders)
+# -O5 option
+#test   time, [s]
+1 1.12640001E-02
+2 0.468102008
+54.3284607
+3 54.3284607
