@@ -15,7 +15,9 @@ module meso_approx
 		integer, allocatable, dimension(:,:) :: sumstateprodsorig ! array storing sums of the above, which make it faster to calculate dHamiltonian/dcorcpar, for each state.
 		integer, allocatable, dimension(:,:) :: sumstateprodscorc ! array storing sums of the above, which make it faster to calculate dHamiltonian/dcorcpar, for each state.
         ! All three of the above are stored as members of the class for computational efficiency, but for large approximations it can be memory intensive!
-        
+        integer, allocatable, dimension(:) :: stateprods_new ! array storing terms that appear in the Hamiltonian, like sigma(1)*sigma(2) etc, for each state.
+
+
 		integer norig      ! number of original parameters in the Hamiltonian, e.g. = 2 if only adsorption energy and 1NN interaction energy are used
 		integer ncorc      ! number of correction terms in the Hamiltonian, e.g. = 1 if only one correction for adsorption energy is imposed (e.g. in BP, BPE)
 		real(8), allocatable, dimension(:) :: origpars ! value of an original interaction term in the Hamiltonian
@@ -46,9 +48,9 @@ module meso_approx
 		integer, allocatable, dimension(:) :: rhs  ! points to array "correlation", encoding the right hand side of each equation
 		real(8), allocatable, dimension(:) :: residual  ! residual of each equation
 		real(8), allocatable, dimension(:,:) :: jacobian  ! jacobian of each equation
-        integer, allocatable, dimension(:,:) ::  stateprods(:,:) ! array storing terms that appear in the correlations, like sigma(1)*sigma(2) etc, for each state.
+        integer, allocatable, dimension(:) ::  stateprods(:) ! array storing terms that appear in the correlations, like sigma(1)*sigma(2) etc, for each state.
         ! These are saved for computational efficiency, but for large approximations it can be memory intensive!
-        
+
 		! The sizes of the above are intended to be:
 		!    correlation(1:nterms,1:nbodymax)
 		!    corrlnbody(1:nterms)
@@ -149,34 +151,44 @@ module meso_approx
     
         implicit none
         class (approximation) :: this
-        integer i, j, upper_range
+        integer i, j, k, upper_range
         real(4) t1, t2, t3, t4
         real(8) tmp_val
         logical is_even_ncorc
+
+        upper_range = 2**this%nsites
 
         ! Preparatory steps: allocate and precompute stateprods, sumstateprodsorig, sumstateprodscorc
         if (.not. (allocated(this%hamilt%sumstateprodsorig) .and. allocated(this%hamilt%sumstateprodscorc))) then 
             call cpu_time(t1) ! function for calculating elapsed CPU time
             if (.not. allocated(this%hamilt%stateprods)) then
-                allocate(this%hamilt%stateprods(2**this%nsites,this%hamilt%nterms),source=1)
+                allocate(this%hamilt%stateprods(upper_range,this%hamilt%nterms),source=1)
+                
+                !!!!!!
+                ! allocate(this%hamilt%stateprods_new(upper_range * this%hamilt%nterms), source = 1)
+                !!!!!!
+
                 do i = 1,this%hamilt%nterms
                     do j = 1,this%hamilt%internbody(i)
                         this%hamilt%stateprods(:,i) = &
                             this%hamilt%stateprods(:,i)*this%allstates(:,this%hamilt%interaction(i,j))
+                        ! do k = 1, upper_range
+                        !     this%hamilt%stateprods_new(i + k * this%hamilt%nterms) = this%hamilt%stateprods(k,i)
+                        ! enddo
                     enddo
                 enddo
             endif
             if (.not. allocated(this%hamilt%sumstateprodsorig)) then
-                allocate(this%hamilt%sumstateprodsorig(2**this%nsites,this%hamilt%norig),source=0)
-                do i = 1,2**this%nsites
+                allocate(this%hamilt%sumstateprodsorig(upper_range,this%hamilt%norig),source=0)
+                do i = 1,upper_range
                     do j = 1,this%hamilt%norig
                         this%hamilt%sumstateprodsorig(i,j) = sum(this%hamilt%stateprods(i,:),MASK=this%hamilt%origterms(1:)==j)
                     enddo
                 enddo
             endif
             if (.not. allocated(this%hamilt%sumstateprodscorc)) then
-                allocate(this%hamilt%sumstateprodscorc(2**this%nsites,this%hamilt%ncorc),source=0)
-                do i = 1,2**this%nsites
+                allocate(this%hamilt%sumstateprodscorc(upper_range,this%hamilt%ncorc),source=0)
+                do i = 1,upper_range
                     do j = 1,this%hamilt%ncorc
                         this%hamilt%sumstateprodscorc(i,j) = sum(this%hamilt%stateprods(i,:),MASK=this%hamilt%corcterms(1:)==j)
                     enddo
@@ -225,7 +237,7 @@ module meso_approx
         !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         ! call cpu_time(t1) ! function for calculating elapsed CPU time
         this%allenergs = this%hamilt%H0
-        upper_range = 2**this%nsites
+        ! upper_range = 2**this%nsites
         do i = 1,this%hamilt%norig
             tmp_val = this%hamilt%origpars(i)
             do j = 1,upper_range
@@ -299,17 +311,20 @@ module meso_approx
     subroutine calculate_residuals(this,calcjac)
     
         use global_constants
+        use omp_lib
 
         implicit none
         
         class (approximation) :: this
-        integer i, j, k
+        integer i, j, k, upper_range
         real(8) lhsderivativeterm, rhsderivativeterm
         logical, intent(in), optional :: calcjac
         logical :: calculatejacobian
         real(4) t1, t2, t3, t4, t5, t6, t7, t8
-        integer lhs_i, rhs_i
+        integer lhs_i, rhs_i, id, tmp_id
         real(8) tmp_var1, tmp_var2
+
+        upper_range = 2**this%nsites
 
         if (present(calcjac)) then
             calculatejacobian = calcjac
@@ -319,16 +334,21 @@ module meso_approx
         
         ! Preparatory steps: allocate and precompute stateprods
         if (.not. allocated(this%eqns%stateprods)) then
-            allocate(this%eqns%stateprods(2**this%nsites,this%eqns%nterms),source=1)
+            allocate(this%eqns%stateprods(upper_range * this%eqns%nterms), source = 1)
+
             do i = 1,this%eqns%nterms
                 do j = 1,this%eqns%corrlnbody(i)
-                    this%eqns%stateprods(:,i) = &
-                        this%eqns%stateprods(:,i)*this%allstates(:,this%eqns%correlation(i,j))
+                    tmp_id = this%eqns%correlation(i, j)
+                    do k = 1, upper_range
+                        id = k + (i - 1) * upper_range
+                        this%eqns%stateprods(id) = &
+                                    this%eqns%stateprods(id) * this%allstates(k, tmp_id)
+                    enddo
                 enddo
             enddo
         endif
         if (.not. allocated(this%expenergies)) then
-            allocate(this%expenergies(2**this%nsites),source=0.d0)
+            allocate(this%expenergies(upper_range),source=0.d0)
         endif
 
         call cpu_time(t1) !!!
@@ -346,17 +366,32 @@ module meso_approx
             ! The following two expressions should give the same results (numerical accuracy issues excluded)
             ! In the Matlab code the first expression is used, i.e. not the actual correlation function, but the 
             ! non-normalised partial sum that corresponds to that correlation
-            this%eqns%corrlvalue(i) = sum(this%eqns%stateprods(:,i)*this%expenergies)
+            ! this%eqns%corrlvalue(i) = sum(this%eqns%stateprods(:,i)*this%expenergies)
+            tmp_var1 = 0.d0
+            do k = 1,upper_range,1
+                ! tmp_var1 = tmp_var1 &
+                !                     + this%eqns%stateprods(k,i) * this%expenergies(k)
+
+                tmp_var1 = tmp_var1 &
+                                    + this%eqns%stateprods(k + (i - 1) * upper_range) &
+                                    * this%expenergies(k)
+            enddo
+            this%eqns%corrlvalue(i) = tmp_var1
             ! this%eqns%corrlvalue(i) = sum(this%eqns%stateprods(:,i)*this%expenergies)/this%partfcn
         enddo  
         call cpu_time(t4) !!!
         write(*,*) 'time (residual 2)',t4-t3, this%eqns%nterms
     
         call cpu_time(t5) !!!
-        this%eqns%residual = 0.d0
+        ! this%eqns%residual = 0.d0     ! no point to flush it, since it will be rewritten in the loop
         do i = 1,this%eqns%neqns
             ! Again, two options. In Matlab we have used the version of the equations with the logarithms
-            this%eqns%residual(i) = log(this%eqns%corrlvalue(this%eqns%lhs(i))) - log(this%eqns%corrlvalue(this%eqns%rhs(i)))
+            
+            ! mathematically, log(a/b) = log(a) - log(b). however, if implemented in this way the roundoff errors change the
+            ! results. so, keep it as it was
+            ! this%eqns%residual(i) = log(this%eqns%corrlvalue(this%eqns%lhs(i)) / this%eqns%corrlvalue(this%eqns%rhs(i)))    ! One log is better than two
+            this%eqns%residual(i) = log(this%eqns%corrlvalue(this%eqns%lhs(i))) - log(this%eqns%corrlvalue(this%eqns%rhs(i)))    ! One log is better than two
+            
             ! this%eqns%residual(i) = this%eqns%corrlvalue(this%eqns%lhs(i)) - this%eqns%corrlvalue(this%eqns%rhs(i))
         enddo
         call cpu_time(t6) !!!
@@ -367,43 +402,34 @@ module meso_approx
         if (.not.calculatejacobian) return
         
         call cpu_time(t7) !!!
-        ! do i = 1,this%eqns%neqns
-        !     do j = 1,this%eqns%neqns
-        !         lhsderivativeterm = sum(this%eqns%stateprods(:,this%eqns%lhs(i)) &
-        !                                 *this%expenergies*this%hamilt%sumstateprodscorc(:,j))
-        !         rhsderivativeterm = sum(this%eqns%stateprods(:,this%eqns%rhs(i)) &
-        !                                 *this%expenergies*this%hamilt%sumstateprodscorc(:,j))
-        !         this%eqns%jacobian(i,j) = &
-        !                 1.d0/this%eqns%corrlvalue(this%eqns%lhs(i))*lhsderivativeterm &
-        !               - 1.d0/this%eqns%corrlvalue(this%eqns%rhs(i))*rhsderivativeterm
-        !     enddo
-        ! enddo
+        ! !$OMP PARALLEL
         do i = 1,this%eqns%neqns
             lhs_i = this%eqns%lhs(i)
             rhs_i = this%eqns%rhs(i)
+
             do j = 1,this%eqns%neqns
-                lhsderivativeterm = 0.
-                rhsderivativeterm = 0.
-                tmp_var1 = 0.
-                tmp_var2 = 0.
+                lhsderivativeterm = 0.d0
+                rhsderivativeterm = 0.d0
+                tmp_var1 = 0.d0
+                tmp_var2 = 0.d0
                 ! !$OMP SIMD
-                do k = 1,2**this%nsites,2
-                    tmp_var1 = this%expenergies(k) * this%hamilt%sumstateprodscorc(k, j)
+                do k = 1,upper_range,2
+                    tmp_var1 = this%expenergies(k    ) * this%hamilt%sumstateprodscorc(k,     j)
                     tmp_var2 = this%expenergies(k + 1) * this%hamilt%sumstateprodscorc(k + 1, j)
                     lhsderivativeterm = lhsderivativeterm &
-                                    + this%eqns%stateprods(k,     lhs_i) * tmp_var1 &
-                                    + this%eqns%stateprods(k + 1, lhs_i) * tmp_var2
+                                      + this%eqns%stateprods(k + (lhs_i - 1) * upper_range) * tmp_var1 &
+                                      + this%eqns%stateprods(k + 1 + (lhs_i - 1) * upper_range) * tmp_var2
                     rhsderivativeterm = rhsderivativeterm &
-                                    + this%eqns%stateprods(k,     rhs_i) * tmp_var1 &
-                                    + this%eqns%stateprods(k + 1, rhs_i) * tmp_var2
+                                      + this%eqns%stateprods(k + (rhs_i - 1) * upper_range) * tmp_var1 &
+                                      + this%eqns%stateprods(k + 1 + (rhs_i - 1) * upper_range) * tmp_var2
                 enddo
-                ! !$OMP END SIMD
                 this%eqns%jacobian(i,j) = &
                         1.d0/this%eqns%corrlvalue(lhs_i)*lhsderivativeterm &
                       - 1.d0/this%eqns%corrlvalue(rhs_i)*rhsderivativeterm
             enddo
         enddo
-        this%eqns%jacobian = -1/(kboltz*this%temp)*this%eqns%jacobian
+        ! !$OMP END PARALLEL
+        this%eqns%jacobian = -1.d0/(kboltz*this%temp)*this%eqns%jacobian
         call cpu_time(t8) !!!
         write(*,*) 'time (residual 4)',t8-t7, this%eqns%neqns
 
