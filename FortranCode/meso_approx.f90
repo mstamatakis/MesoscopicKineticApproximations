@@ -13,10 +13,9 @@ module meso_approx
 		integer, allocatable, dimension(:) :: corcterms ! integers pointing to corcpars (see below) to return correction parameters for each of the interaction terms in vector "interaction" above
 		integer, allocatable, dimension(:,:) :: stateprods ! array storing terms that appear in the Hamiltonian, like sigma(1)*sigma(2) etc, for each state.
 		integer, allocatable, dimension(:,:) :: sumstateprodsorig ! array storing sums of the above, which make it faster to calculate dHamiltonian/dcorcpar, for each state.
-		integer, allocatable, dimension(:,:) :: sumstateprodscorc ! array storing sums of the above, which make it faster to calculate dHamiltonian/dcorcpar, for each state.
+		integer, allocatable, dimension(:) :: sumstateprodscorc ! array storing sums of the above, which make it faster to calculate dHamiltonian/dcorcpar, for each state.
         ! All three of the above are stored as members of the class for computational efficiency, but for large approximations it can be memory intensive!
         integer, allocatable, dimension(:) :: stateprods_new ! array storing terms that appear in the Hamiltonian, like sigma(1)*sigma(2) etc, for each state.
-
 
 		integer norig      ! number of original parameters in the Hamiltonian, e.g. = 2 if only adsorption energy and 1NN interaction energy are used
 		integer ncorc      ! number of correction terms in the Hamiltonian, e.g. = 1 if only one correction for adsorption energy is imposed (e.g. in BP, BPE)
@@ -187,10 +186,17 @@ module meso_approx
                 enddo
             endif
             if (.not. allocated(this%hamilt%sumstateprodscorc)) then
-                allocate(this%hamilt%sumstateprodscorc(upper_range,this%hamilt%ncorc),source=0)
+                ! allocate(this%hamilt%sumstateprodscorc(upper_range,this%hamilt%ncorc),source=0)
+                ! do i = 1,upper_range
+                !     do j = 1,this%hamilt%ncorc
+                !         this%hamilt%sumstateprodscorc(i,j) = sum(this%hamilt%stateprods(i,:),MASK=this%hamilt%corcterms(1:)==j)
+                !     enddo
+                ! enddo
+                allocate(this%hamilt%sumstateprodscorc(upper_range * this%hamilt%ncorc), source=0)
                 do i = 1,upper_range
                     do j = 1,this%hamilt%ncorc
-                        this%hamilt%sumstateprodscorc(i,j) = sum(this%hamilt%stateprods(i,:),MASK=this%hamilt%corcterms(1:)==j)
+                        this%hamilt%sumstateprodscorc(i + (j - 1) * upper_range) = &
+                            sum(this%hamilt%stateprods(i,:),MASK=this%hamilt%corcterms(1:)==j)
                     enddo
                 enddo
             endif
@@ -253,7 +259,8 @@ module meso_approx
             tmp_val = this%hamilt%corcpars(i)
             do j = 1,upper_range
                 this%allenergs(j) = this%allenergs(j) + & 
-                    tmp_val * this%hamilt%sumstateprodscorc(j,i)
+                    tmp_val * this%hamilt%sumstateprodscorc(j + (i - 1) * upper_range)
+                    ! tmp_val * this%hamilt%sumstateprodscorc(j,i)
             enddo
         enddo
         ! call cpu_time(t4) ! function for calculating elapsed CPU time
@@ -354,14 +361,24 @@ module meso_approx
         call cpu_time(t1) !!!
         call this%calc_energ() ! Note that we calculate the energies here, so if a program unit is calling the correlations subroutine,
         ! it would be unnecessary (and a waste of time) to compute the energies in the calling program unit
-        this%expenergies = exp(-(this%allenergs-this%mu*this%nparticles)/(kboltz*this%temp))
+
+        ! this%expenergies = exp(-(this%allenergs-this%mu*this%nparticles)/(kboltz*this%temp))
+        ! tmp_var1 = 1.d0 / (kboltz*this%temp)
+        do i = 1, upper_range
+            this%expenergies(i) = exp(-(this%allenergs(i) - this%mu * this%nparticles(i)) / (kboltz*this%temp))
+        enddo
         call cpu_time(t2) !!!
         write(*,*) 'time (residual 1)',t2-t1
 
         this%eqns%corrlvalue = 0.d0
 
         call cpu_time(t3) !!!
-        this%partfcn = sum(this%expenergies)
+        ! this%partfcn = sum(this%expenergies)
+        this%partfcn = 0.d0
+        do i = 1,upper_range
+            this%partfcn = this%partfcn + this%expenergies(i)
+        enddo
+
         do i = 1,this%eqns%nterms
             ! The following two expressions should give the same results (numerical accuracy issues excluded)
             ! In the Matlab code the first expression is used, i.e. not the actual correlation function, but the 
@@ -414,8 +431,14 @@ module meso_approx
                 tmp_var2 = 0.d0
                 ! !$OMP SIMD
                 do k = 1,upper_range,2
-                    tmp_var1 = this%expenergies(k    ) * this%hamilt%sumstateprodscorc(k,     j)
-                    tmp_var2 = this%expenergies(k + 1) * this%hamilt%sumstateprodscorc(k + 1, j)
+                    tmp_var1 = this%expenergies(k    ) &
+                            * this%hamilt%sumstateprodscorc(k + (j - 1) * upper_range)
+                            ! * this%hamilt%sumstateprodscorc(k,     j)
+                    tmp_var2 = this%expenergies(k + 1) &
+                            * this%hamilt%sumstateprodscorc(k + (j - 1) * upper_range)
+                            ! * this%hamilt%sumstateprodscorc(k + 1, j)
+                    ! tmp_var1 = this%expenergies(k    ) * this%hamilt%sumstateprodscorc(k,     j)
+                    ! tmp_var2 = this%expenergies(k + 1) * this%hamilt%sumstateprodscorc(k + 1, j)
                     lhsderivativeterm = lhsderivativeterm &
                                       + this%eqns%stateprods(k + (lhs_i - 1) * upper_range) * tmp_var1 &
                                       + this%eqns%stateprods(k + 1 + (lhs_i - 1) * upper_range) * tmp_var2
@@ -423,6 +446,7 @@ module meso_approx
                                       + this%eqns%stateprods(k + (rhs_i - 1) * upper_range) * tmp_var1 &
                                       + this%eqns%stateprods(k + 1 + (rhs_i - 1) * upper_range) * tmp_var2
                 enddo
+                ! !$OMP END SIMD
                 this%eqns%jacobian(i,j) = &
                         1.d0/this%eqns%corrlvalue(lhs_i)*lhsderivativeterm &
                       - 1.d0/this%eqns%corrlvalue(rhs_i)*rhsderivativeterm

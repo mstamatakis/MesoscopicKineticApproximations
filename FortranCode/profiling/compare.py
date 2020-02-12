@@ -1,4 +1,4 @@
-# Performs comparison of two files and asserts if they are not the same (w.r.p. to pre-defined tolerance)  
+# Performs comparison of two files and reports if they are not the same (w.r.p. to pre-defined tolerance)  
 from os.path import join, exists
 
 def loadtext(path):
