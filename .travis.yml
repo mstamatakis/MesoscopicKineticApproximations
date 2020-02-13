@@ -21,6 +21,12 @@ matrix:
 
   include:
     - os: osx
+      addons:
+        homebrew:
+          packages: &osx_sources
+            - llvm
+            - libomp
+          update: true
       env:
         - TITLE="OSX - GFortran"
       
@@ -51,7 +57,7 @@ matrix:
 
 before_install:
   # Install stuff specifically for MacOS
-  - if [ $TRAVIS_OS_NAME = osx ]; then brew update; rm '/usr/local/include/c++'; brew install gcc; fi
+  - if [ $TRAVIS_OS_NAME = osx ]; then brew link gcc; fi
   # Install stuff specifically for Windows
   - if [ $TRAVIS_OS_NAME = windows ]; then choco install make; fi
 
