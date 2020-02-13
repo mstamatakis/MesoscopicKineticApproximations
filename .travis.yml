@@ -21,14 +21,40 @@ matrix:
 
   include:
     - os: osx
+      addons:
+        homebrew:
+          packages: &osx_sources
+            - llvm
+            - libomp
+          update: true
+      env:
+        - TITLE="OSX - GFortran"
       
     - os: linux
+      env:
+        - TITLE="Linux - GFortran"
+
+    - os: linux
+      env:
+        - TITLE="Linux - IFort"
+      addons:
+        apt:
+          sources:
+          - sourceline: 'deb https://apt.repos.intel.com/oneapi all main'
+            key_url: 'https://apt.repos.intel.com/intel-gpg-keys/GPG-PUB-KEY-INTEL-SW-PRODUCTS-2023.PUB'
+          packages:
+          - intel-oneapi-ifort
+      install:
+        - source /opt/intel/inteloneapi/compiler/latest/env/vars.sh
 
     - os: windows
+      env:
+        - TITLE="Windows (MinGW64) - GFortran"
 
 before_install:
   # Install stuff specifically for MacOS
-  - if [ $TRAVIS_OS_NAME = osx ]; then brew update; rm '/usr/local/include/c++'; brew install gcc; fi
+  - if [ $TRAVIS_OS_NAME = osx ]; then brew link gcc; fi
+  # Install stuff specifically for Windows
   - if [ $TRAVIS_OS_NAME = windows ]; then choco install make; fi
 
 install:
@@ -43,10 +69,15 @@ script:
   - make -j
   - while sleep 540 ; do echo "=========== tests are taking more than 9m - pinging travis =========="; done &
   - PING_PID=$!
-  - ctest --output-on-failure
-  # - ctest -L fast --output-on-failure
+  # - ctest --output-on-failure
+  - ctest -L fast --output-on-failure
   # - ctest -L "(fast|medium)" --output-on-failure
+  # The following kills the pinging process, otherwise Windows builds hang
   - kill $PING_PID
+
+after_script:
+  - find . -name "uninstal*"
+  - '[[ ! -z "${INTEL_INSTALL_PATH}" ]] && uninstall_intel_software'
 
 after_success:
 
