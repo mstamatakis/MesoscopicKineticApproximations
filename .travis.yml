@@ -42,6 +42,8 @@ matrix:
             key_url: 'https://apt.repos.intel.com/intel-gpg-keys/GPG-PUB-KEY-INTEL-SW-PRODUCTS-2023.PUB'
           packages:
           - intel-oneapi-ifort
+      install:
+        - source /opt/intel/inteloneapi/compiler/latest/env/vars.sh
 
     - os: windows
       env:
@@ -52,8 +54,6 @@ before_install:
   - if [ $TRAVIS_OS_NAME = osx ]; then brew update; rm '/usr/local/include/c++'; brew install gcc; fi
   # Install stuff specifically for Windows
   - if [ $TRAVIS_OS_NAME = windows ]; then choco install make; fi
-  - chmod 777 ./install-icc.sh
-  - if [ $FC = ifort ]; then ./install-icc.sh --components "${COMPONENTS}"; source ~/.bashrc; fi
 
 install:
 
