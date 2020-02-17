@@ -11,8 +11,8 @@ module meso_approx
 		integer, allocatable, dimension(:,:) :: interaction ! intended as a (nterms x nbodymax) array encoding interaction terms e.g. 1, 2, 1-2, ...
 		integer, allocatable, dimension(:) :: origterms ! integers pointing to origpars (see below) to return original Hamiltonian parameters for each of the interaction terms in vector "interaction" above
 		integer, allocatable, dimension(:) :: corcterms ! integers pointing to corcpars (see below) to return correction parameters for each of the interaction terms in vector "interaction" above
-		integer, allocatable, dimension(:,:) :: stateprods ! array storing terms that appear in the Hamiltonian, like sigma(1)*sigma(2) etc, for each state.
-		integer, allocatable, dimension(:,:) :: sumstateprodsorig ! array storing sums of the above, which make it faster to calculate dHamiltonian/dcorcpar, for each state.
+		integer, allocatable, dimension(:) :: stateprods ! array storing terms that appear in the Hamiltonian, like sigma(1)*sigma(2) etc, for each state.
+		integer, allocatable, dimension(:) :: sumstateprodsorig ! array storing sums of the above, which make it faster to calculate dHamiltonian/dcorcpar, for each state.
 		integer, allocatable, dimension(:) :: sumstateprodscorc ! array storing sums of the above, which make it faster to calculate dHamiltonian/dcorcpar, for each state.
         ! All three of the above are stored as members of the class for computational efficiency, but for large approximations it can be memory intensive!
         integer, allocatable, dimension(:) :: stateprods_new ! array storing terms that appear in the Hamiltonian, like sigma(1)*sigma(2) etc, for each state.
@@ -150,7 +150,7 @@ module meso_approx
     
         implicit none
         class (approximation) :: this
-        integer i, j, k, upper_range
+        integer i, j, k, upper_range, tmp_int
         real(4) t1, t2, t3, t4
         real(8) tmp_val
         logical is_even_ncorc
@@ -161,42 +161,40 @@ module meso_approx
         if (.not. (allocated(this%hamilt%sumstateprodsorig) .and. allocated(this%hamilt%sumstateprodscorc))) then 
             call cpu_time(t1) ! function for calculating elapsed CPU time
             if (.not. allocated(this%hamilt%stateprods)) then
-                allocate(this%hamilt%stateprods(upper_range,this%hamilt%nterms),source=1)
-                
-                !!!!!!
-                ! allocate(this%hamilt%stateprods_new(upper_range * this%hamilt%nterms), source = 1)
-                !!!!!!
-
+                allocate(this%hamilt%stateprods(upper_range * this%hamilt%nterms),source=1)
                 do i = 1,this%hamilt%nterms
                     do j = 1,this%hamilt%internbody(i)
-                        this%hamilt%stateprods(:,i) = &
-                            this%hamilt%stateprods(:,i)*this%allstates(:,this%hamilt%interaction(i,j))
-                        ! do k = 1, upper_range
-                        !     this%hamilt%stateprods_new(i + k * this%hamilt%nterms) = this%hamilt%stateprods(k,i)
-                        ! enddo
+                        do k = 1, upper_range
+                            tmp_int = k + (i - 1) * upper_range
+                            this%hamilt%stateprods(tmp_int) = &
+                                        this%hamilt%stateprods(tmp_int) * this%allstates(k, this%hamilt%interaction(i,j))
+                        enddo
                     enddo
                 enddo
             endif
             if (.not. allocated(this%hamilt%sumstateprodsorig)) then
-                allocate(this%hamilt%sumstateprodsorig(upper_range,this%hamilt%norig),source=0)
+                allocate(this%hamilt%sumstateprodsorig(upper_range * this%hamilt%norig),source=0)
                 do i = 1,upper_range
                     do j = 1,this%hamilt%norig
-                        this%hamilt%sumstateprodsorig(i,j) = sum(this%hamilt%stateprods(i,:),MASK=this%hamilt%origterms(1:)==j)
+                        tmp_int = 0
+                        do k = 1, this%hamilt%nterms
+                            if (this%hamilt%origterms(k) .eq. j) &
+                                tmp_int = tmp_int + this%hamilt%stateprods(i + (k - 1) * upper_range)
+                        enddo
+                        this%hamilt%sumstateprodsorig(i + (j - 1) * upper_range) = tmp_int
                     enddo
                 enddo
             endif
             if (.not. allocated(this%hamilt%sumstateprodscorc)) then
-                ! allocate(this%hamilt%sumstateprodscorc(upper_range,this%hamilt%ncorc),source=0)
-                ! do i = 1,upper_range
-                !     do j = 1,this%hamilt%ncorc
-                !         this%hamilt%sumstateprodscorc(i,j) = sum(this%hamilt%stateprods(i,:),MASK=this%hamilt%corcterms(1:)==j)
-                !     enddo
-                ! enddo
                 allocate(this%hamilt%sumstateprodscorc(upper_range * this%hamilt%ncorc), source=0)
                 do i = 1,upper_range
                     do j = 1,this%hamilt%ncorc
-                        this%hamilt%sumstateprodscorc(i + (j - 1) * upper_range) = &
-                            sum(this%hamilt%stateprods(i,:),MASK=this%hamilt%corcterms(1:)==j)
+                        tmp_int = 0
+                        do k = 1, this%hamilt%nterms
+                            if (this%hamilt%corcterms(k) .eq. j) &
+                                tmp_int = tmp_int + this%hamilt%stateprods(i + (k - 1) * upper_range)
+                        enddo
+                        this%hamilt%sumstateprodscorc(i + (j - 1) * upper_range) = tmp_int
                     enddo
                 enddo
             endif
@@ -248,7 +246,7 @@ module meso_approx
             tmp_val = this%hamilt%origpars(i)
             do j = 1,upper_range
                 this%allenergs(j) = this%allenergs(j) + & 
-                    tmp_val*this%hamilt%sumstateprodsorig(j,i)
+                    tmp_val*this%hamilt%sumstateprodsorig(j + (i - 1) * upper_range)
             enddo
         enddo
         ! call cpu_time(t2) ! function for calculating elapsed CPU time
@@ -260,7 +258,6 @@ module meso_approx
             do j = 1,upper_range
                 this%allenergs(j) = this%allenergs(j) + & 
                     tmp_val * this%hamilt%sumstateprodscorc(j + (i - 1) * upper_range)
-                    ! tmp_val * this%hamilt%sumstateprodscorc(j,i)
             enddo
         enddo
         ! call cpu_time(t4) ! function for calculating elapsed CPU time
@@ -323,13 +320,13 @@ module meso_approx
         implicit none
         
         class (approximation) :: this
-        integer i, j, k, upper_range
+        integer i, j, k, kk, upper_range
         real(8) lhsderivativeterm, rhsderivativeterm
         logical, intent(in), optional :: calcjac
         logical :: calculatejacobian
         real(4) t1, t2, t3, t4, t5, t6, t7, t8
         integer lhs_i, rhs_i, id, tmp_id
-        real(8) tmp_var1, tmp_var2
+        real(8) tmp_var1, tmp_var2, tmp_var3, tmp_var4
 
         upper_range = 2**this%nsites
 
@@ -423,6 +420,9 @@ module meso_approx
         do i = 1,this%eqns%neqns
             lhs_i = this%eqns%lhs(i)
             rhs_i = this%eqns%rhs(i)
+            
+            tmp_var3 = 1.d0/this%eqns%corrlvalue(lhs_i)
+            tmp_var4 = 1.d0/this%eqns%corrlvalue(rhs_i)
 
             do j = 1,this%eqns%neqns
                 lhsderivativeterm = 0.d0
@@ -430,30 +430,48 @@ module meso_approx
                 tmp_var1 = 0.d0
                 tmp_var2 = 0.d0
                 ! !$OMP SIMD
-                do k = 1,upper_range,2
-                    tmp_var1 = this%expenergies(k    ) &
-                            * this%hamilt%sumstateprodscorc(k + (j - 1) * upper_range)
-                            ! * this%hamilt%sumstateprodscorc(k,     j)
-                    tmp_var2 = this%expenergies(k + 1) &
-                            * this%hamilt%sumstateprodscorc(k + (j - 1) * upper_range)
-                            ! * this%hamilt%sumstateprodscorc(k + 1, j)
-                    ! tmp_var1 = this%expenergies(k    ) * this%hamilt%sumstateprodscorc(k,     j)
-                    ! tmp_var2 = this%expenergies(k + 1) * this%hamilt%sumstateprodscorc(k + 1, j)
-                    lhsderivativeterm = lhsderivativeterm &
-                                      + this%eqns%stateprods(k + (lhs_i - 1) * upper_range) * tmp_var1 &
-                                      + this%eqns%stateprods(k + 1 + (lhs_i - 1) * upper_range) * tmp_var2
-                    rhsderivativeterm = rhsderivativeterm &
-                                      + this%eqns%stateprods(k + (rhs_i - 1) * upper_range) * tmp_var1 &
-                                      + this%eqns%stateprods(k + 1 + (rhs_i - 1) * upper_range) * tmp_var2
+                ! do k = 1,upper_range,2
+                !     tmp_var1 = this%expenergies(k    ) &
+                !             * this%hamilt%sumstateprodscorc(k + (j - 1) * upper_range)
+                !     tmp_var2 = this%expenergies(k + 1) &
+                !             * this%hamilt%sumstateprodscorc(k + (j - 1) * upper_range)
+                !     ! tmp_var1 = this%expenergies(k    ) * this%hamilt%sumstateprodscorc(k,     j)
+                !     ! tmp_var2 = this%expenergies(k + 1) * this%hamilt%sumstateprodscorc(k + 1, j)
+                !     lhsderivativeterm = lhsderivativeterm &
+                !                       + this%eqns%stateprods(k + (lhs_i - 1) * upper_range) * tmp_var1 &
+                !                       + this%eqns%stateprods(k + 1 + (lhs_i - 1) * upper_range) * tmp_var2
+                !     rhsderivativeterm = rhsderivativeterm &
+                !                       + this%eqns%stateprods(k + (rhs_i - 1) * upper_range) * tmp_var1 &
+                !                       + this%eqns%stateprods(k + 1 + (rhs_i - 1) * upper_range) * tmp_var2
+                ! enddo
+                do k = 1, upper_range, 16384
+                    do kk = k, k + 16383, 2
+                        tmp_var1 = this%expenergies(kk    ) &
+                                * this%hamilt%sumstateprodscorc(kk + (j - 1) * upper_range)
+                        tmp_var2 = this%expenergies(kk + 1) &
+                                * this%hamilt%sumstateprodscorc(kk + (j - 1) * upper_range)
+                        lhsderivativeterm = lhsderivativeterm &
+                                        + this%eqns%stateprods(kk + (lhs_i - 1) * upper_range) * tmp_var1 &
+                                        + this%eqns%stateprods(kk + 1 + (lhs_i - 1) * upper_range) * tmp_var2
+                        rhsderivativeterm = rhsderivativeterm &
+                                        + this%eqns%stateprods(kk + (rhs_i - 1) * upper_range) * tmp_var1 &
+                                        + this%eqns%stateprods(kk + 1 + (rhs_i - 1) * upper_range) * tmp_var2
+                    enddo
                 enddo
+
                 ! !$OMP END SIMD
-                this%eqns%jacobian(i,j) = &
-                        1.d0/this%eqns%corrlvalue(lhs_i)*lhsderivativeterm &
-                      - 1.d0/this%eqns%corrlvalue(rhs_i)*rhsderivativeterm
+                this%eqns%jacobian(i,j) = tmp_var3 * lhsderivativeterm &
+                                        - tmp_var4 * rhsderivativeterm
             enddo
         enddo
         ! !$OMP END PARALLEL
-        this%eqns%jacobian = -1.d0/(kboltz*this%temp)*this%eqns%jacobian
+        ! this%eqns%jacobian = -1.d0/(kboltz*this%temp)*this%eqns%jacobian
+        do j = 1,this%eqns%neqns
+            do i = 1,this%eqns%neqns
+                this%eqns%jacobian(i, j) = -1.d0/(kboltz*this%temp)*this%eqns%jacobian(i, j)
+            enddo
+        enddo
+
         call cpu_time(t8) !!!
         write(*,*) 'time (residual 4)',t8-t7, this%eqns%neqns
 
