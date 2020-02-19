@@ -4,7 +4,7 @@ bold=$(tput bold)
 normal=$(tput sgr0)
 
 # Test number (folder name)
-name_test="001"
+name_test="003"
 name_prof_file="profile.dat"
 
 # Path to the input files

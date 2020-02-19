@@ -355,6 +355,7 @@ module meso_approx
         real(4) t1, t2
         integer lhs_i, rhs_i, id, tmp_id
         real(8) tmp_var1, tmp_var2, tmp_var3, tmp_var4
+        integer loop_step
 
         upper_range = 2**this%nsites
 
@@ -435,6 +436,7 @@ module meso_approx
         if (.not.calculatejacobian) return
 
         call cpu_time(t1) !!!!!!!!!!!!
+        loop_step = min(upper_range, 4096)
         ! !$OMP PARALLEL
         do i = 1,this%eqns%neqns
             lhs_i = (this%eqns%lhs(i) - 1) * upper_range
@@ -480,8 +482,8 @@ module meso_approx
                 !                       * this%expenergies(k)
                 ! enddo
 
-                do k = 1, upper_range, 4096
-                    do kk = k, k + 4095, 2
+                do k = 1, upper_range, loop_step
+                    do kk = k, k + loop_step - 1, 2
                         lhsderivativeterm = lhsderivativeterm &
                                           + this%hamilt%time_saver_lhs(kk + tmp_id) &
                                           * this%expenergies(kk) &

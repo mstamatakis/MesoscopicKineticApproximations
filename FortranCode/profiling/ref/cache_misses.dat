@@ -1,0 +1,465 @@
+At commit dddda48
+
+==28881== I   refs:      23,677,496,184
+==28881== I1  misses:           123,287
+==28881== LLi misses:            65,055
+==28881== I1  miss rate:           0.00%
+==28881== LLi miss rate:           0.00%
+==28881== 
+==28881== D   refs:       8,389,630,517  (7,769,405,406 rd   + 620,225,111 wr)
+==28881== D1  misses:       649,999,156  (  621,882,523 rd   +  28,116,633 wr)
+==28881== LLd misses:       170,644,395  (  158,123,734 rd   +  12,520,661 wr)
+==28881== D1  miss rate:            7.7% (          8.0%     +         4.5%  )
+==28881== LLd miss rate:            2.0% (          2.0%     +         2.0%  )
+==28881== 
+==28881== LL refs:          650,122,443  (  622,005,810 rd   +  28,116,633 wr)
+==28881== LL misses:        170,709,450  (  158,188,789 rd   +  12,520,661 wr)
+==28881== LL miss rate:             0.5% (          0.5%     +         2.0%  )
+
+
+cg_annotate
+--------------------------------------------------------------------------------
+I1 cache:         32768 B, 64 B, 8-way associative
+D1 cache:         32768 B, 64 B, 8-way associative
+LL cache:         31457280 B, 64 B, 30-way associative
+Command:          ./mesoapprox.x ../tests/data/2/calculation_input.dat
+Data file:        cachegrind.out.28881
+Events recorded:  Ir I1mr ILmr Dr D1mr DLmr Dw D1mw DLmw
+Events shown:     Ir I1mr ILmr Dr D1mr DLmr Dw D1mw DLmw
+Event sort order: Ir I1mr ILmr Dr D1mr DLmr Dw D1mw DLmw
+Thresholds:       0.1 100 100 100 100 100 100 100 100
+Include dirs:     
+User annotated:   /home/maximm/pragma/MesoscopicKineticApproximations/FortranCode/meso_approx.f90
+Auto-annotation:  off
+
+--------------------------------------------------------------------------------
+            Ir    I1mr   ILmr            Dr        D1mr        DLmr          Dw       D1mw       DLmw 
+--------------------------------------------------------------------------------
+23,677,496,184 123,287 65,055 7,769,405,406 621,882,523 158,123,734 620,225,111 28,116,633 12,520,661  PROGRAM TOTALS
+
+--------------------------------------------------------------------------------
+            Ir   I1mr  ILmr            Dr        D1mr        DLmr          Dw       D1mw      DLmw  file:function
+--------------------------------------------------------------------------------
+16,366,430,397  3,428 3,371 5,844,081,396 460,482,253  56,562,625 114,374,317  4,164,972 4,163,826  /home/maximm/pragma/MesoscopicKineticApproximations/FortranCode/meso_approx.f90:__meso_approx_MOD_calculate_residuals
+ 3,622,378,541  3,178 3,178 1,165,184,268 150,384,787 100,903,341 190,781,534 12,812,501 6,718,985  /home/maximm/pragma/MesoscopicKineticApproximations/FortranCode/meso_approx.f90:__meso_approx_MOD_calculate_energies
+ 3,018,326,431    475   475   597,687,766   1,022,654      12,353 239,075,763         51         4  ???:__ieee754_exp_avx
+   478,150,656    103   103    89,653,248          50          20  59,768,832          0         0  ???:exp
+   108,785,910     31    31     9,961,507   9,961,482     622,025   9,961,529  9,959,795   474,903  /home/maximm/pragma/MesoscopicKineticApproximations/FortranCode/meso_approx.f90:__meso_approx_MOD_populate_allstates
+    59,821,157  2,246 1,253    59,820,625       2,882       2,047         275          2         2  ???:???
+
+--------------------------------------------------------------------------------
+-- User-annotated source: /home/maximm/pragma/MesoscopicKineticApproximations/FortranCode/meso_approx.f90
+--------------------------------------------------------------------------------
+
+           Ir I1mr ILmr            Dr        D1mr       DLmr         Dw      D1mw      DLmw 
+
+-- line 105 ----------------------------------------
+            .    .    .             .           .          .          .         .         .          subroutine approx_initialise_k3nnc2(obj_approx)
+            .    .    .             .           .          .          .         .         .              import approximation
+            .    .    .             .           .          .          .         .         .              class(approximation) :: obj_approx
+            .    .    .             .           .          .          .         .         .          end subroutine
+            .    .    .             .           .          .          .         .         .      end interface
+            .    .    .             .           .          .          .         .         .  
+            .    .    .             .           .          .          .         .         .      contains
+            .    .    .             .           .          .          .         .         .  
+            7    1    1             0           0          0          6         0         0      subroutine populate_allstates(this)
+            .    .    .             .           .          .          .         .         .      
+            .    .    .             .           .          .          .         .         .          implicit none
+            .    .    .             .           .          .          .         .         .          class (approximation) :: this
+            .    .    .             .           .          .          .         .         .          integer i, j, dec, count
+            .    .    .             .           .          .          .         .         .          
+          196   11   11            19           5          0         41         1         1          allocate(this%allstates(2**this%nsites,this%nsites),source=0)
+            .    .    .             .           .          .          .         .         .          
+    3,145,747    2    2             3           0          0          0         0         0          do i = 0,2**this%nsites-1
+            .    .    .             .           .          .          .         .         .              dec = i
+            .    .    .             .           .          .          .         .         .              count = 0
+   13,090,724    2    2             0           0          0          0         0         0              do j = 1,this%nsites
+   18,874,372    2    2             0           0          0          0         0         0                  if (mod(dec,2)==0) then
+    7,608,348    4    4             0           0          0  4,456,450 4,455,722   212,866                      this%allstates(i+1,j) = 0
+            .    .    .             .           .          .          .         .         .                  else
+    6,291,456    1    1             0           0          0  4,980,736 4,979,783   229,267                      this%allstates(i+1,j) = 1
+            .    .    .             .           .          .          .         .         .                  end if
+            .    .    .             .           .          .          .         .         .                  dec = dec/2
+            .    .    .             .           .          .          .         .         .                  count = count + 1
+   24,647,716    2    2             0           0          0          0         0         0                  if (dec == 0) then
+            .    .    .             .           .          .          .         .         .                      exit  
+            .    .    .             .           .          .          .         .         .                  endif
+            .    .    .             .           .          .          .         .         .              enddo
+            .    .    .             .           .          .          .         .         .      
+            .    .    .             .           .          .          .         .         .          enddo
+            .    .    .             .           .          .          .         .         .      
+           20    2    2             2           2          2          8         1         1          allocate(this%nparticles(2**this%nsites))
+    1,048,596    1    1             4           1          1          0         0         0          do i = 1,2**this%nsites
+   34,078,720    3    3     9,961,472   9,961,472    622,020    524,288   524,288    32,768              this%nparticles(i) = sum(this%allstates(i,:))
+            .    .    .             .           .          .          .         .         .          enddo
+            .    .    .             .           .          .          .         .         .          
+            .    .    .             .           .          .          .         .         .          return
+            .    .    .             .           .          .          .         .         .      
+            8    0    0             7           2          2          0         0         0      end subroutine populate_allstates
+            .    .    .             .           .          .          .         .         .  
+            .    .    .             .           .          .          .         .         .      
+          684  114  114            57           0          0        456        10         0      subroutine calculate_energies(this)
+            .    .    .             .           .          .          .         .         .      
+            .    .    .             .           .          .          .         .         .          implicit none
+            .    .    .             .           .          .          .         .         .          class (approximation) :: this
+            .    .    .             .           .          .          .         .         .          integer i, j, k, upper_range, tmp_int
+            .    .    .             .           .          .          .         .         .          real(4) t1, t2, t3, t4
+            .    .    .             .           .          .          .         .         .          real(8) tmp_val
+            .    .    .             .           .          .          .         .         .          logical is_even_ncorc
+            .    .    .             .           .          .          .         .         .  
+          798    0    0           114           1          0          0         0         0          upper_range = 2**this%nsites
+            .    .    .             .           .          .          .         .         .  
+            .    .    .             .           .          .          .         .         .          ! Preparatory steps: allocate and precompute stateprods, sumstateprodsorig, sumstateprodscorc
+          226   57   57           113         113         90          0         0         0          if (.not. (allocated(this%hamilt%sumstateprodsorig) .and. allocated(this%hamilt%sumstateprodscorc))) then 
+            3    0    0             0           0          0          1         0         0              call cpu_time(t1) ! function for calculating elapsed CPU time
+            3    1    1             2           1          1          0         0         0              if (.not. allocated(this%hamilt%stateprods)) then
+    8,355,947   13   13             4           3          3  5,570,575 2,785,280 2,785,280                  allocate(this%hamilt%stateprods(upper_range * this%hamilt%nterms),source=1)
+          178    1    1            87           1          1          0         0         0                  do i = 1,this%hamilt%nterms
+        1,331    1    1           746         321          6          4         0         0                      do j = 1,this%hamilt%internbody(i)
+   39,583,895    0    0             0           0          0          0         0         0                          do k = 1, upper_range
+            .    .    .             .           .          .          .         .         .                              tmp_int = k + (i - 1) * upper_range
+            .    .    .             .           .          .          .         .         .                              this%hamilt%stateprods(tmp_int) = &
+  633,342,472    5    5   237,503,210   9,896,511  5,620,066 79,167,743         1         1                                          this%hamilt%stateprods(tmp_int) * this%allstates(k, this%hamilt%interaction(i,j))
+            .    .    .             .           .          .          .         .         .                          enddo
+            .    .    .             .           .          .          .         .         .                      enddo
+            .    .    .             .           .          .          .         .         .                  enddo
+            .    .    .             .           .          .          .         .         .              endif
+            2    0    0             1           1          1          0         0         0              if (.not. allocated(this%hamilt%sumstateprodsorig)) then
+           25    3    3             2           1          1          9         2         2                  allocate(this%hamilt%sumstateprodsorig(upper_range * this%hamilt%norig),source=0)
+    3,145,737    1    1     2,097,152       8,192         32          1         0         0                  do i = 1,upper_range
+    4,718,593    1    1             0           0          0    524,288         1         0                      do j = 1,this%hamilt%norig
+   18,874,368    2    2             0           0          0          0         0         0                          tmp_int = 0
+   29,360,133    2    2     2,097,153      16,385         33  2,097,153         1         0                          do k = 1, this%hamilt%nterms
+  195,035,136    2    2    92,274,688      99,335        227          0         0         0                              if (this%hamilt%origterms(k) .eq. j) &
+  232,783,872    4    4    95,944,704  31,981,569 31,981,569          0         0         0                                  tmp_int = tmp_int + this%hamilt%stateprods(i + (k - 1) * upper_range)
+            .    .    .             .           .          .          .         .         .                          enddo
+    2,097,152    0    0             0           0          0  1,048,576 1,048,576    32,898                          this%hamilt%sumstateprodsorig(i + (j - 1) * upper_range) = tmp_int
+            .    .    .             .           .          .          .         .         .                      enddo
+            .    .    .             .           .          .          .         .         .                  enddo
+            .    .    .             .           .          .          .         .         .              endif
+            2    0    0             1           1          1          0         0         0              if (.not. allocated(this%hamilt%sumstateprodscorc)) then
+           25    3    3             2           1          1          9         1         1                  allocate(this%hamilt%sumstateprodscorc(upper_range * this%hamilt%ncorc), source=0)
+    2,621,453    1    1     1,572,865      16,385         33          3         2         0                  do i = 1,upper_range
+   16,777,216    0    0             0           0          0          0         0         0                      do j = 1,this%hamilt%ncorc
+   94,371,840    1    1             0           0          0          0         0         0                          tmp_int = 0
+  125,829,123    1    1             1           1          1          0         0         0                          do k = 1, this%hamilt%nterms
+  975,175,680    1    1   461,373,440     228,871        351          0         0         0                              if (this%hamilt%corcterms(k) .eq. j) &
+  646,971,392    5    5    81,788,928  40,894,464 40,894,464          0         0         0                                  tmp_int = tmp_int + this%hamilt%stateprods(i + (k - 1) * upper_range)
+            .    .    .             .           .          .          .         .         .                          enddo
+   10,485,760    0    0             0           0          0  5,242,880 5,242,880   165,130                          this%hamilt%sumstateprodscorc(i + (j - 1) * upper_range) = tmp_int
+            .    .    .             .           .          .          .         .         .                      enddo
+            .    .    .             .           .          .          .         .         .                  enddo
+            .    .    .             .           .          .          .         .         .              endif
+            6    0    0             2           1          1          2         1         1              deallocate(this%hamilt%stateprods) ! free up some memory; this array not needed anymore, unless we use the first method to calculate energies
+            3    0    0             0           0          0          1         0         0              call cpu_time(t2) ! function for calculating elapsed CPU time
+           21    3    3             3           0          0          8         0         0              write(*,*) 'time (energy 1)',t2-t1
+            .    .    .             .           .          .          .         .         .          endif
+            .    .    .             .           .          .          .         .         .          
+            .    .    .             .           .          .          .         .         .          !this%allenergs = this%hamilt%H0
+            .    .    .             .           .          .          .         .         .          !do i = 1,this%hamilt%nterms                        
+            .    .    .             .           .          .          .         .         .          !    do j = 1,2**this%nsites
+            .    .    .             .           .          .          .         .         .          !        this%allenergs(j) = this%allenergs(j) + & 
+            .    .    .             .           .          .          .         .         .          !            (this%hamilt%origpars(this%hamilt%origterms(i)) + &
+            .    .    .             .           .          .          .         .         .          !             this%hamilt%corcpars(this%hamilt%corcterms(i)))*this%hamilt%stateprods(j,i)
+-- line 211 ----------------------------------------
+-- line 235 ----------------------------------------
+            .    .    .             .           .          .          .         .         .          ! ! call cpu_time(t4) ! function for calculating elapsed CPU time
+            .    .    .             .           .          .          .         .         .          ! ! write(*,*) 'Elapsed CPU-time (residual 3)',t4-t3, this%hamilt%ncorc, 2**this%nsites
+            .    .    .             .           .          .          .         .         .  
+            .    .    .             .           .          .          .         .         .          ! ! write(*,*) 'Elapsed CPU-time (residual full)',t4-t3 + t2-t1
+            .    .    .             .           .          .          .         .         .  
+            .    .    .             .           .          .          .         .         .  
+            .    .    .             .           .          .          .         .         .          !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            .    .    .             .           .          .          .         .         .          ! call cpu_time(t1) ! function for calculating elapsed CPU time
+   11,211,444  399  399           285         105        105  7,471,275 3,735,609 3,735,609          this%allenergs = this%hamilt%H0
+            .    .    .             .           .          .          .         .         .          ! upper_range = 2**this%nsites
+          912  106  106           228          80         23        171        57        21          do i = 1,this%hamilt%norig
+        1,083  114  114           570         114         23        114         0         0              tmp_val = this%hamilt%origpars(i)
+        2,282  115  115             0           0          0          1         0         0              do j = 1,upper_range
+            .    .    .             .           .          .          .         .         .                  this%allenergs(j) = this%allenergs(j) + & 
+   95,269,629  969  969    31,754,472  11,206,998  3,735,610 14,943,291        80        42                      tmp_val*this%hamilt%sumstateprodsorig(j + (i - 1) * upper_range)
+            .    .    .             .           .          .          .         .         .              enddo
+            .    .    .             .           .          .          .         .         .          enddo
+            .    .    .             .           .          .          .         .         .          ! call cpu_time(t2) ! function for calculating elapsed CPU time
+            .    .    .             .           .          .          .         .         .          ! write(*,*) 'Elapsed CPU-time (residual 2)',t2-t1, this%hamilt%norig, 2**this%nsites
+            .    .    .             .           .          .          .         .         .  
+            .    .    .             .           .          .          .         .         .          ! call cpu_time(t3) ! function for calculating elapsed CPU time
+        2,223  114  114           627          57          0        171         0         0          do i = 1,this%hamilt%ncorc
+        5,529  114  114         3,021         627         46        114         0         0              tmp_val = this%hamilt%corcpars(i)
+       11,400   57   57             0           0          0          0         0         0              do j = 1,upper_range
+            .    .    .             .           .          .          .         .         .                  this%allenergs(j) = this%allenergs(j) + & 
+  476,340,393  928  928   158,771,334  56,034,534 18,670,650 74,714,688         0         0                      tmp_val * this%hamilt%sumstateprodscorc(j + (i - 1) * upper_range)
+            .    .    .             .           .          .          .         .         .              enddo
+            .    .    .             .           .          .          .         .         .          enddo
+            .    .    .             .           .          .          .         .         .          ! call cpu_time(t4) ! function for calculating elapsed CPU time
+            .    .    .             .           .          .          .         .         .          ! write(*,*) 'Elapsed CPU-time (residual 3)',t4-t3, this%hamilt%ncorc, 2**this%nsites
+            .    .    .             .           .          .          .         .         .  
+            .    .    .             .           .          .          .         .         .          ! write(*,*) 'Elapsed CPU-time (residual full)',t4-t3 + t2-t1
+            .    .    .             .           .          .          .         .         .          !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            .    .    .             .           .          .          .         .         .  
+-- line 268 ----------------------------------------
+-- line 304 ----------------------------------------
+            .    .    .             .           .          .          .         .         .          !     ! endif
+            .    .    .             .           .          .          .         .         .          !     this%allenergs(j) = this%allenergs(j) + tmp_val
+            .    .    .             .           .          .          .         .         .          ! enddo
+            .    .    .             .           .          .          .         .         .          ! call cpu_time(t4) ! function for calculating elapsed CPU time
+            .    .    .             .           .          .          .         .         .          ! write(*,*) 'Elapsed CPU-time (residual full)',t4-t3, this%hamilt%ncorc, 2**this%nsites
+            .    .    .             .           .          .          .         .         .  
+            .    .    .             .           .          .          .         .         .          return
+            .    .    .             .           .          .          .         .         .          
+          570   40   40           456         114          2          0         0         0      end subroutine calculate_energies
+            .    .    .             .           .          .          .         .         .      
+            .    .    .             .           .          .          .         .         .      
+          741  114  114            57           0          0        513         0         0      subroutine calculate_residuals(this,calcjac)
+            .    .    .             .           .          .          .         .         .      
+            .    .    .             .           .          .          .         .         .          use global_constants
+            .    .    .             .           .          .          .         .         .          use omp_lib
+            .    .    .             .           .          .          .         .         .  
+            .    .    .             .           .          .          .         .         .          implicit none
+            .    .    .             .           .          .          .         .         .          
+            .    .    .             .           .          .          .         .         .          class (approximation) :: this
+            .    .    .             .           .          .          .         .         .          integer i, j, k, kk, upper_range
+            .    .    .             .           .          .          .         .         .          real(8) lhsderivativeterm, rhsderivativeterm
+            .    .    .             .           .          .          .         .         .          logical, intent(in), optional :: calcjac
+            .    .    .             .           .          .          .         .         .          logical :: calculatejacobian
+            .    .    .             .           .          .          .         .         .          real(4) t1, t2, t3, t4, t5, t6, t7, t8
+            .    .    .             .           .          .          .         .         .          integer lhs_i, rhs_i, id, tmp_id
+            .    .    .             .           .          .          .         .         .          real(8) tmp_var1, tmp_var2, tmp_var3, tmp_var4
+            .    .    .             .           .          .          .         .         .  
+          798   47   47           114          23         22        114         0         0          upper_range = 2**this%nsites
+            .    .    .             .           .          .          .         .         .  
+          114    0    0             0           0          0          0         0         0          if (present(calcjac)) then
+           68    0    0            34          34         34         34         0         0              calculatejacobian = calcjac
+            .    .    .             .           .          .          .         .         .          else
+           57    0    0             0           0          0         57         0         0              calculatejacobian = .true.
+            .    .    .             .           .          .          .         .         .          endif
+            .    .    .             .           .          .          .         .         .          
+            .    .    .             .           .          .          .         .         .          ! Preparatory steps: allocate and precompute stateprods
+          114    0    0            57           2          0          0         0         0          if (.not. allocated(this%eqns%stateprods)) then
+    1,278,060   12   12             3           1          0    851,982   425,985   425,985              allocate(this%eqns%stateprods(upper_range * this%eqns%nterms), source = 1)
+            .    .    .             .           .          .          .         .         .  
+           36    3    3            17           3          0          0         0         0              do i = 1,this%eqns%nterms
+          368    5    5           240          13          1         36         3         0                  do j = 1,this%eqns%corrlnbody(i)
+          117    1    1            39          24          0          0         0         0                      tmp_id = this%eqns%correlation(i, j)
+          418    2    2            44           0          0          0         0         0                      do k = 1, upper_range
+           88    0    0             0           0          0          0         0         0                          id = k + (i - 1) * upper_range
+            .    .    .             .           .          .          .         .         .                          this%eqns%stateprods(id) = &
+    6,490,903   19   19     4,506,255   1,441,912    573,684  1,442,115        13         0                                      this%eqns%stateprods(id) * this%allstates(k, tmp_id)
+            .    .    .             .           .          .          .         .         .                      enddo
+            .    .    .             .           .          .          .         .         .                  enddo
+            .    .    .             .           .          .          .         .         .              enddo
+            .    .    .             .           .          .          .         .         .          endif
+          114    0    0            57          57          1          0         0         0          if (.not. allocated(this%expenergies)) then
+           24    3    3             1           1          1          8         1         0              allocate(this%expenergies(upper_range),source=0.d0)
+            .    .    .             .           .          .          .         .         .          endif
+            .    .    .             .           .          .          .         .         .  
+          171   57   57             0           0          0         57         0         0          call cpu_time(t1) !!!
+          228    0    0           171          58         58         57         0         0          call this%calc_energ() ! Note that we calculate the energies here, so if a program unit is calling the correlations subroutine,
+            .    .    .             .           .          .          .         .         .          ! it would be unnecessary (and a waste of time) to compute the energies in the calling program unit
+            .    .    .             .           .          .          .         .         .  
+            .    .    .             .           .          .          .         .         .          ! this%expenergies = exp(-(this%allenergs-this%mu*this%nparticles)/(kboltz*this%temp))
+            .    .    .             .           .          .          .         .         .          ! tmp_var1 = 1.d0 / (kboltz*this%temp)
+   14,942,436    0    0     7,471,161          57          1          0         0         0          do i = 1, upper_range
+  403,440,528  445  445   201,720,207   5,603,841  1,867,917 82,182,201 3,735,632 3,735,610              this%expenergies(i) = exp(-(this%allenergs(i) - this%mu * this%nparticles(i)) / (kboltz*this%temp))
+            .    .    .             .           .          .          .         .         .          enddo
+          171   57   57             0           0          0         57         0         0          call cpu_time(t2) !!!
+        1,083  114  114           114           0          0        456        23        23          write(*,*) 'time (residual 1)',t2-t1
+            .    .    .             .           .          .          .         .         .  
+          798   57   57           342         171        114         57         0         0          this%eqns%corrlvalue = 0.d0
+            .    .    .             .           .          .          .         .         .  
+          171    0    0             0           0          0         57         0         0          call cpu_time(t3) !!!
+            .    .    .             .           .          .          .         .         .          ! this%partfcn = sum(this%expenergies)
+          171   57   57           114           0          0         57         0         0          this%partfcn = 0.d0
+    7,471,332    0    0           114          57          0          0         0         0          do i = 1,upper_range
+   63,505,125  171  171    29,884,473   3,735,609          0 29,884,416         0         0              this%partfcn = this%partfcn + this%expenergies(i)
+            .    .    .             .           .          .          .         .         .          enddo
+            .    .    .             .           .          .          .         .         .  
+        2,223   57   57           228         171         57          0         0         0          do i = 1,this%eqns%nterms
+            .    .    .             .           .          .          .         .         .              ! The following two expressions should give the same results (numerical accuracy issues excluded)
+            .    .    .             .           .          .          .         .         .              ! In the Matlab code the first expression is used, i.e. not the actual correlation function, but the 
+            .    .    .             .           .          .          .         .         .              ! non-normalised partial sum that corresponds to that correlation
+            .    .    .             .           .          .          .         .         .              ! this%eqns%corrlvalue(i) = sum(this%eqns%stateprods(:,i)*this%expenergies)
+        3,705    0    0             0           0          0          0         0         0              tmp_var1 = 0.d0
+   97,131,021   57   57         3,705       1,482         57          0         0         0              do k = 1,upper_range,1
+            .    .    .             .           .          .          .         .         .                  ! tmp_var1 = tmp_var1 &
+            .    .    .             .           .          .          .         .         .                  !                     + this%eqns%stateprods(k,i) * this%expenergies(k)
+            .    .    .             .           .          .          .         .         .  
+            .    .    .             .           .          .          .         .         .                  tmp_var1 = tmp_var1 &
+            .    .    .             .           .          .          .         .         .                                      + this%eqns%stateprods(k + (i - 1) * upper_range) &
+1,602,552,549  228  228   776,994,816  72,844,062 24,281,145          0         0         0                                      * this%expenergies(k)
+            .    .    .             .           .          .          .         .         .              enddo
+        2,223    0    0           741         741          0        741       741        57              this%eqns%corrlvalue(i) = tmp_var1
+            .    .    .             .           .          .          .         .         .              ! this%eqns%corrlvalue(i) = sum(this%eqns%stateprods(:,i)*this%expenergies)/this%partfcn
+            .    .    .             .           .          .          .         .         .          enddo  
+          171   57   57             0           0          0         57        57        57          call cpu_time(t4) !!!
+        1,482  171  114           228          57         57        570        46        46          write(*,*) 'time (residual 2)',t4-t3, this%eqns%nterms
+            .    .    .             .           .          .          .         .         .      
+          171   57   57             0           0          0         57         0         0          call cpu_time(t5) !!!
+            .    .    .             .           .          .          .         .         .          ! this%eqns%residual = 0.d0     ! no point to flush it, since it will be rewritten in the loop
+          855    0    0           456          57         57          0         0         0          do i = 1,this%eqns%neqns
+            .    .    .             .           .          .          .         .         .              ! Again, two options. In Matlab we have used the version of the equations with the logarithms
+            .    .    .             .           .          .          .         .         .              
+            .    .    .             .           .          .          .         .         .              ! mathematically, log(a/b) = log(a) - log(b). however, if implemented in this way the roundoff errors change the
+            .    .    .             .           .          .          .         .         .              ! results. so, keep it as it was
+            .    .    .             .           .          .          .         .         .              ! this%eqns%residual(i) = log(this%eqns%corrlvalue(this%eqns%lhs(i)) / this%eqns%corrlvalue(this%eqns%rhs(i)))    ! One log is better than two
+        8,721  285  285         3,249         342        228      2,337       114       114              this%eqns%residual(i) = log(this%eqns%corrlvalue(this%eqns%lhs(i))) - log(this%eqns%corrlvalue(this%eqns%rhs(i)))    ! One log is better than two
+            .    .    .             .           .          .          .         .         .              
+            .    .    .             .           .          .          .         .         .              ! this%eqns%residual(i) = this%eqns%corrlvalue(this%eqns%lhs(i)) - this%eqns%corrlvalue(this%eqns%rhs(i))
+            .    .    .             .           .          .          .         .         .          enddo
+          171   57   57             0           0          0         57         0         0          call cpu_time(t6) !!!
+        1,482  114  114           228           0          0        570         0         0          write(*,*) 'time (residual 3)',t6-t5, this%eqns%neqns
+            .    .    .             .           .          .          .         .         .  
+        4,959  342  342           456         114         57        570         0         0          this%eqns%jacobian = 0.d0
+            .    .    .             .           .          .          .         .         .          
+          171   57   57            57          34         34          0         0         0          if (.not.calculatejacobian) return
+            .    .    .             .           .          .          .         .         .          
+           69   23   23             0           0          0         23         0         0          call cpu_time(t7) !!!
+            .    .    .             .           .          .          .         .         .          ! !$OMP PARALLEL
+          759   46   46           391          45         23          0         0         0          do i = 1,this%eqns%neqns
+          690    0    0           460         405          0          0         0         0              lhs_i = (this%eqns%lhs(i) - 1) * upper_range
+          460    0    0           460         207          0          0         0         0              rhs_i = (this%eqns%rhs(i) - 1) * upper_range
+            .    .    .             .           .          .          .         .         .              
+        1,219   69   69           805         207         23         92        23        23              tmp_var3 = 1.d0/this%eqns%corrlvalue(lhs_i)
+          690    0    0           230          23         23          0         0         0              tmp_var4 = 1.d0/this%eqns%corrlvalue(rhs_i)
+            .    .    .             .           .          .          .         .         .  
+       12,190   23   23         9,430       4,700          0        230         0         0              do j = 1,this%eqns%neqns
+      156,400   23   23         2,300           0          0          0         0         0                  lhsderivativeterm = 0.d0
+        2,300    0    0             0           0          0          0         0         0                  rhsderivativeterm = 0.d0
+            .    .    .             .           .          .          .         .         .                  tmp_var1 = 0.d0
+            .    .    .             .           .          .          .         .         .                  tmp_var2 = 0.d0
+            .    .    .             .           .          .          .         .         .                  ! !$OMP SIMD
+            .    .    .             .           .          .          .         .         .                  ! do k = 1,upper_range,2
+            .    .    .             .           .          .          .         .         .                  !     tmp_var1 = this%expenergies(k    ) &
+            .    .    .             .           .          .          .         .         .                  !             * this%hamilt%sumstateprodscorc(k + (j - 1) * upper_range)
+            .    .    .             .           .          .          .         .         .                  !     tmp_var2 = this%expenergies(k + 1) &
+            .    .    .             .           .          .          .         .         .                  !             * this%hamilt%sumstateprodscorc(k + (j - 1) * upper_range)
+-- line 437 ----------------------------------------
+-- line 439 ----------------------------------------
+            .    .    .             .           .          .          .         .         .                  !     ! tmp_var2 = this%expenergies(k + 1) * this%hamilt%sumstateprodscorc(k + 1, j)
+            .    .    .             .           .          .          .         .         .                  !     lhsderivativeterm = lhsderivativeterm &
+            .    .    .             .           .          .          .         .         .                  !                       + this%eqns%stateprods(k + (lhs_i - 1) * upper_range) * tmp_var1 &
+            .    .    .             .           .          .          .         .         .                  !                       + this%eqns%stateprods(k + 1 + (lhs_i - 1) * upper_range) * tmp_var2
+            .    .    .             .           .          .          .         .         .                  !     rhsderivativeterm = rhsderivativeterm &
+            .    .    .             .           .          .          .         .         .                  !                       + this%eqns%stateprods(k + (rhs_i - 1) * upper_range) * tmp_var1 &
+            .    .    .             .           .          .          .         .         .                  !                       + this%eqns%stateprods(k + 1 + (rhs_i - 1) * upper_range) * tmp_var2
+            .    .    .             .           .          .          .         .         .                  ! enddo
+      161,506   46   46         9,315       4,623         46        207         0         0  
+  301,760,000   23   23             0           0          0          0         0         0                  tmp_id = (j - 1) * upper_range
+            .    .    .             .           .          .          .         .         .                  do k = 1, upper_range, 16384
+1,959,563,200   23   23 1,205,876,200 150,739,677         23      2,300         0         0                      do kk = k, k + 16383, 2
+            .    .    .             .           .          .          .         .         .                          tmp_var1 = this%expenergies(kk    ) &
+1,959,526,400    0    0 1,205,862,400  75,366,400 20,411,772          0         0         0                                  * this%hamilt%sumstateprodscorc(kk + tmp_id)
+            .    .    .             .           .          .          .         .         .                          tmp_var2 = this%expenergies(kk + 1) &
+            .    .    .             .           .          .          .         .         .                                  * this%hamilt%sumstateprodscorc(kk + tmp_id + 1)
+4,823,450,290   92   92 1,205,862,630  75,368,654  2,255,318          0         0         0                          lhsderivativeterm = lhsderivativeterm &
+            .    .    .             .           .          .          .         .         .                                          + this%eqns%stateprods(kk + lhs_i) * tmp_var1 &
+            .    .    .             .           .          .          .         .         .                                          + this%eqns%stateprods(kk + lhs_i + 1) * tmp_var2
+5,124,917,040   92   92 1,205,862,630  75,367,918  7,171,608        460        10         1                          rhsderivativeterm = rhsderivativeterm &
+            .    .    .             .           .          .          .         .         .                                          + this%eqns%stateprods(kk + rhs_i) * tmp_var1 &
+            .    .    .             .           .          .          .         .         .                                          + this%eqns%stateprods(kk + rhs_i + 1) * tmp_var2
+            .    .    .             .           .          .          .         .         .                      enddo
+            .    .    .             .           .          .          .         .         .                  enddo
+            .    .    .             .           .          .          .         .         .  
+       11,500    0    0         2,300           0          0      2,300     2,300     1,886                  ! !$OMP END SIMD
+            .    .    .             .           .          .          .         .         .                  this%eqns%jacobian(i,j) = tmp_var3 * lhsderivativeterm &
+            .    .    .             .           .          .          .         .         .                                          - tmp_var4 * rhsderivativeterm
+            .    .    .             .           .          .          .         .         .              enddo
+            .    .    .             .           .          .          .         .         .          enddo
+        1,426   23   23           460           0          0          0         0         0          ! !$OMP END PARALLEL
+        2,990   46   46           230           0          0          0         0         0          ! this%eqns%jacobian = -1.d0/(kboltz*this%temp)*this%eqns%jacobian
+       15,893  184  184         2,829         368        161      1,242         0         0          do j = 1,this%eqns%neqns
+            .    .    .             .           .          .          .         .         .              do i = 1,this%eqns%neqns
+            .    .    .             .           .          .          .         .         .                  this%eqns%jacobian(i, j) = -1.d0/(kboltz*this%temp)*this%eqns%jacobian(i, j)
+            .    .    .             .           .          .          .         .         .              enddo
+           69    0    0             0           0          0         23        23        23          enddo
+          575   69   69            92          23         23        207         1         1  
+            .    .    .             .           .          .          .         .         .          call cpu_time(t8) !!!
+           23    0    0             0           0          0          0         0         0          write(*,*) 'time (residual 4)',t8-t7, this%eqns%neqns
+            .    .    .             .           .          .          .         .         .  
+          570    0    0           456          80         80          0         0         0          return
+            .    .    .             .           .          .          .         .         .      
+            .    .    .             .           .          .          .         .         .      end subroutine calculate_residuals
+            7    1    1             0           0          0          3         0         0      
+            .    .    .             .           .          .          .         .         .      
+            .    .    .             .           .          .          .         .         .  	subroutine approx_initialise(this,approx_name)
+            .    .    .             .           .          .          .         .         .  
+            .    .    .             .           .          .          .         .         .  	    use global_constants
+            .    .    .             .           .          .          .         .         .          implicit none
+            .    .    .             .           .          .          .         .         .          class (approximation) :: this
+            3    0    0             2           1          1          1         1         1          character(*) approx_name
+            2    0    0             1           0          0          1         0         0  	
+            .    .    .             .           .          .          .         .         .  	    this%mu = mu0
+            .    .    .             .           .          .          .         .         .  	    this%temp = temp
+            .    .    .             .           .          .          .         .         .  
+            .    .    .             .           .          .          .         .         .          select case (approx_name)
+            .    .    .             .           .          .          .         .         .              
+            .    .    .             .           .          .          .         .         .              case ('BPEC')
+            .    .    .             .           .          .          .         .         .                  call this%approx_initialise_bpec()
+            .    .    .             .           .          .          .         .         .  
+            .    .    .             .           .          .          .         .         .              case ('K2NNC2')
+            .    .    .             .           .          .          .         .         .                  call this%approx_initialise_k2nnc2()
+            5    1    1             2           1          1          0         0         0                  
+            .    .    .             .           .          .          .         .         .              case ('K3NNC2')
+            .    .    .             .           .          .          .         .         .                  call this%approx_initialise_k3nnc2()
+            9    1    1             0           0          0          1         0         0                  
+            .    .    .             .           .          .          .         .         .              case default
+            .    .    .             .           .          .          .         .         .                  write(*,*) 'Unknown approximation',approx_name
+            .    .    .             .           .          .          .         .         .                  
+            .    .    .             .           .          .          .         .         .          end select
+            .    .    .             .           .          .          .         .         .              
+            4    0    0             3           0          0          0         0         0          return
+            .    .    .             .           .          .          .         .         .  	
+            .    .    .             .           .          .          .         .         .  	end subroutine approx_initialise
+            8    1    1             0           0          0          6         0         0  	
+            .    .    .             .           .          .          .         .         .  	
+            .    .    .             .           .          .          .         .         .  	subroutine approx_print(this)
+            .    .    .             .           .          .          .         .         .  
+            .    .    .             .           .          .          .         .         .  	    use parser_module
+            .    .    .             .           .          .          .         .         .  	    class (approximation) :: this
+           16    2    2             1           0          0          7         0         0  	    integer i, j
+           16    1    1             1           0          0          7         0         0  
+           11    2    2             0           0          0          6         0         0  	    write(*,*) 'Approximation name:',this%approxname
+           49    5    5            10           0          0          8         0         0  	    write(*,*) 'Number of sites:',this%nsites
+          180    7    7            42           0          0         16         0         0  	    write(*,*) 'HAMILTONIAN'
+           17    2    2             1           0          0          7         0         0  	    write(*,*) 'original parameters:   ',(this%hamilt%origpars(j),j=1,this%hamilt%norig)
+           11    2    2             0           0          0          6         0         0  	    write(*,*) 'correction parameters: ',(this%hamilt%corcpars(j),j=1,this%hamilt%ncorc)
+          603    0    0           171           0          0         87         0         0  	    write(*,*) 'nterms:',this%hamilt%nterms
+            .    .    .             .           .          .          .         .         .  	    write(*,*) 'Original par pointers, values; correction par pointers, values; table of terms:'
+          680    0    0             0           0          0        170         0         0  	    do i = 1,this%hamilt%nterms
+          680   85    1           255           1          0         85         0         0  		    write(*,'(I3,a,2(I3,F16.8),' // trim(int2str(this%hamilt%internbody(i))) // 'I6)') &
+          935   85    1           510           0          0         85         0         0                  i,')', &
+          680   85    1           255           1          0         85         0         0                  this%hamilt%origterms(i), &
+          935    0    0           510           0          0         85         0         0  			    this%hamilt%origpars(this%hamilt%origterms(i)), &
+        8,583  584   10         1,435           1          0      1,511         0         0                  this%hamilt%corcterms(i), &
+            .    .    .             .           .          .          .         .         .                  this%hamilt%corcpars(this%hamilt%corcterms(i)), &
+            .    .    .             .           .          .          .         .         .  			    (this%hamilt%interaction(i,j),j=1,this%hamilt%internbody(i))
+            .    .    .             .           .          .          .         .         .          enddo
+            .    .    .             .           .          .          .         .         .          
+            .    .    .             .           .          .          .         .         .       !   write(*,*) ''
+            .    .    .             .           .          .          .         .         .       !   write(*,*) 'All states:'
+            .    .    .             .           .          .          .         .         .  	    !do i = 1,2**this%nsites
+            .    .    .             .           .          .          .         .         .  		   ! write(*,'(' // int2str(this%nsites) // 'I3)') (this%allstates(i,j), j=this%nsites,1,-1)
+           12    1    1             0           0          0          6         0         0       !   enddo
+           16    2    2             1           0          0          7         0         0          
+           16    2    2             1           0          0          7         0         0  	    write(*,*) 'EQUATIONS'
+           16    1    1             1           0          0          7         0         0  	    write(*,*) 'number of distinct terms:   ',this%eqns%nterms
+           78    1    1            21           0          0         12         0         0  	    write(*,*) 'number of equations:        ',this%eqns%neqns
+            .    .    .             .           .          .          .         .         .  	    write(*,*) 'list of equations:   ',this%eqns%nterms
+            .    .    .             .           .          .          .         .         .          do i = 1,this%eqns%neqns
+           80    0    0             0           0          0         20         0         0              write(*,'(I3,a,5x,' // trim(int2str(this%eqns%corrlnbody(this%eqns%lhs(i)))) // '("s(",I3,")")' &
+          460    3    3           179           0          0         17         0         0                               // ', " = ", ' // trim(int2str(this%eqns%corrlnbody(this%eqns%rhs(i)))) // '("s(",I3,")"))' ) &
+        1,838   47   17           333           5          0        317         0         0                  i,')', &
+            .    .    .             .           .          .          .         .         .                  (this%eqns%correlation(this%eqns%lhs(i),j),j=1,this%eqns%corrlnbody(this%eqns%lhs(i))), &
+            .    .    .             .           .          .          .         .         .                  (this%eqns%correlation(this%eqns%rhs(i),j),j=1,this%eqns%corrlnbody(this%eqns%rhs(i)))
+            .    .    .             .           .          .          .         .         .              continue
+            .    .    .             .           .          .          .         .         .          enddo
+            .    .    .             .           .          .          .         .         .          	
+            8    1    1             7           1          0          0         0         0          return
+            .    .    .             .           .          .          .         .         .  	
+            .    .    .             .           .          .          .         .         .  	end subroutine approx_print
+            .    .    .             .           .          .          .         .         .  	
+            .    .    .             .           .          .          .         .         .  end module
+--------------------------------------------------------------------------------
+Ir I1mr ILmr Dr D1mr DLmr Dw D1mw DLmw 
+--------------------------------------------------------------------------------
+85    6   10 90  100  100 51   96   91  percentage of events annotated
