@@ -418,11 +418,11 @@ module meso_approx
         call cpu_time(t7) !!!
         ! !$OMP PARALLEL
         do i = 1,this%eqns%neqns
-            lhs_i = this%eqns%lhs(i)
-            rhs_i = this%eqns%rhs(i)
+            lhs_i = (this%eqns%lhs(i) - 1) * upper_range
+            rhs_i = (this%eqns%rhs(i) - 1) * upper_range
             
-            tmp_var3 = 1.d0/this%eqns%corrlvalue(lhs_i)
-            tmp_var4 = 1.d0/this%eqns%corrlvalue(rhs_i)
+            tmp_var3 = 1.d0/this%eqns%corrlvalue(this%eqns%lhs(i))
+            tmp_var4 = 1.d0/this%eqns%corrlvalue(this%eqns%rhs(i))
 
             do j = 1,this%eqns%neqns
                 lhsderivativeterm = 0.d0
@@ -444,18 +444,20 @@ module meso_approx
                 !                       + this%eqns%stateprods(k + (rhs_i - 1) * upper_range) * tmp_var1 &
                 !                       + this%eqns%stateprods(k + 1 + (rhs_i - 1) * upper_range) * tmp_var2
                 ! enddo
+
+                tmp_id = (j - 1) * upper_range
                 do k = 1, upper_range, 16384
                     do kk = k, k + 16383, 2
                         tmp_var1 = this%expenergies(kk    ) &
-                                * this%hamilt%sumstateprodscorc(kk + (j - 1) * upper_range)
+                                * this%hamilt%sumstateprodscorc(kk + tmp_id)
                         tmp_var2 = this%expenergies(kk + 1) &
-                                * this%hamilt%sumstateprodscorc(kk + (j - 1) * upper_range)
+                                * this%hamilt%sumstateprodscorc(kk + tmp_id + 1)
                         lhsderivativeterm = lhsderivativeterm &
-                                        + this%eqns%stateprods(kk + (lhs_i - 1) * upper_range) * tmp_var1 &
-                                        + this%eqns%stateprods(kk + 1 + (lhs_i - 1) * upper_range) * tmp_var2
+                                        + this%eqns%stateprods(kk + lhs_i) * tmp_var1 &
+                                        + this%eqns%stateprods(kk + lhs_i + 1) * tmp_var2
                         rhsderivativeterm = rhsderivativeterm &
-                                        + this%eqns%stateprods(kk + (rhs_i - 1) * upper_range) * tmp_var1 &
-                                        + this%eqns%stateprods(kk + 1 + (rhs_i - 1) * upper_range) * tmp_var2
+                                        + this%eqns%stateprods(kk + rhs_i) * tmp_var1 &
+                                        + this%eqns%stateprods(kk + rhs_i + 1) * tmp_var2
                     enddo
                 enddo
 
