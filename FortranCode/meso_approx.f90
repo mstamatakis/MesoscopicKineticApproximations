@@ -14,8 +14,8 @@ module meso_approx
 		integer, allocatable, dimension(:) :: stateprods ! array storing terms that appear in the Hamiltonian, like sigma(1)*sigma(2) etc, for each state.
 		integer, allocatable, dimension(:) :: sumstateprodsorig ! array storing sums of the above, which make it faster to calculate dHamiltonian/dcorcpar, for each state.
         integer, allocatable, dimension(:) :: sumstateprodscorc ! array storing sums of the above, which make it faster to calculate dHamiltonian/dcorcpar, for each state.
-        integer, allocatable, dimension(:,:,:) :: time_saver_lhs(:,:,:)
-        integer, allocatable, dimension(:,:,:) :: time_saver_rhs(:,:,:)
+        integer, allocatable, dimension(:) :: time_saver_lhs(:)
+        integer, allocatable, dimension(:) :: time_saver_rhs(:)
         ! All three of the above are stored as members of the class for computational efficiency, but for large approximations it can be memory intensive!
 
 		integer norig      ! number of original parameters in the Hamiltonian, e.g. = 2 if only adsorption energy and 1NN interaction energy are used
@@ -152,7 +152,7 @@ module meso_approx
         implicit none
         class (approximation) :: this
         integer i, j, k, upper_range, tmp_int
-        real(4) t1, t2, t3, t4
+        ! real(4) t1, t2, t3, t4
         real(8) tmp_val
         logical is_even_ncorc
 
@@ -160,7 +160,6 @@ module meso_approx
 
         ! Preparatory steps: allocate and precompute stateprods, sumstateprodsorig, sumstateprodscorc
         if (.not. (allocated(this%hamilt%sumstateprodsorig) .and. allocated(this%hamilt%sumstateprodscorc))) then 
-            call cpu_time(t1) ! function for calculating elapsed CPU time
             if (.not. allocated(this%hamilt%stateprods)) then
                 allocate(this%hamilt%stateprods(upper_range * this%hamilt%nterms),source=1)
                 do i = 1,this%hamilt%nterms
@@ -201,28 +200,28 @@ module meso_approx
 
                 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 ! Compute time_saver
-                allocate(this%hamilt%time_saver_lhs(upper_range, this%eqns%neqns, this%eqns%neqns), source=0)
-                allocate(this%hamilt%time_saver_rhs(upper_range, this%eqns%neqns, this%eqns%neqns), source=0)
+                allocate(this%hamilt%time_saver_lhs(upper_range * this%eqns%neqns * this%eqns%neqns), source=0)
+                allocate(this%hamilt%time_saver_rhs(upper_range * this%eqns%neqns * this%eqns%neqns), source=0)
 
                 do i = 1,this%eqns%neqns
-                    ! lhs_i = (this%eqns%lhs(i) - 1) * upper_range
-                    ! rhs_i = (this%eqns%rhs(i) - 1) * upper_range
-        
                     do j = 1,this%eqns%neqns
-                        ! lhsderivativeterm = 0.d0
-                        ! rhsderivativeterm = 0.d0
-                        ! tmp_var1 = 0.d0
-                        ! tmp_var2 = 0.d0
+                        tmp_int = upper_range * (j - 1 + this%eqns%neqns * (i - 1))
+                        do k = 1, upper_range, 2
+                            this%hamilt%time_saver_lhs(k + tmp_int) = &
+                                                                this%eqns%stateprods(k + (this%eqns%lhs(i) - 1) * upper_range) &
+                                                              * this%hamilt%sumstateprodscorc(k + (j - 1) * upper_range)
+
+                            this%hamilt%time_saver_lhs(k + 1 + tmp_int) = &
+                                                              this%eqns%stateprods(k + 1 + (this%eqns%lhs(i) - 1) * upper_range) &
+                                                            * this%hamilt%sumstateprodscorc(k + 1 + (j - 1) * upper_range)
         
-                        ! tmp_id = (j - 1) * upper_range
-        
-                        do k = 1, upper_range
-                            ! lhs_i = (this%eqns%lhs(i) - 1) * upper_range
-                            this%hamilt%time_saver_lhs(k, j, i) = this%eqns%stateprods(k + (this%eqns%lhs(i) - 1) * upper_range) &
-                                                                * this%hamilt%sumstateprodscorc(k + (j - 1) * upper_range)
-        
-                            this%hamilt%time_saver_rhs(k, j, i) = this%eqns%stateprods(k + (this%eqns%rhs(i) - 1) * upper_range) &
-                                                                * this%hamilt%sumstateprodscorc(k + (j - 1) * upper_range)
+                            this%hamilt%time_saver_rhs(k + tmp_int) = &
+                                                                this%eqns%stateprods(k + (this%eqns%rhs(i) - 1) * upper_range) &
+                                                              * this%hamilt%sumstateprodscorc(k + (j - 1) * upper_range)
+                                                              
+                            this%hamilt%time_saver_rhs(k + 1 + tmp_int) = &
+                                                              this%eqns%stateprods(k + 1 + (this%eqns%rhs(i) - 1) * upper_range) &
+                                                            * this%hamilt%sumstateprodscorc(k + 1 + (j - 1) * upper_range)
                         enddo
                     enddo
                 enddo
@@ -230,8 +229,6 @@ module meso_approx
                 
             endif
             deallocate(this%hamilt%stateprods) ! free up some memory; this array not needed anymore, unless we use the first method to calculate energies
-            call cpu_time(t2) ! function for calculating elapsed CPU time
-            write(*,*) 'time (energy 1)',t2-t1
         endif
         
         !this%allenergs = this%hamilt%H0
@@ -355,7 +352,7 @@ module meso_approx
         real(8) lhsderivativeterm, rhsderivativeterm
         logical, intent(in), optional :: calcjac
         logical :: calculatejacobian
-        real(4) t1, t2, t3, t4, t5, t6, t7, t8
+        real(4) t1, t2
         integer lhs_i, rhs_i, id, tmp_id
         real(8) tmp_var1, tmp_var2, tmp_var3, tmp_var4
 
@@ -386,7 +383,6 @@ module meso_approx
             allocate(this%expenergies(upper_range),source=0.d0)
         endif
 
-        call cpu_time(t1) !!!
         call this%calc_energ() ! Note that we calculate the energies here, so if a program unit is calling the correlations subroutine,
         ! it would be unnecessary (and a waste of time) to compute the energies in the calling program unit
 
@@ -395,12 +391,9 @@ module meso_approx
         do i = 1, upper_range
             this%expenergies(i) = exp(-(this%allenergs(i) - this%mu * this%nparticles(i)) / (kboltz*this%temp))
         enddo
-        call cpu_time(t2) !!!
-        write(*,*) 'time (residual 1)',t2-t1
 
         this%eqns%corrlvalue = 0.d0
 
-        call cpu_time(t3) !!!
         ! this%partfcn = sum(this%expenergies)
         this%partfcn = 0.d0
         do i = 1,upper_range
@@ -424,10 +417,7 @@ module meso_approx
             this%eqns%corrlvalue(i) = tmp_var1
             ! this%eqns%corrlvalue(i) = sum(this%eqns%stateprods(:,i)*this%expenergies)/this%partfcn
         enddo  
-        call cpu_time(t4) !!!
-        write(*,*) 'time (residual 2)',t4-t3, this%eqns%nterms
     
-        call cpu_time(t5) !!!
         ! this%eqns%residual = 0.d0     ! no point to flush it, since it will be rewritten in the loop
         do i = 1,this%eqns%neqns
             ! Again, two options. In Matlab we have used the version of the equations with the logarithms
@@ -439,14 +429,12 @@ module meso_approx
             
             ! this%eqns%residual(i) = this%eqns%corrlvalue(this%eqns%lhs(i)) - this%eqns%corrlvalue(this%eqns%rhs(i))
         enddo
-        call cpu_time(t6) !!!
-        write(*,*) 'time (residual 3)',t6-t5, this%eqns%neqns
 
         this%eqns%jacobian = 0.d0
         
         if (.not.calculatejacobian) return
 
-        call cpu_time(t7) !!!
+        call cpu_time(t1) !!!!!!!!!!!!
         ! !$OMP PARALLEL
         do i = 1,this%eqns%neqns
             lhs_i = (this%eqns%lhs(i) - 1) * upper_range
@@ -461,8 +449,8 @@ module meso_approx
                 tmp_var1 = 0.d0
                 tmp_var2 = 0.d0
 
+                ! Old
                 ! tmp_id = (j - 1) * upper_range
-
                 ! do k = 1, upper_range, 2048
                 !     do kk = k, k + 2047, 1
                 !         tmp_var1 = this%expenergies(kk    ) &
@@ -480,14 +468,32 @@ module meso_approx
                 !     enddo
                 ! enddo
 
-                do k = 1, upper_range
-                    lhsderivativeterm = lhsderivativeterm &
-                                      + this%hamilt%time_saver_lhs(k, j, i) &
-                                      * this%expenergies(k)
+                ! New
+                tmp_id = upper_range * (j - 1 + this%eqns%neqns * (i - 1))
+                ! do k = 1, upper_range
+                !     lhsderivativeterm = lhsderivativeterm &
+                !                       + this%hamilt%time_saver_lhs(k + tmp_id) &
+                !                       * this%expenergies(k)
 
-                    rhsderivativeterm = rhsderivativeterm &
-                                      + this%hamilt%time_saver_rhs(k, j, i) &
-                                      * this%expenergies(k)
+                !     rhsderivativeterm = rhsderivativeterm &
+                !                       + this%hamilt%time_saver_rhs(k + tmp_id) &
+                !                       * this%expenergies(k)
+                ! enddo
+
+                do k = 1, upper_range, 4096
+                    do kk = k, k + 4095, 2
+                        lhsderivativeterm = lhsderivativeterm &
+                                          + this%hamilt%time_saver_lhs(kk + tmp_id) &
+                                          * this%expenergies(kk) &
+                                          + this%hamilt%time_saver_lhs(kk + tmp_id + 1) &
+                                          * this%expenergies(kk + 1)
+
+                        rhsderivativeterm = rhsderivativeterm &
+                                          + this%hamilt%time_saver_rhs(kk + tmp_id) &
+                                          * this%expenergies(kk) &
+                                          + this%hamilt%time_saver_rhs(kk + tmp_id + 1) &
+                                          * this%expenergies(kk + 1)
+                    enddo
                 enddo
 
                 this%eqns%jacobian(i,j) = tmp_var3 * lhsderivativeterm &
@@ -502,8 +508,8 @@ module meso_approx
             enddo
         enddo
 
-        call cpu_time(t8) !!!
-        write(*,*) 'time (residual 4)',t8-t7, this%eqns%neqns
+        call cpu_time(t2) !!!!!!!!!!!!
+        write(*,*) 'time (residual)',t2-t1, this%eqns%neqns
 
         return
     
