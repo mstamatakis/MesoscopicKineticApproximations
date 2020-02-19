@@ -13,9 +13,10 @@ module meso_approx
 		integer, allocatable, dimension(:) :: corcterms ! integers pointing to corcpars (see below) to return correction parameters for each of the interaction terms in vector "interaction" above
 		integer, allocatable, dimension(:) :: stateprods ! array storing terms that appear in the Hamiltonian, like sigma(1)*sigma(2) etc, for each state.
 		integer, allocatable, dimension(:) :: sumstateprodsorig ! array storing sums of the above, which make it faster to calculate dHamiltonian/dcorcpar, for each state.
-		integer, allocatable, dimension(:) :: sumstateprodscorc ! array storing sums of the above, which make it faster to calculate dHamiltonian/dcorcpar, for each state.
+        integer, allocatable, dimension(:) :: sumstateprodscorc ! array storing sums of the above, which make it faster to calculate dHamiltonian/dcorcpar, for each state.
+        integer, allocatable, dimension(:,:,:) :: time_saver_lhs(:,:,:)
+        integer, allocatable, dimension(:,:,:) :: time_saver_rhs(:,:,:)
         ! All three of the above are stored as members of the class for computational efficiency, but for large approximations it can be memory intensive!
-        integer, allocatable, dimension(:) :: stateprods_new ! array storing terms that appear in the Hamiltonian, like sigma(1)*sigma(2) etc, for each state.
 
 		integer norig      ! number of original parameters in the Hamiltonian, e.g. = 2 if only adsorption energy and 1NN interaction energy are used
 		integer ncorc      ! number of correction terms in the Hamiltonian, e.g. = 1 if only one correction for adsorption energy is imposed (e.g. in BP, BPE)
@@ -197,6 +198,36 @@ module meso_approx
                         this%hamilt%sumstateprodscorc(i + (j - 1) * upper_range) = tmp_int
                     enddo
                 enddo
+
+                !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                ! Compute time_saver
+                allocate(this%hamilt%time_saver_lhs(upper_range, this%eqns%neqns, this%eqns%neqns), source=0)
+                allocate(this%hamilt%time_saver_rhs(upper_range, this%eqns%neqns, this%eqns%neqns), source=0)
+
+                do i = 1,this%eqns%neqns
+                    ! lhs_i = (this%eqns%lhs(i) - 1) * upper_range
+                    ! rhs_i = (this%eqns%rhs(i) - 1) * upper_range
+        
+                    do j = 1,this%eqns%neqns
+                        ! lhsderivativeterm = 0.d0
+                        ! rhsderivativeterm = 0.d0
+                        ! tmp_var1 = 0.d0
+                        ! tmp_var2 = 0.d0
+        
+                        ! tmp_id = (j - 1) * upper_range
+        
+                        do k = 1, upper_range
+                            ! lhs_i = (this%eqns%lhs(i) - 1) * upper_range
+                            this%hamilt%time_saver_lhs(k, j, i) = this%eqns%stateprods(k + (this%eqns%lhs(i) - 1) * upper_range) &
+                                                                * this%hamilt%sumstateprodscorc(k + (j - 1) * upper_range)
+        
+                            this%hamilt%time_saver_rhs(k, j, i) = this%eqns%stateprods(k + (this%eqns%rhs(i) - 1) * upper_range) &
+                                                                * this%hamilt%sumstateprodscorc(k + (j - 1) * upper_range)
+                        enddo
+                    enddo
+                enddo
+                !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                
             endif
             deallocate(this%hamilt%stateprods) ! free up some memory; this array not needed anymore, unless we use the first method to calculate energies
             call cpu_time(t2) ! function for calculating elapsed CPU time
@@ -414,7 +445,7 @@ module meso_approx
         this%eqns%jacobian = 0.d0
         
         if (.not.calculatejacobian) return
-        
+
         call cpu_time(t7) !!!
         ! !$OMP PARALLEL
         do i = 1,this%eqns%neqns
@@ -429,39 +460,36 @@ module meso_approx
                 rhsderivativeterm = 0.d0
                 tmp_var1 = 0.d0
                 tmp_var2 = 0.d0
-                ! !$OMP SIMD
-                ! do k = 1,upper_range,2
-                !     tmp_var1 = this%expenergies(k    ) &
-                !             * this%hamilt%sumstateprodscorc(k + (j - 1) * upper_range)
-                !     tmp_var2 = this%expenergies(k + 1) &
-                !             * this%hamilt%sumstateprodscorc(k + (j - 1) * upper_range)
-                !     ! tmp_var1 = this%expenergies(k    ) * this%hamilt%sumstateprodscorc(k,     j)
-                !     ! tmp_var2 = this%expenergies(k + 1) * this%hamilt%sumstateprodscorc(k + 1, j)
-                !     lhsderivativeterm = lhsderivativeterm &
-                !                       + this%eqns%stateprods(k + (lhs_i - 1) * upper_range) * tmp_var1 &
-                !                       + this%eqns%stateprods(k + 1 + (lhs_i - 1) * upper_range) * tmp_var2
-                !     rhsderivativeterm = rhsderivativeterm &
-                !                       + this%eqns%stateprods(k + (rhs_i - 1) * upper_range) * tmp_var1 &
-                !                       + this%eqns%stateprods(k + 1 + (rhs_i - 1) * upper_range) * tmp_var2
+
+                ! tmp_id = (j - 1) * upper_range
+
+                ! do k = 1, upper_range, 2048
+                !     do kk = k, k + 2047, 1
+                !         tmp_var1 = this%expenergies(kk    ) &
+                !                 * this%hamilt%sumstateprodscorc(kk + tmp_id)
+                !         ! tmp_var2 = this%expenergies(kk + 1) &
+                !         !         * this%hamilt%sumstateprodscorc(kk + tmp_id + 1)
+                !         lhsderivativeterm = lhsderivativeterm &
+                !                         + this%eqns%stateprods(kk + lhs_i) * tmp_var1 !&
+                !                         ! + this%eqns%stateprods(kk + lhs_i + 1) * tmp_var2
+                !         rhsderivativeterm = rhsderivativeterm &
+                !                         + this%eqns%stateprods(kk + rhs_i) * tmp_var1 !&
+                !                         ! + this%eqns%stateprods(kk + rhs_i + 1) * tmp_var2
+
+                !         ! write(*,*) this%hamilt%time_saver_lhs(kk, j, i), this%eqns%stateprods(kk + lhs_i) * this%hamilt%sumstateprodscorc(kk + tmp_id)
+                !     enddo
                 ! enddo
 
-                tmp_id = (j - 1) * upper_range
-                do k = 1, upper_range, 16384
-                    do kk = k, k + 16383, 2
-                        tmp_var1 = this%expenergies(kk    ) &
-                                * this%hamilt%sumstateprodscorc(kk + tmp_id)
-                        tmp_var2 = this%expenergies(kk + 1) &
-                                * this%hamilt%sumstateprodscorc(kk + tmp_id + 1)
-                        lhsderivativeterm = lhsderivativeterm &
-                                        + this%eqns%stateprods(kk + lhs_i) * tmp_var1 &
-                                        + this%eqns%stateprods(kk + lhs_i + 1) * tmp_var2
-                        rhsderivativeterm = rhsderivativeterm &
-                                        + this%eqns%stateprods(kk + rhs_i) * tmp_var1 &
-                                        + this%eqns%stateprods(kk + rhs_i + 1) * tmp_var2
-                    enddo
+                do k = 1, upper_range
+                    lhsderivativeterm = lhsderivativeterm &
+                                      + this%hamilt%time_saver_lhs(k, j, i) &
+                                      * this%expenergies(k)
+
+                    rhsderivativeterm = rhsderivativeterm &
+                                      + this%hamilt%time_saver_rhs(k, j, i) &
+                                      * this%expenergies(k)
                 enddo
 
-                ! !$OMP END SIMD
                 this%eqns%jacobian(i,j) = tmp_var3 * lhsderivativeterm &
                                         - tmp_var4 * rhsderivativeterm
             enddo
