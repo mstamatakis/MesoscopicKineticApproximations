@@ -437,7 +437,7 @@ module meso_approx
 
         call cpu_time(t1) !!!!!!!!!!!!
         loop_step = min(upper_range, 4096)
-        ! !$OMP PARALLEL
+        ! !$OMP PARALLEL DO NUM_THREADS(4)
         do i = 1,this%eqns%neqns
             lhs_i = (this%eqns%lhs(i) - 1) * upper_range
             rhs_i = (this%eqns%rhs(i) - 1) * upper_range
@@ -448,41 +448,10 @@ module meso_approx
             do j = 1,this%eqns%neqns
                 lhsderivativeterm = 0.d0
                 rhsderivativeterm = 0.d0
-                tmp_var1 = 0.d0
-                tmp_var2 = 0.d0
 
-                ! Old
-                ! tmp_id = (j - 1) * upper_range
-                ! do k = 1, upper_range, 2048
-                !     do kk = k, k + 2047, 1
-                !         tmp_var1 = this%expenergies(kk    ) &
-                !                 * this%hamilt%sumstateprodscorc(kk + tmp_id)
-                !         ! tmp_var2 = this%expenergies(kk + 1) &
-                !         !         * this%hamilt%sumstateprodscorc(kk + tmp_id + 1)
-                !         lhsderivativeterm = lhsderivativeterm &
-                !                         + this%eqns%stateprods(kk + lhs_i) * tmp_var1 !&
-                !                         ! + this%eqns%stateprods(kk + lhs_i + 1) * tmp_var2
-                !         rhsderivativeterm = rhsderivativeterm &
-                !                         + this%eqns%stateprods(kk + rhs_i) * tmp_var1 !&
-                !                         ! + this%eqns%stateprods(kk + rhs_i + 1) * tmp_var2
-
-                !         ! write(*,*) this%hamilt%time_saver_lhs(kk, j, i), this%eqns%stateprods(kk + lhs_i) * this%hamilt%sumstateprodscorc(kk + tmp_id)
-                !     enddo
-                ! enddo
-
-                ! New
                 tmp_id = upper_range * (j - 1 + this%eqns%neqns * (i - 1))
-                ! do k = 1, upper_range
-                !     lhsderivativeterm = lhsderivativeterm &
-                !                       + this%hamilt%time_saver_lhs(k + tmp_id) &
-                !                       * this%expenergies(k)
-
-                !     rhsderivativeterm = rhsderivativeterm &
-                !                       + this%hamilt%time_saver_rhs(k + tmp_id) &
-                !                       * this%expenergies(k)
-                ! enddo
-
                 do k = 1, upper_range, loop_step
+                    !$OMP SIMD
                     do kk = k, k + loop_step - 1, 2
                         lhsderivativeterm = lhsderivativeterm &
                                           + this%hamilt%time_saver_lhs(kk + tmp_id) &
@@ -496,13 +465,14 @@ module meso_approx
                                           + this%hamilt%time_saver_rhs(kk + tmp_id + 1) &
                                           * this%expenergies(kk + 1)
                     enddo
+                    !$OMP END SIMD
                 enddo
 
                 this%eqns%jacobian(i,j) = tmp_var3 * lhsderivativeterm &
                                         - tmp_var4 * rhsderivativeterm
             enddo
         enddo
-        ! !$OMP END PARALLEL
+        ! !$OMP END PARALLEL DO
         ! this%eqns%jacobian = -1.d0/(kboltz*this%temp)*this%eqns%jacobian
         do j = 1,this%eqns%neqns
             do i = 1,this%eqns%neqns
