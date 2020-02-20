@@ -65,15 +65,11 @@ script:
   - cd FortranCode
   - mkdir build
   - cd build
-  - cmake .. -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release -Ddoopenmp=OFF
+  - travis_wait 30 cmake .. -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release -Ddoopenmp=OFF
   - make -j
-  - while sleep 540 ; do echo "=========== tests are taking more than 9m - pinging travis =========="; done &
-  - PING_PID=$!
   # - ctest --output-on-failure
   - ctest -L fast --output-on-failure
   # - ctest -L "(fast|medium)" --output-on-failure
-  # The following kills the pinging process, otherwise Windows builds hang
-  - kill $PING_PID
 
 after_script:
   - find . -name "uninstal*"
