@@ -68,8 +68,8 @@ script:
   - travis_wait 30 cmake .. -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release -Ddoopenmp=OFF
   - make -j
   # - ctest --output-on-failure
-  - ctest -L fast --output-on-failure
-  # - ctest -L "(fast|medium)" --output-on-failure
+  # - ctest -L fast --output-on-failure
+  - ctest -L "(fast|medium)" --output-on-failure
 
 after_script:
   - find . -name "uninstal*"
