@@ -14,8 +14,9 @@ module meso_approx
 		integer, allocatable, dimension(:) :: stateprods ! array storing terms that appear in the Hamiltonian, like sigma(1)*sigma(2) etc, for each state.
 		integer, allocatable, dimension(:) :: sumstateprodsorig ! array storing sums of the above, which make it faster to calculate dHamiltonian/dcorcpar, for each state.
         integer, allocatable, dimension(:) :: sumstateprodscorc ! array storing sums of the above, which make it faster to calculate dHamiltonian/dcorcpar, for each state.
-        integer, allocatable, dimension(:) :: time_saver_lhs(:)
-        integer, allocatable, dimension(:) :: time_saver_rhs(:)
+        real(8), allocatable, dimension(:) :: time_saver_lhs(:)
+        real(8), allocatable, dimension(:) :: time_saver_rhs(:)
+        real(8), allocatable, dimension(:) :: time_saver(:)
         ! All three of the above are stored as members of the class for computational efficiency, but for large approximations it can be memory intensive!
 
 		integer norig      ! number of original parameters in the Hamiltonian, e.g. = 2 if only adsorption energy and 1NN interaction energy are used
@@ -200,28 +201,39 @@ module meso_approx
 
                 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 ! Compute time_saver
-                allocate(this%hamilt%time_saver_lhs(upper_range * this%eqns%neqns * this%eqns%neqns), source=0)
-                allocate(this%hamilt%time_saver_rhs(upper_range * this%eqns%neqns * this%eqns%neqns), source=0)
+                ! allocate(this%hamilt%time_saver_lhs(upper_range * this%eqns%neqns * this%eqns%neqns), source=0.d0)
+                ! allocate(this%hamilt%time_saver_rhs(upper_range * this%eqns%neqns * this%eqns%neqns), source=0.d0)
+                allocate(this%hamilt%time_saver(2 * upper_range * this%eqns%neqns * this%eqns%neqns), source=0.d0)
 
                 do i = 1,this%eqns%neqns
                     do j = 1,this%eqns%neqns
                         tmp_int = upper_range * (j - 1 + this%eqns%neqns * (i - 1))
-                        do k = 1, upper_range, 2
-                            this%hamilt%time_saver_lhs(k + tmp_int) = &
-                                                                this%eqns%stateprods(k + (this%eqns%lhs(i) - 1) * upper_range) &
-                                                              * this%hamilt%sumstateprodscorc(k + (j - 1) * upper_range)
+                        do k = 1, upper_range, 1
+                            this%hamilt%time_saver(k + tmp_int) = &
+                                                        this%eqns%stateprods(k + (this%eqns%lhs(i) - 1) * upper_range) &
+                                                        * this%hamilt%sumstateprodscorc(k + (j - 1) * upper_range)
 
-                            this%hamilt%time_saver_lhs(k + 1 + tmp_int) = &
-                                                              this%eqns%stateprods(k + 1 + (this%eqns%lhs(i) - 1) * upper_range) &
-                                                            * this%hamilt%sumstateprodscorc(k + 1 + (j - 1) * upper_range)
+                            this%hamilt%time_saver(k + tmp_int + 1) = &
+                                                        this%eqns%stateprods(k + (this%eqns%rhs(i) - 1) * upper_range) &
+                                                        * this%hamilt%sumstateprodscorc(k + (j - 1) * upper_range)
+                                            
+                            tmp_int = tmp_int + 2
+
+                            ! this%hamilt%time_saver_lhs(k + tmp_int) = &
+                            !                                     this%eqns%stateprods(k + (this%eqns%lhs(i) - 1) * upper_range) &
+                            !                                   * this%hamilt%sumstateprodscorc(k + (j - 1) * upper_range)
+
+                            ! this%hamilt%time_saver_lhs(k + 1 + tmp_int) = &
+                            !                                   this%eqns%stateprods(k + 1 + (this%eqns%lhs(i) - 1) * upper_range) &
+                            !                                 * this%hamilt%sumstateprodscorc(k + 1 + (j - 1) * upper_range)
         
-                            this%hamilt%time_saver_rhs(k + tmp_int) = &
-                                                                this%eqns%stateprods(k + (this%eqns%rhs(i) - 1) * upper_range) &
-                                                              * this%hamilt%sumstateprodscorc(k + (j - 1) * upper_range)
+                            ! this%hamilt%time_saver_rhs(k + tmp_int) = &
+                            !                                     this%eqns%stateprods(k + (this%eqns%rhs(i) - 1) * upper_range) &
+                            !                                   * this%hamilt%sumstateprodscorc(k + (j - 1) * upper_range)
                                                               
-                            this%hamilt%time_saver_rhs(k + 1 + tmp_int) = &
-                                                              this%eqns%stateprods(k + 1 + (this%eqns%rhs(i) - 1) * upper_range) &
-                                                            * this%hamilt%sumstateprodscorc(k + 1 + (j - 1) * upper_range)
+                            ! this%hamilt%time_saver_rhs(k + 1 + tmp_int) = &
+                            !                                   this%eqns%stateprods(k + 1 + (this%eqns%rhs(i) - 1) * upper_range) &
+                            !                                 * this%hamilt%sumstateprodscorc(k + 1 + (j - 1) * upper_range)
                         enddo
                     enddo
                 enddo
@@ -353,7 +365,7 @@ module meso_approx
         logical, intent(in), optional :: calcjac
         logical :: calculatejacobian
         real(4) t1, t2
-        integer lhs_i, rhs_i, id, tmp_id
+        integer lhs_i, rhs_i, tmp_id1, tmp_id2
         real(8) tmp_var1, tmp_var2, tmp_var3, tmp_var4
         integer loop_step
 
@@ -371,11 +383,11 @@ module meso_approx
 
             do i = 1,this%eqns%nterms
                 do j = 1,this%eqns%corrlnbody(i)
-                    tmp_id = this%eqns%correlation(i, j)
+                    tmp_id1 = this%eqns%correlation(i, j)
                     do k = 1, upper_range
-                        id = k + (i - 1) * upper_range
-                        this%eqns%stateprods(id) = &
-                                    this%eqns%stateprods(id) * this%allstates(k, tmp_id)
+                        tmp_id2 = k + (i - 1) * upper_range
+                        this%eqns%stateprods(tmp_id2) = &
+                                    this%eqns%stateprods(tmp_id2) * this%allstates(k, tmp_id1)
                     enddo
                 enddo
             enddo
@@ -417,7 +429,7 @@ module meso_approx
             enddo
             this%eqns%corrlvalue(i) = tmp_var1
             ! this%eqns%corrlvalue(i) = sum(this%eqns%stateprods(:,i)*this%expenergies)/this%partfcn
-        enddo  
+        enddo
     
         ! this%eqns%residual = 0.d0     ! no point to flush it, since it will be rewritten in the loop
         do i = 1,this%eqns%neqns
@@ -425,8 +437,8 @@ module meso_approx
             
             ! mathematically, log(a/b) = log(a) - log(b). however, if implemented in this way the roundoff errors change the
             ! results. so, keep it as it was
-            ! this%eqns%residual(i) = log(this%eqns%corrlvalue(this%eqns%lhs(i)) / this%eqns%corrlvalue(this%eqns%rhs(i)))    ! One log is better than two
-            this%eqns%residual(i) = log(this%eqns%corrlvalue(this%eqns%lhs(i))) - log(this%eqns%corrlvalue(this%eqns%rhs(i)))    ! One log is better than two
+            this%eqns%residual(i) = log(this%eqns%corrlvalue(this%eqns%lhs(i)) / this%eqns%corrlvalue(this%eqns%rhs(i)))    ! One log is better than two
+            ! this%eqns%residual(i) = log(this%eqns%corrlvalue(this%eqns%lhs(i))) - log(this%eqns%corrlvalue(this%eqns%rhs(i)))    ! One log is better than two
             
             ! this%eqns%residual(i) = this%eqns%corrlvalue(this%eqns%lhs(i)) - this%eqns%corrlvalue(this%eqns%rhs(i))
         enddo
@@ -445,27 +457,45 @@ module meso_approx
             tmp_var3 = 1.d0/this%eqns%corrlvalue(this%eqns%lhs(i))
             tmp_var4 = 1.d0/this%eqns%corrlvalue(this%eqns%rhs(i))
 
+            rhsderivativeterm = tmp_var3 / tmp_var4
+
             do j = 1,this%eqns%neqns
                 lhsderivativeterm = 0.d0
                 rhsderivativeterm = 0.d0
 
-                tmp_id = upper_range * (j - 1 + this%eqns%neqns * (i - 1))
+                tmp_id1 = upper_range * (j - 1 + this%eqns%neqns * (i - 1))
                 do k = 1, upper_range, loop_step
-                    !$OMP SIMD
-                    do kk = k, k + loop_step - 1, 2
+                    ! !DIR$ PREFETCH this%expenergies:0:64
+                    ! !DIR$ PREFETCH this%this%hamilt%time_saver_lhs:0:64
+                    ! !DIR$ PREFETCH this%this%hamilt%time_saver_rhs:0:64
+                    ! !$OMP SIMD
+                    ! !dir$ vector aligned
+                    do kk = k, k + loop_step - 1, 1
+                        tmp_id2 = kk + tmp_id1
+
                         lhsderivativeterm = lhsderivativeterm &
-                                          + this%hamilt%time_saver_lhs(kk + tmp_id) &
-                                          * this%expenergies(kk) &
-                                          + this%hamilt%time_saver_lhs(kk + tmp_id + 1) &
-                                          * this%expenergies(kk + 1)
+                                            + this%hamilt%time_saver(tmp_id2) &
+                                            * this%expenergies(kk)
 
                         rhsderivativeterm = rhsderivativeterm &
-                                          + this%hamilt%time_saver_rhs(kk + tmp_id) &
-                                          * this%expenergies(kk) &
-                                          + this%hamilt%time_saver_rhs(kk + tmp_id + 1) &
-                                          * this%expenergies(kk + 1)
+                                            + this%hamilt%time_saver(tmp_id2 + 1) &
+                                            * this%expenergies(kk)
+                        
+                        tmp_id1 = tmp_id1 + 2
+
+                        ! lhsderivativeterm = lhsderivativeterm &
+                        !                   + this%hamilt%time_saver_lhs(tmp_id2) &
+                        !                   * this%expenergies(kk) &
+                        !                   + this%hamilt%time_saver_lhs(tmp_id2 + 1) &
+                        !                   * this%expenergies(kk + 1)
+
+                        ! rhsderivativeterm = rhsderivativeterm &
+                        !                   + this%hamilt%time_saver_rhs(tmp_id2) &
+                        !                   * this%expenergies(kk) &
+                        !                   + this%hamilt%time_saver_rhs(tmp_id2 + 1) &
+                        !                   * this%expenergies(kk + 1)
                     enddo
-                    !$OMP END SIMD
+                    ! !$OMP END SIMD
                 enddo
 
                 this%eqns%jacobian(i,j) = tmp_var3 * lhsderivativeterm &

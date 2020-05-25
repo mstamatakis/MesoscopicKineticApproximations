@@ -4,7 +4,7 @@ bold=$(tput bold)
 normal=$(tput sgr0)
 
 # Test number (folder name)
-name_test="003"
+name_test="004"
 name_prof_file="profile.dat"
 
 # Path to the input files
@@ -19,6 +19,7 @@ cd ../build
 cd ../profiling
 
 # Create a dummy of the output file
+mkdir $name_test
 echo "# Elapsed CPU time of the main loop, based on the provided test cases (see tests/data/(0,1,2) folders)" > $name_test/$name_prof_file
 echo "# -O5 option" >> $name_test/$name_prof_file
 echo "#test   time, [s]" >> $name_test/$name_prof_file
