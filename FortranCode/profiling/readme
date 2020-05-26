@@ -2,5 +2,7 @@
 # The results in the folder 000 are based on the original "master" branch, wheres
 # the results in other folders are based on the branch "profiling"
 #folder	date	commit	comment
-000	10.02	c531e7d	original profiling based on the code pushed from the master branch (same as in folder ref)
-001	10.02	924fd56	~10% boost after optimization of the Jacobian calulation
+000	10.02	c531e7d	Original profiling based on the code pushed from the master branch (same as in folder ref)
+001	10.02	924fd56	+10% Optimization of the Jacobian calulation
+002     12.02   e741d0  +5% Switched to 1d array for sumstateprodscorc
+003	19.02	b3beeb7	+6% Added tiling
