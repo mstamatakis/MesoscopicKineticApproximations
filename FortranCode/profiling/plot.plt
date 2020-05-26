@@ -6,4 +6,4 @@ set style histogram clustered gap 1 title textcolor lt -1
 set style data histograms
 set yrange [10:62]
 
-p for [i=0:1] sprintf("%03.0f/profile.dat", i) u 2 every ::2 ti sprintf("%03.0f", i)
+p for [i=0:4] sprintf("%03.0f/profile.dat", i) u 2 every ::2 ti sprintf("%03.0f", i)
