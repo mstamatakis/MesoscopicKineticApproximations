@@ -89,11 +89,10 @@ script:
   # - ctest --output-on-failure
   # - ctest -L fast --output-on-failure
   - travis_wait 30 ctest -L "(fast|medium)" --output-on-failure
-  - cd ..
-  - tar cvfz build.tar.gz build
 
 after_script:
-  - pwd
+  - cd ..
+  - tar cvfz build.tar.gz build
 
 after_success:
 
