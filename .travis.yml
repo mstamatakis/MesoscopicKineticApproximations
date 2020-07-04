@@ -15,6 +15,7 @@ addons:
       - cmake
       - libgomp1
   artifacts:
+    debug: true
     s3_region: "us-west-1"
     paths: $HOME/AllBuildFiles.tar.gz
 
