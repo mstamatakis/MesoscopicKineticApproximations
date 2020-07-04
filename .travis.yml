@@ -16,6 +16,7 @@ addons:
       - libgomp1
   artifacts:
     s3_region: "eu-west-2"
+    paths: $HOME/AllBuildFiles.tar.gz
 
 env:
   global:
@@ -82,6 +83,8 @@ script:
 after_script:
   - find . -name "uninstal*"
   - '[[ ! -z "${INTEL_INSTALL_PATH}" ]] && uninstall_intel_software'
+  - cd "${HOME}"
+  - tar cvfz AllBuildFiles.tar.gz *.*
 
 after_success:
 
