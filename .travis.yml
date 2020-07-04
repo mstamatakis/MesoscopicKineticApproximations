@@ -38,6 +38,10 @@ matrix:
             - llvm
             - libomp
           update: true
+        artifacts:
+          debug: true
+          s3_region: "us-west-1"
+          paths: build.tar.gz
       env:
         - TITLE="OSX - GFortran"
       
@@ -55,6 +59,10 @@ matrix:
             key_url: 'https://apt.repos.intel.com/intel-gpg-keys/GPG-PUB-KEY-INTEL-SW-PRODUCTS-2023.PUB'
           packages:
           - intel-oneapi-ifort
+        artifacts:
+          debug: true
+          s3_region: "us-west-1"
+          paths: build.tar.gz
       install:
         - source /opt/intel/inteloneapi/compiler/latest/env/vars.sh
 
