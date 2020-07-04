@@ -83,9 +83,6 @@ script:
   - travis_wait 30 ctest -L "(fast|medium)" --output-on-failure
 
 after_script:
-  - find . -name "uninstal*"
-  - '[[ ! -z "${INTEL_INSTALL_PATH}" ]] && uninstall_intel_software'
-  - cd "${HOME}"
   - tar cvfz AllBuildFiles.tar.gz *.*
 
 after_success:
