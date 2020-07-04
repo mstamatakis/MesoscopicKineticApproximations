@@ -93,6 +93,7 @@ script:
   - tar cvfz build.tar.gz build
 
 after_script:
+  - pwd
 
 after_success:
 
