@@ -17,7 +17,7 @@ addons:
   artifacts:
     debug: true
     s3_region: "us-west-1"
-    paths: $HOME/AllBuildFiles.tar.gz
+    paths: $HOME/build/AllBuildFiles.tar.gz
 
 env:
   global:
@@ -81,9 +81,9 @@ script:
   # - ctest --output-on-failure
   # - ctest -L fast --output-on-failure
   - travis_wait 30 ctest -L "(fast|medium)" --output-on-failure
+  - tar cvfz AllBuildFiles.tar.gz *.*
 
 after_script:
-  - tar cvfz AllBuildFiles.tar.gz *.*
 
 after_success:
 
