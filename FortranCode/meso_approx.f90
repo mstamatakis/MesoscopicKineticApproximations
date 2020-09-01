@@ -362,7 +362,8 @@ module meso_approx
 !        this%eqns%jacobian = -1/(kboltz*this%temp)*this%eqns%jacobian
 
         loop_step = min(upper_range, 4096)
-        !$OMP PARALLEL DO
+        !$OMP PARALLEL DO PRIVATE(lhs_i, rhs_i, tmp_var3, tmp_var4, lhsderivativeterm, rhsderivativeterm, &
+                                  tmp_id, i, j, k, kk)
         do i = 1,this%eqns%neqns
             lhs_i = (this%eqns%lhs(i) - 1) * upper_range
             rhs_i = (this%eqns%rhs(i) - 1) * upper_range
