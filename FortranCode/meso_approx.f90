@@ -233,7 +233,7 @@ module meso_approx
         !             this%hamilt%corcpars(this%hamilt%corcterms(i)))*this%hamilt%stateprods(j,i)
         !    enddo
         !enddo
-        
+
         this%allenergs = this%hamilt%H0
         do i = 1,this%hamilt%norig
             tmp_val = this%hamilt%origpars(i)
@@ -249,6 +249,21 @@ module meso_approx
                     tmp_val * this%hamilt%sumstateprodscorc(j + (i - 1) * upper_range)
             enddo
         enddo
+
+        ! The following version improves scaling but it deteriorates a single-core performance
+        ! this%allenergs = this%hamilt%H0
+        ! !$OMP PARALLEL DO PRIVATE(i, j, tmp_val)
+        ! do j = 1,upper_range
+        !     tmp_val = 0.d0
+        !     do i = 1,this%hamilt%norig
+        !         tmp_val = tmp_val + this%hamilt%sumstateprodsorig(j + (i - 1) * upper_range) * this%hamilt%origpars(i)
+        !     enddo
+        !     do i = 1,this%hamilt%ncorc
+        !         tmp_val = tmp_val + this%hamilt%sumstateprodscorc(j + (i - 1) * upper_range) * this%hamilt%corcpars(i)
+        !     enddo
+        !     this%allenergs(j) = this%allenergs(j) + tmp_val
+        ! enddo
+        ! !$OMP END PARALLEL DO
         
         return
         
@@ -320,6 +335,7 @@ module meso_approx
             this%partfcn = this%partfcn + this%expenergies(i)
         enddo
 
+        !$OMP PARALLEL DO PRIVATE(i, k, tmp_var1)
         do i = 1,this%eqns%nterms
             ! The following two expressions should give the same results (numerical accuracy issues excluded)
             ! In the Matlab code the first expression is used, i.e. not the actual correlation function, but the 
@@ -335,15 +351,19 @@ module meso_approx
             enddo
             this%eqns%corrlvalue(i) = tmp_var1
             ! this%eqns%corrlvalue(i) = sum(this%eqns%stateprods(:,i)*this%expenergies)/this%partfcn
-        enddo        
+        enddo
+        !$OMP END PARALLEL DO
     
         this%eqns%residual = 0.d0
+        !$OMP PARALLEL DO PRIVATE(i)
         do i = 1,this%eqns%neqns
             ! Again, two options. In Matlab we have used the version of the equations with the logarithms
 !            this%eqns%residual(i) = log(this%eqns%corrlvalue(this%eqns%lhs(i))) - log(this%eqns%corrlvalue(this%eqns%rhs(i)))
-            this%eqns%residual(i) = log(this%eqns%corrlvalue(this%eqns%lhs(i))) - log(this%eqns%corrlvalue(this%eqns%rhs(i)))    ! One log is better than two
+            ! this%eqns%residual(i) = log(this%eqns%corrlvalue(this%eqns%lhs(i))) - log(this%eqns%corrlvalue(this%eqns%rhs(i)))
+            this%eqns%residual(i) = log(this%eqns%corrlvalue(this%eqns%lhs(i)) / this%eqns%corrlvalue(this%eqns%rhs(i)))    ! One log is better than two
             ! this%eqns%residual(i) = this%eqns%corrlvalue(this%eqns%lhs(i)) - this%eqns%corrlvalue(this%eqns%rhs(i))
         enddo
+        !$OMP END PARALLEL DO
         
         this%eqns%jacobian = 0.d0
         
@@ -362,8 +382,8 @@ module meso_approx
 !        this%eqns%jacobian = -1/(kboltz*this%temp)*this%eqns%jacobian
 
         loop_step = min(upper_range, 4096)
-        !$OMP PARALLEL DO PRIVATE(lhs_i, rhs_i, tmp_var3, tmp_var4, lhsderivativeterm, rhsderivativeterm, &
-                                  tmp_id, i, j, k, kk)
+        !$OMP PARALLEL DO DEFAULT(SHARED) PRIVATE(lhs_i, rhs_i, tmp_var3, tmp_var4, &
+        !$OMP& lhsderivativeterm, rhsderivativeterm, tmp_id, i, j, k, kk)
         do i = 1,this%eqns%neqns
             lhs_i = (this%eqns%lhs(i) - 1) * upper_range
             rhs_i = (this%eqns%rhs(i) - 1) * upper_range
@@ -388,17 +408,19 @@ module meso_approx
                                           * this%expenergies(kk + 1)
                     enddo
                 enddo
-                this%eqns%jacobian(i,j) = tmp_var3 * lhsderivativeterm &
-                                        - tmp_var4 * rhsderivativeterm
+                this%eqns%jacobian(i, j) = tmp_var3 * lhsderivativeterm &
+                                         - tmp_var4 * rhsderivativeterm
+
+                this%eqns%jacobian(i, j) = -1.d0 / (kboltz*this%temp)*this%eqns%jacobian(i, j)
             enddo
         enddo
         !$OMP END PARALLEL DO
 
-        do j = 1,this%eqns%neqns
-            do i = 1,this%eqns%neqns
-                this%eqns%jacobian(i, j) = -1.d0/(kboltz*this%temp)*this%eqns%jacobian(i, j)
-            enddo
-        enddo
+        ! do j = 1,this%eqns%neqns
+        !     do i = 1,this%eqns%neqns
+        !         this%eqns%jacobian(i, j) = -1.d0/(kboltz*this%temp)*this%eqns%jacobian(i, j)
+        !     enddo
+        ! enddo
 
         return
     
