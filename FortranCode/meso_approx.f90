@@ -153,7 +153,6 @@ module meso_approx
         class (approximation) :: this
         integer i, j, k, upper_range, tmp_int
         real(8) tmp_val
-        logical is_even_ncorc
         upper_range = 2**this%nsites
         
         ! Preparatory steps: allocate and precompute stateprods, sumstateprodsorig, sumstateprodscorc
@@ -282,8 +281,8 @@ module meso_approx
         real(8) lhsderivativeterm, rhsderivativeterm
         logical, intent(in), optional :: calcjac
         logical :: calculatejacobian
-        integer lhs_i, rhs_i, id, tmp_id
-        real(8) tmp_var1, tmp_var2, tmp_var3, tmp_var4
+        integer id, tmp_id
+        real(8) tmp_var1, tmp_var2
         integer loop_step
 
         upper_range = 2**this%nsites
@@ -368,28 +367,13 @@ module meso_approx
         this%eqns%jacobian = 0.d0
         
         if (.not.calculatejacobian) return
-        
-!        do i = 1,this%eqns%neqns
-!            do j = 1,this%eqns%neqns
-!                lhsderivativeterm = sum(this%eqns%stateprods(:,this%eqns%lhs(i)) &
-!                                        *this%expenergies*this%hamilt%sumstateprodscorc(:,j))
-!                rhsderivativeterm = sum(this%eqns%stateprods(:,this%eqns%rhs(i)) &
-!                                        *this%expenergies*this%hamilt%sumstateprodscorc(:,j))
-!                this%eqns%jacobian(i,j) = 1.d0/this%eqns%corrlvalue(this%eqns%lhs(i))*lhsderivativeterm &
-!                    - 1.d0/this%eqns%corrlvalue(this%eqns%rhs(i))*rhsderivativeterm
-!            enddo
-!        enddo
-!        this%eqns%jacobian = -1/(kboltz*this%temp)*this%eqns%jacobian
 
         loop_step = min(upper_range, 4096)
-        !$OMP PARALLEL DO DEFAULT(SHARED) PRIVATE(lhs_i, rhs_i, tmp_var3, tmp_var4, &
+        !$OMP PARALLEL DO DEFAULT(SHARED) PRIVATE(tmp_var1, tmp_var2, &
         !$OMP& lhsderivativeterm, rhsderivativeterm, tmp_id, i, j, k, kk)
         do i = 1,this%eqns%neqns
-            lhs_i = (this%eqns%lhs(i) - 1) * upper_range
-            rhs_i = (this%eqns%rhs(i) - 1) * upper_range
-            
-            tmp_var3 = 1.d0/this%eqns%corrlvalue(this%eqns%lhs(i))
-            tmp_var4 = 1.d0/this%eqns%corrlvalue(this%eqns%rhs(i))
+            tmp_var1 = 1.d0 / this%eqns%corrlvalue(this%eqns%lhs(i))
+            tmp_var2 = 1.d0 / this%eqns%corrlvalue(this%eqns%rhs(i))
             do j = 1,this%eqns%neqns
                 lhsderivativeterm = 0.d0
                 rhsderivativeterm = 0.d0
@@ -408,19 +392,13 @@ module meso_approx
                                           * this%expenergies(kk + 1)
                     enddo
                 enddo
-                this%eqns%jacobian(i, j) = tmp_var3 * lhsderivativeterm &
-                                         - tmp_var4 * rhsderivativeterm
+                this%eqns%jacobian(i, j) = tmp_var1 * lhsderivativeterm &
+                                         - tmp_var2 * rhsderivativeterm
 
                 this%eqns%jacobian(i, j) = -1.d0 / (kboltz*this%temp)*this%eqns%jacobian(i, j)
             enddo
         enddo
         !$OMP END PARALLEL DO
-
-        ! do j = 1,this%eqns%neqns
-        !     do i = 1,this%eqns%neqns
-        !         this%eqns%jacobian(i, j) = -1.d0/(kboltz*this%temp)*this%eqns%jacobian(i, j)
-        !     enddo
-        ! enddo
 
         return
     
