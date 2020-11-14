@@ -45,7 +45,7 @@ matrix:
           packages:
           - intel-oneapi-ifort
       install:
-        - source /opt/intel/inteloneapi/compiler/latest/env/vars.sh
+        - source /opt/intel/oneapi/compiler/latest/env/vars.sh
 
     - os: windows
       env:
