@@ -14,6 +14,17 @@ addons:
       - gfortran
       - cmake
       - libgomp1
+  artifacts:
+    debug: false
+    s3_region: "us-west-1"
+    paths: build.tar.gz
+
+env:
+  global:
+    - secure: "TYAJB6kLFTqLzFJx44zHMyhNEKJ8i2PvTLlKuft5jsoN+d/OCxqBS847A920vd1N8MMlnBfa/jjm2fB3NjbBE7sIg0pQwh1OuYTkSPVUNQvSfBHz/aodnJmnctaUlXvO6Je7W276C+kikzBicKB1j9Q2v/roBj4aJmXbaR0dP0Hc6x4Fzw6pPbc9ya4Ftrt14X0EXMPydzB+6wjNEi0bZI48+xrefdBrq7Nb3aMkrvpQ9XpNrzegvn9Z8DZxnGCwGdCHv+wYbzydxD/ROzgRkn4ycE26+boq5hSA1MyoQUsZqzNNDyZei6znuqNMBLDRiHZ7CzwiXDl4xVtcuf4hQ87pvQFM7Z6CYDJbN4aIZAQESu7kC1/gU/N2muBnG6lU+WjrDoQTZWdygB5ALH9s209+yL/yrZqaeuWaPPK54TF1CnGICE1VYkdReth5eHTfCYrKegz4zJlgCK3nXB+/voJWqdF5c0IHWi1Q0p8v35/J0wWnVgWevWAPaSS2Cu9Qs+TMI9hjA2zFYIUfwJU/lA7fgCctYFvgSS30G7PuqfC9l2N5qrrWt+TFw+4tDQzhcpbWaosd8p40LzkbtdR0sC3XB2G65X5xG9MpyLihuYLQFypMqWsRh39kqCUdluujF2Xo9/2IjHwZ6aC3ZCpY46D+Rvm2JH/0VeFjt6DNYNM="
+    - secure: "Hp/WmhjO9EtYMVMoHtP3LXvB4EX0EgdAoUctediRXCdFWTk004VaFYJuSXoGLBucl+qTeEVt78Y2TFCbAgn7u/Y5BPuqkc3qoq/OeyhX1fXsw8/f/sCfb00aUm9qFxHDwWeu9jmMfVVvwEXlZHzxmdHt4SHv3jMNmsQMCfb1iTzAZwlnsCyBFJNTAGFXjvpp9ljs6KGM/AGlECoBkWfE/PY6MAQ/5wj8ZXuduABJMP0Tbx3gyJfspawSktIve8MvggLIPQFQmxrkA8DE0P6WGHbP6dDIhV0zWwQTAHOGjsCBjEfhKtqSAw9J6Z+a0ByDj8QRZfduOVP73AmJ/6tkIiSQcpWCXE5CW0RAUYOyb4iAhnPmCuxwAmxcUy9w/I59U3oPENHmeObh4YxeimFdVxJLDhWKbi+smV9DsKOYl9Wt5bSyeN0TT+y5lfEsETR100slS6qAo6YZgpSuW36ot5WjE4DlBpFdRYmXQ0FYfN7ayAehzNPOzQje62U9cCIMIuv4JBLJnT42thxTxatpIQuHyhrqhfnRmWMLpCml+66lZNRzUHAe1uH52yMPGKyhW2GWpnvr2OxgvNe3/qxalOq1WnpdJ/SSJlAyJysyk4rZuG9K8UTfHhTNxbAxUg1wVvsS3al65IgnfMqTiPwcA3UXHzsrsahbA1jKzBzmyfA="
+#    - secure: "R2tPchBpgXc7yF+hYJYGXYQ9yNvTx8kXdrlICQ6sYBjP7fYAHznHhUr6IkfyJutBOY09qEMnV/etG7axCj+nYJMPRKs33zK5kz8Koj+ydwPT48zvDFYPHtwEEBGAAKc1Sd/P8yIhLECTAA8T8AFGvZVtZONaN4F1Q5AoPy00g3Iy8fa2CRF6bCieVMsq3yYFeT7+Buk0jQ5ILhJY+BGFEAUWeuQdIKI+9dGt/asA3Co4oNP13TRR7VoNM3PE5/u8D/HowKc/0uBJRKcU+SuvvyqlTOYukMjWygDWHjG/a15Jckq3rftvTBsOiIdX6C5YumUrQCctcIz+kYkzOPrZdLJWYao7l1rvzp4QSiENM6/CBR6wzsa7pnrHLDwOqx50wr8sVEKOTCsE5YbPWQjzzT9D4td4rd3fVoOW4YUNR8SUMitNMnPYvJ6DULVmaG0sgtHuhl5vUi6QjosR3lOZfXzHwBUNQ7JVbp9LHpcf6LIiR14aFUyHMcqXgNjnrcwbMBeDnVU5CD9p/LBygFwXKnUqdMjXKCIT2IJOECaZNULjEsN7JiQfZ2jpcdOP0Ouz6g7AeXv8QMVzi45ZzJmoEMdSK5cr3+7duOpjFWJS+ClnRs/x6Ea6zskXhkexfQvvR5UP/wcbIFjEnpVKHFAIlWia7MIJ8RBvpJWeFzYOIIc="
+    - ARTIFACTS_BUCKET="mesoapprox"
 
 matrix:
   # Don't wait for allowed failures - do we really need this? TODO
@@ -27,6 +38,10 @@ matrix:
             - llvm
             - libomp
           update: true
+        artifacts:
+          debug: false
+          s3_region: "us-west-1"
+          paths: build.tar.gz
       env:
         - TITLE="OSX - GFortran"
       
@@ -44,8 +59,12 @@ matrix:
             key_url: 'https://apt.repos.intel.com/intel-gpg-keys/GPG-PUB-KEY-INTEL-SW-PRODUCTS-2023.PUB'
           packages:
           - intel-oneapi-ifort
+        artifacts:
+          debug: false
+          s3_region: "us-west-1"
+          paths: build.tar.gz
       install:
-        - source /opt/intel/inteloneapi/compiler/latest/env/vars.sh
+        - source /opt/intel/oneapi/compiler/latest/env/vars.sh
 
     - os: windows
       env:
@@ -72,8 +91,8 @@ script:
   - travis_wait 30 ctest -L "(fast|medium)" --output-on-failure
 
 after_script:
-  - find . -name "uninstal*"
-  - '[[ ! -z "${INTEL_INSTALL_PATH}" ]] && uninstall_intel_software'
+  - cd ..
+  - tar cvfz build.tar.gz build
 
 after_success:
 
