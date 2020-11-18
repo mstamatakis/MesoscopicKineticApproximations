@@ -64,7 +64,7 @@ matrix:
           s3_region: "us-west-1"
           paths: build.tar.gz
       install:
-        - source /opt/intel/inteloneapi/compiler/latest/env/vars.sh
+        - source /opt/intel/oneapi/compiler/latest/env/vars.sh
 
     - os: windows
       env:
