@@ -537,7 +537,7 @@ do while (io >= 0)
                this%muFin = str2dbl(tmpstr1(iw2(5):iw2(6)))
                readmu = .true.
                      
-               write(iwrite,'(/,a)') '6. Chemical potential range=' // trim(tmpstr1(iw2(1):iw2(2)))// ':' &
+               write(iwrite,'(/,a)') '6. Chemical potential range= ' // trim(tmpstr1(iw2(1):iw2(2)))// ':' &
                // trim(tmpstr1(iw2(3):iw2(4))) // ':' // trim(tmpstr1(iw2(5):iw2(6)))
                      
            else         
