@@ -1,1 +1,11 @@
-K3NNC2
+3NN
+lattice_type         hexagonal
+cluster_depth        3NN   
+n_original_terms     2       
+original_terms 
+  SB   -1.171955613174250d0  
+  1NN   0.3d0  
+n_corrections        3
+corrections          SB 1NN 2NN    
+temperature          480.d0
+chempot_range       -1.50d0:0.02d0:1.0d0
