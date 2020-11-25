@@ -94,7 +94,8 @@ def test(inpath, execpath, testpath, resumetest=False, Neventstarget=0, execrunn
     # use readline() to read the first line which contains the approximation name
     line = fcalcin.readline()
     s = ''
-    filnam = s.join((line.split()[0], '_Fortran_Theta_vs_Mu.txt'))
+    #filnam = s.join((line.split()[0], '_Fortran_Theta_vs_Mu.txt'))
+    filnam = 'Fortran_Theta_vs_Mu.txt'
     testdata = loadtxt(join(datapath, filnam))
     outdata = loadtxt(join(directory, filnam))
     # print(join(datapath, filnam))
