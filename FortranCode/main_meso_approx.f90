@@ -21,12 +21,12 @@ program main
     real(8) FTOL, FRET
     real(4) t1, t2
     logical check
-    character(10) approx
+    character(10) cluster
   
     call cal_parser%read_setup()
     call cal_parser%cluster_setup()
-    approx=cal_parser%get_approx()
-    call obj_approx%init(trim(approx))
+    cluster=cal_parser%get_cluster()
+    call obj_approx%init(trim(cluster))
     call obj_approx%prnt()
     
     call obj_approx%calc_resid()
@@ -63,7 +63,8 @@ program main
     ndeg = 2
     allocate(Pnewguess(N),source=0.d0)
     
-    open(unit=101,file=trim(approx) // '_Fortran_Theta_vs_Mu.txt')
+    !open(unit=101,file=trim(approx_m) // '_Fortran_Theta_vs_Mu.txt')
+     open(unit=101,file='Fortran_Theta_vs_Mu.txt')
     
     call cpu_time(t1) ! function for calculating elapsed CPU time
  

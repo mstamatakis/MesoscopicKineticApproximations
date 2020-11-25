@@ -405,18 +405,18 @@ module meso_approx
     end subroutine calculate_residuals
     
     
-	subroutine approx_initialise(this,approx_name)
+	subroutine approx_initialise(this,cluster_name)
 
 	    use global_constants
         implicit none
         class (approximation) :: this
-        character(*) approx_name
+        character(*) cluster_name
 	
         this%mu = cal_parser% get_muIni()
        
 	this%temp = cal_parser%get_temp()
 
-        select case (approx_name)
+        select case (cluster_name)
             
             case ('1NN')
                !call this%approx_initialise_bpec()
@@ -429,7 +429,7 @@ module meso_approx
                 !call this%approx_initialise_k3nnc2()
                 call this%approx_initialise_3NN()
             case default
-                write(*,*) 'Unknown approximation',approx_name
+                write(*,*) 'Unknown approximation',cluster_name
                 
         end select
             

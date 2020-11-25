@@ -14,9 +14,9 @@ module calculation_parser_module
      integer norigterms, ncorrterms, n_int, nshellsmax
      integer n_corr, nsites, nterms, n_eqns, n_terms, nsitesmax
      integer, dimension(inttermsmax, 2) :: int_term
-     character(nnam0) approx
+     character(nnam0) cluster
 
-     character(nnam0) lattice_type, cluster_depth
+     character(nnam0)  lattice_type, cluster_depth
      character(nnam0), allocatable :: corr_terms_names(:)
      character(nnam0), allocatable :: orig_terms_names(:)
      real(8), allocatable :: int_values(:)
@@ -30,7 +30,7 @@ module calculation_parser_module
      procedure, public :: get_muIni
      procedure, public :: get_Dmu
      procedure, public :: get_muFin
-     procedure, public :: get_approx
+     procedure, public :: get_cluster
      procedure, public::  get_norigterms
      procedure, public::  get_ncorrterms
      procedure, public :: get_lattice_type
@@ -50,6 +50,7 @@ module calculation_parser_module
 
 contains
   ! Getters
+  
   function get_n_terms(this)
     implicit none
     class(calculation_parser), intent(in) :: this
@@ -128,12 +129,12 @@ contains
     get_muFin = this%muFin
   end function get_muFin
 
-  function get_approx(this)
+  function get_cluster(this)
     implicit none
     class(calculation_parser), intent(in) :: this
-    character(nnam0) get_approx
-    get_approx = this%approx
-  end function get_approx
+    character(nnam0) get_cluster
+    get_cluster = this%cluster
+  end function get_cluster
 
   function get_norigterms(this)
     implicit none
@@ -270,13 +271,13 @@ do while (io >= 0)
               this%cluster_depth = recinput(iw(3):iw(4))              
               if (this%cluster_depth.eq.'1NN') then
                   this%nsites = 7
-                  this%approx = '1NN'
+                  this%cluster = '1NN'
               elseif (this%cluster_depth.eq.'2NN') then
                   this%nsites = 13
-                  this%approx = '2NN'
+                  this%cluster = '2NN'
               elseif (this%cluster_depth.eq.'3NN') then
                   this%nsites = 19
-                  this%approx = '3NN'
+                  this%cluster = '3NN'
                     ! elseif  (this%cluster_depth.eq.'4NN') then
                     !     this%nsites = 31
                     ! elseif  (this%cluster_depth.eq.'5NN') then
@@ -300,7 +301,7 @@ do while (io >= 0)
                   ' in line ' // trim(int2str(irec)) // '.'
                   call error(10,moreinfo)  
                endif       
-                  write(iwrite,'(/,a)') '2. Cluster depth= ' // trim(this%approx)
+                  write(iwrite,'(/,a)') '2. Cluster depth= ' // trim(this%cluster)
                   readclust = .true.
                      this%nshellsmax = 3 !12 is the maximum number of shells in a cluster up to 12NN
                      this%nsitesmax = 19 !97 is the maxiumum number of sites in a cluster up to 12NN                  
@@ -430,7 +431,7 @@ do while (io >= 0)
                    call error(15,moreinfo)
                endif
 
-               if ((this%approx.eq.'1NN').and.(this%ncorrterms > 2)) then ! number of correction terms  > 2 -> invalid!
+               if ((this%cluster.eq.'1NN').and.(this%ncorrterms > 2)) then ! number of correction terms  > 2 -> invalid!
                    moreinfo = 'Occurred while parsing line ' // trim(int2str(irec)) // '.'
                    call error(16,moreinfo)
                endif         
@@ -464,7 +465,7 @@ do while (io >= 0)
                        allocate(this%corr_terms_names(0:this%ncorrterms))
                        this%corr_terms_names(1) =  recinput(iw(3):iw(4))
                        write(iwrite,'(/,a)') trim(this%corr_terms_names(1)) 
-                       readcorr = .true.
+                       readcorr = .true.                      
                    else
                        moreinfo = 'Unknown cluster directive ' // recinput(iw(3):iw(4)) // &
                        ' in line ' // trim(int2str(irec)) // '.'
