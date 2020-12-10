@@ -16,9 +16,9 @@ set(F90_SOURCES fdjac.f90
 				func.f90
 				funcv.f90
 				global_constants.f90
-				init_BPEC.f90
-				init_K2NNC2.f90
-				init_K3NNC2.f90
+				init_1NN.f90
+				init_2NN.f90
+				init_3NN.f90
 				lnsrch.f90
 				lubksb.f90
 				ludcmp.f90
@@ -29,6 +29,10 @@ set(F90_SOURCES fdjac.f90
 				nrtype.f90
 				nrutil.f90
 				parser_module.f90
+				constants_module.f90
+				err_warn_module.F90
+				calculation_setup_module.f90
+				calculation_parser_module.f90
 				polint.f90
 				powell.f90)
 
@@ -37,9 +41,9 @@ set(FREELINE_SOURCES fdjac.f90
 				func.f90
 				funcv.f90
 				global_constants.f90
-				init_BPEC.f90
-				init_K2NNC2.f90
-				init_K3NNC2.f90
+				init_1NN.f90
+				init_2NN.f90
+				init_3NN.f90
 				lnsrch.f90
 				lubksb.f90
 				ludcmp.f90
@@ -70,7 +74,7 @@ endif()
 if(doopenmp)
   find_package(OpenMP_Fortran)
   if(OpenMP_Fortran_FLAGS)
-    set(OPENMP_SOURCES main_meso_approx.f90) # placeholder - not used currently
+    set(OPENMP_SOURCES  meso_approx.f90 main_meso_approx.f90) # placeholder - not used currently
     foreach(OPENMP_SOURCE ${OPENMP_SOURCES})
       get_source_file_property(OLD_FLAGS ${OPENMP_SOURCE} COMPILE_FLAGS)
       if (OLD_FLAGS)

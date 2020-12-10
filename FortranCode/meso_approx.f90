@@ -1,5 +1,5 @@
 module meso_approx
-
+  use calculation_setup_module
 	implicit none
 	private
 
@@ -81,29 +81,29 @@ module meso_approx
         procedure :: populate_allstates
         procedure :: calc_energ => calculate_energies
         procedure :: calc_resid => calculate_residuals
-		procedure :: approx_initialise_bpec
-		procedure :: approx_initialise_k2nnc2
-		procedure :: approx_initialise_k3nnc2
+		procedure :: approx_initialise_1NN
+		procedure :: approx_initialise_2NN
+		procedure :: approx_initialise_3NN
     end type
 
 	! Interfaces for approximation-specific initialization subroutines
 	
     interface
-        subroutine approx_initialise_bpec(obj_approx)
+        subroutine approx_initialise_1NN(obj_approx)
             import approximation
             class(approximation) :: obj_approx
         end subroutine
     end interface
     
     interface
-        subroutine approx_initialise_k2nnc2(obj_approx)
+        subroutine approx_initialise_2NN(obj_approx)
             import approximation
             class(approximation) :: obj_approx
         end subroutine
     end interface
     
     interface
-        subroutine approx_initialise_k3nnc2(obj_approx)
+        subroutine approx_initialise_3NN(obj_approx)
             import approximation
             class(approximation) :: obj_approx
         end subroutine
@@ -271,7 +271,7 @@ module meso_approx
     
     subroutine calculate_residuals(this,calcjac)
     
-        use global_constants
+      use constants_module
 
         implicit none
         
@@ -405,29 +405,31 @@ module meso_approx
     end subroutine calculate_residuals
     
     
-	subroutine approx_initialise(this,approx_name)
+	subroutine approx_initialise(this,cluster_name)
 
 	    use global_constants
         implicit none
         class (approximation) :: this
-        character(*) approx_name
+        character(*) cluster_name
 	
-	    this%mu = mu0
-	    this%temp = temp
+        this%mu = cal_parser% get_muIni()
+       
+	this%temp = cal_parser%get_temp()
 
-        select case (approx_name)
+        select case (cluster_name)
             
-            case ('BPEC')
-                call this%approx_initialise_bpec()
-
-            case ('K2NNC2')
-                call this%approx_initialise_k2nnc2()
+            case ('1NN')
+               !call this%approx_initialise_bpec()
+                call this%approx_initialise_1NN()
+            case ('2NN')
+               !call this%approx_initialise_k2nnc2()
+                call this%approx_initialise_2NN()
                 
-            case ('K3NNC2')
-                call this%approx_initialise_k3nnc2()
-                
+            case ('3NN')
+                !call this%approx_initialise_k3nnc2()
+                call this%approx_initialise_3NN()
             case default
-                write(*,*) 'Unknown approximation',approx_name
+                write(*,*) 'Unknown approximation',cluster_name
                 
         end select
             
