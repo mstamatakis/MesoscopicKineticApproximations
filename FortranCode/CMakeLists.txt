@@ -2,7 +2,7 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 project ("MesoscopicKineticApproximations" Fortran)
 
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/")
-option(doopenmp    "Will compile with openmp, if found." off)
+option(doopenmp    "Will compile with openmp, if found." on)
 
 include(compilerinfo2008_Fortran)
 include(CheckMPI)
