@@ -118,10 +118,10 @@ module meso_approx
         integer i, j, dec, count
         
         allocate(this%allstates(2**this%nsites,this%nsites),source=0)
-        
+        !$OMP PARALLEL DO  PRIVATE(i, j, dec)
         do i = 0,2**this%nsites-1
             dec = i
-            count = 0
+ !           count = 0
             do j = 1,this%nsites
                 if (mod(dec,2)==0) then
                     this%allstates(i+1,j) = 0
@@ -129,19 +129,20 @@ module meso_approx
                     this%allstates(i+1,j) = 1
                 end if
                 dec = dec/2
-                count = count + 1
+  !              count = count + 1
                 if (dec == 0) then
                     exit  
                 endif
             enddo
-    
-        enddo
+         enddo
+        !$OMP END PARALLEL DO
     
         allocate(this%nparticles(2**this%nsites))
+        !$OMP PARALLEL DO  PRIVATE(i)
         do i = 1,2**this%nsites
             this%nparticles(i) = sum(this%allstates(i,:))
-         enddo
-         
+        enddo
+        !$OMP END PARALLEL DO
         
         return
     
@@ -161,17 +162,20 @@ module meso_approx
             if (.not. allocated(this%hamilt%stateprods)) then
                allocate(this%hamilt%stateprods(upper_range * this%hamilt%nterms),source=1)
                 do i = 1,this%hamilt%nterms
-                    do j = 1,this%hamilt%internbody(i)
+                   do j = 1,this%hamilt%internbody(i)
+                        !$OMP PARALLEL DO PRIVATE(tmp_int, k)
                         do k = 1, upper_range
                             tmp_int = k + (i - 1) * upper_range
                             this%hamilt%stateprods(tmp_int) = &
                                         this%hamilt%stateprods(tmp_int) * this%allstates(k, this%hamilt%interaction(i,j))
-                        enddo
+                         enddo
+                         !$OMP END PARALLEL DO
                     enddo
                  enddo
             endif
             if (.not. allocated(this%hamilt%sumstateprodsorig)) then
                allocate(this%hamilt%sumstateprodsorig(upper_range * this%hamilt%norig),source=0)
+                !$OMP PARALLEL DO PRIVATE(tmp_int, i, j, k)
                 do i = 1,upper_range
                     do j = 1,this%hamilt%norig
                         tmp_int = 0
@@ -182,9 +186,11 @@ module meso_approx
                         this%hamilt%sumstateprodsorig(i + (j - 1) * upper_range) = tmp_int
                     enddo
                  enddo
+                 !$OMP END PARALLEL DO
             endif
             if (.not. allocated(this%hamilt%sumstateprodscorc)) then
                allocate(this%hamilt%sumstateprodscorc(upper_range * this%hamilt%ncorc), source=0)
+                !$OMP PARALLEL DO PRIVATE(tmp_int, i, j, k)
                 do i = 1,upper_range
                     do j = 1,this%hamilt%ncorc
                         tmp_int = 0
@@ -195,29 +201,32 @@ module meso_approx
                         this%hamilt%sumstateprodscorc(i + (j - 1) * upper_range) = tmp_int
                     enddo
                  enddo
+                 !$OMP END PARALLEL DO
                 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 ! Compute time_saver
                 allocate(this%hamilt%time_saver_lhs(upper_range * this%eqns%neqns * this%eqns%neqns), source=0)
                 allocate(this%hamilt%time_saver_rhs(upper_range * this%eqns%neqns * this%eqns%neqns), source=0)
                 do i = 1,this%eqns%neqns
                    do j = 1,this%eqns%neqns
-                       tmp_int = upper_range * (j - 1 + this%eqns%neqns * (i - 1))
+                      !tmp_int = upper_range * (j - 1 + this%eqns%neqns * (i - 1))
+                       !$OMP PARALLEL DO PRIVATE(k)
                         do k = 1, upper_range, 2
-                            this%hamilt%time_saver_lhs(k + tmp_int) = &
+                            this%hamilt%time_saver_lhs(k + upper_range * (j - 1 + this%eqns%neqns * (i - 1))) = &
                                                                 this%eqns%stateprods(k + (this%eqns%lhs(i) - 1) * upper_range) &
                                                               * this%hamilt%sumstateprodscorc(k + (j - 1) * upper_range)
-                            this%hamilt%time_saver_lhs(k + 1 + tmp_int) = &
+                            this%hamilt%time_saver_lhs(k + 1 +  upper_range * (j - 1 + this%eqns%neqns * (i - 1))) = &
                                                               this%eqns%stateprods(k + 1 + (this%eqns%lhs(i) - 1) * upper_range) &
                                                             * this%hamilt%sumstateprodscorc(k + 1 + (j - 1) * upper_range)
         
-                            this%hamilt%time_saver_rhs(k + tmp_int) = &
+                            this%hamilt%time_saver_rhs(k +  upper_range * (j - 1 + this%eqns%neqns * (i - 1))) = &
                                                                 this%eqns%stateprods(k + (this%eqns%rhs(i) - 1) * upper_range) &
                                                               * this%hamilt%sumstateprodscorc(k + (j - 1) * upper_range)
                                                               
-                            this%hamilt%time_saver_rhs(k + 1 + tmp_int) = &
+                            this%hamilt%time_saver_rhs(k + 1 + upper_range * (j - 1 + this%eqns%neqns * (i - 1))) = &
                                                               this%eqns%stateprods(k + 1 + (this%eqns%rhs(i) - 1) * upper_range) &
                                                             * this%hamilt%sumstateprodscorc(k + 1 + (j - 1) * upper_range)
                          enddo
+                         !$OMP END PARALLEL DO
                     enddo
                  enddo
                 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -307,12 +316,15 @@ module meso_approx
  
             do i = 1,this%eqns%nterms
                do j = 1,this%eqns%corrlnbody(i)
-                  tmp_id = this%eqns%correlation(i, j)
+!                    tmp_id = this%eqns%correlation(i,j)
+                    !$OMP PARALLEL DO PRIVATE(k, id) 
                     do k = 1, upper_range
                         id = k + (i - 1) * upper_range
                         this%eqns%stateprods(id) = &
-                            this%eqns%stateprods(id) * this%allstates(k, tmp_id)
-                     enddo 
+                            this%eqns%stateprods(id) * this%allstates(k, this%eqns%correlation(i,j))
+!                            this%eqns%stateprods(id) * this%allstates(k, tmp_id)     
+                     enddo
+                     !$OMP END PARALLEL DO
                 enddo
              enddo
 
@@ -344,7 +356,6 @@ module meso_approx
          this%partfcn=sum_partfcn
      
         
-!        !$OMP PARALLEL DO PRIVATE(i, k, tmp_var1)
         do i = 1,this%eqns%nterms
             ! The following two expressions should give the same results (numerical accuracy issues excluded)
             ! In the Matlab code the first expression is used, i.e. not the actual correlation function, but the 
@@ -363,10 +374,9 @@ module meso_approx
             this%eqns%corrlvalue(i) = tmp_var1
             ! this%eqns%corrlvalue(i) = sum(this%eqns%stateprods(:,i)*this%expenergies)/this%partfcn
         enddo
- !       !$OMP END PARALLEL DO
     
         this%eqns%residual = 0.d0
-        !$OMP PARALLEL DO PRIVATE(i)
+
         do i = 1,this%eqns%neqns
             ! Again, two options. In Matlab we have used the version of the equations with the logarithms
 !            this%eqns%residual(i) = log(this%eqns%corrlvalue(this%eqns%lhs(i))) - log(this%eqns%corrlvalue(this%eqns%rhs(i)))
@@ -374,23 +384,21 @@ module meso_approx
             this%eqns%residual(i) = log(this%eqns%corrlvalue(this%eqns%lhs(i)) / this%eqns%corrlvalue(this%eqns%rhs(i)))    ! One log is better than two
             ! this%eqns%residual(i) = this%eqns%corrlvalue(this%eqns%lhs(i)) - this%eqns%corrlvalue(this%eqns%rhs(i))
         enddo
-        !$OMP END PARALLEL DO
+
         
         this%eqns%jacobian = 0.d0
         
         if (.not.calculatejacobian) return
 
         loop_step = min(upper_range, 4096)
-        !$OMP PARALLEL DO DEFAULT(SHARED) COLLAPSE(2) PRIVATE(tmp_var1, tmp_var2, &
-        !$OMP& lhsderivativeterm, rhsderivativeterm, tmp_id, i, j, k, kk)
         do i = 1,this%eqns%neqns
            do j = 1,this%eqns%neqns
               tmp_var1 = 1.d0 / this%eqns%corrlvalue(this%eqns%lhs(i))
               tmp_var2 = 1.d0 / this%eqns%corrlvalue(this%eqns%rhs(i))
-     !       do j = 1,this%eqns%neqns
                 lhsderivativeterm = 0.d0
                 rhsderivativeterm = 0.d0
                 tmp_id = upper_range * (j - 1 + this%eqns%neqns * (i - 1))
+                !$OMP PARALLEL DO DEFAULT(SHARED) PRIVATE(k,kk) REDUCTION(+:lhsderivativeterm,rhsderivativeterm)
                 do k = 1, upper_range, loop_step
                     do kk = k, k + loop_step - 1, 2
                         lhsderivativeterm = lhsderivativeterm &
@@ -405,13 +413,13 @@ module meso_approx
                                           * this%expenergies(kk + 1)
                     enddo
                  enddo
+                 !$OMP END PARALLEL DO
                 this%eqns%jacobian(i, j) = tmp_var1 * lhsderivativeterm &
                                          - tmp_var2 * rhsderivativeterm
 
                 this%eqns%jacobian(i, j) = -1.d0 / (kboltz*this%temp)*this%eqns%jacobian(i, j)
             enddo
         enddo
-        !$OMP END PARALLEL DO
 
         return
     
