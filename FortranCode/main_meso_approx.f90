@@ -1,15 +1,16 @@
 program main
-    
-    use global_constants
+
+    use constants_module
     use meso_approx_inst
     use parser_module
+    use calculation_setup_module
     use nrtype
     use nr
     use, intrinsic:: iso_fortran_env, only: stdin=>input_unit
 	
     implicit none
     integer i,j,imu,Nmu,ndeg
-    real(8) mu, munext
+    real(8) mu, munext, muIni, Dmu, muFin
     
     integer N, ITER
     real(DP), allocatable, dimension(:) :: P
@@ -20,15 +21,12 @@ program main
     real(8) FTOL, FRET
     real(4) t1, t2
     logical check
-    character(10) approx    
-    
-	open(unit=501,file="calculation_input.dat",form="formatted",status="old",action="read")
-	read(501,"(a)") approx
-	close(501)
-    !approx = 'BPEC'
-    !approx = 'K2NNC2'
-    !approx = 'K3NNC2'
-    call obj_approx%init(trim(approx))
+    character(10) cluster
+  
+    call cal_parser%read_setup()
+    call cal_parser%cluster_setup()
+    cluster=cal_parser%get_cluster()
+    call obj_approx%init(trim(cluster))
     call obj_approx%prnt()
     
     call obj_approx%calc_resid()
@@ -45,6 +43,10 @@ program main
     FTOL=1.D-12
     ITER = 0
     FRET = 0.d0
+
+    muIni = cal_parser%get_muIni()
+    Dmu = cal_parser%get_Dmu()
+    muFin = cal_parser%get_muFin()
     
     !call powell(p,xi,n,n,ftol,iter,fret)
     call newt(P,check)
@@ -61,13 +63,15 @@ program main
     ndeg = 2
     allocate(Pnewguess(N),source=0.d0)
     
-    open(unit=101,file=trim(approx) // '_Fortran_Theta_vs_Mu.txt')
+    !open(unit=101,file=trim(approx_m) // '_Fortran_Theta_vs_Mu.txt')
+     open(unit=101,file='Fortran_Theta_vs_Mu.txt')
     
     call cpu_time(t1) ! function for calculating elapsed CPU time
-	Nmu = nint((mu1-mu0)/Dmu)
-    do imu = 1,Nmu+1
+ 
+     Nmu = nint((muFin-muIni)/Dmu)
+     do imu = 1,Nmu+1
         
-		mu = mu0 + (imu-1)*Dmu
+        mu = muIni + (imu-1)*Dmu
 		
         obj_approx%mu = mu
         
