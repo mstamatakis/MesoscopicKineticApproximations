@@ -114,14 +114,14 @@ module meso_approx
     
         implicit none
         class (approximation) :: this
-        integer i, j, dec, upper_range
+        integer i, j, dec, allstatescount
         
-        upper_range = 2**this%nsites
+        allstatescount = 2**this%nsites
 
-        allocate(this%allstates(upper_range,this%nsites),source=0)
+        allocate(this%allstates(allstatescount,this%nsites),source=0)
         
         !$OMP PARALLEL DO PRIVATE(i, j, dec) 
-        do i = 0,upper_range-1
+        do i = 0,allstatescount-1
             dec = i
             do j = 1,this%nsites
                 if (mod(dec,2)==0) then
@@ -137,9 +137,9 @@ module meso_approx
         enddo
         !$OMP END PARALLEL DO
     
-        allocate(this%nparticles(upper_range))
+        allocate(this%nparticles(allstatescount))
         !$OMP PARALLEL DO PRIVATE(i, dec) 
-        do i = 1,upper_range
+        do i = 1,allstatescount
             this%nparticles(i) = sum(this%allstates(i,:))
         enddo
         !$OMP END PARALLEL DO
@@ -152,20 +152,20 @@ module meso_approx
     subroutine allocate_memory(this)
         implicit none
         class (approximation) :: this
-        integer i, j, k, upper_range, tmp_id1, tmp_id2, tmp_id3
+        integer i, j, k, allstatescount, tmp_id1, tmp_id2, tmp_id3
         real(8) tmp_val
-        upper_range = 2**this%nsites
+        allstatescount = 2**this%nsites
 
         ! Preparatory steps: allocate and precompute stateprods
         if (.not. allocated(this%eqns%stateprods)) then
-            allocate(this%eqns%stateprods(upper_range * this%eqns%nterms), source = 1)
+            allocate(this%eqns%stateprods(allstatescount * this%eqns%nterms), source = 1)
             do i = 1,this%eqns%nterms
-                tmp_id2 = (i - 1) * upper_range
+                tmp_id2 = (i - 1) * allstatescount
                 do j = 1,this%eqns%corrlnbody(i)
                     tmp_id1 = this%eqns%correlation(i, j)
                     !$OMP PARALLEL PRIVATE(k, tmp_id3)
                     !$OMP DO SIMD
-                    do k = 1, upper_range
+                    do k = 1, allstatescount
                         tmp_id3 = k + tmp_id2
                         this%eqns%stateprods(tmp_id3) = &
                             this%eqns%stateprods(tmp_id3) * this%allstates(k, tmp_id1)
@@ -176,20 +176,20 @@ module meso_approx
             enddo
         endif
         if (.not. allocated(this%expenergies)) then
-            allocate(this%expenergies(upper_range),source=0.d0)
+            allocate(this%expenergies(allstatescount),source=0.d0)
         endif
 
         ! Preparatory steps: allocate and precompute stateprods, sumstateprodsorig, sumstateprodscorc
         if (.not. (allocated(this%hamilt%sumstateprodsorig) .and. allocated(this%hamilt%sumstateprodscorc))) then 
             if (.not. allocated(this%hamilt%stateprods)) then
-                allocate(this%hamilt%stateprods(upper_range * this%hamilt%nterms),source=1)
+                allocate(this%hamilt%stateprods(allstatescount * this%hamilt%nterms),source=1)
                 do i = 1,this%hamilt%nterms
-                    tmp_id3 = (i - 1) * upper_range
+                    tmp_id3 = (i - 1) * allstatescount
                     do j = 1,this%hamilt%internbody(i)
                         tmp_id2 = this%hamilt%interaction(i, j)    
                         !$OMP PARALLEL PRIVATE(k, tmp_id1) 
                         !$OMP DO SIMD
-                        do k = 1, upper_range
+                        do k = 1, allstatescount
                             tmp_id1 = k + tmp_id3
                             this%hamilt%stateprods(tmp_id1) = &
                                         this%hamilt%stateprods(tmp_id1) * this%allstates(k, tmp_id2)
@@ -200,34 +200,34 @@ module meso_approx
                 enddo
             endif
             if (.not. allocated(this%hamilt%sumstateprodsorig)) then
-                allocate(this%hamilt%sumstateprodsorig(upper_range * this%hamilt%norig),source=0)
+                allocate(this%hamilt%sumstateprodsorig(allstatescount * this%hamilt%norig),source=0)
                 !$OMP PARALLEL PRIVATE(i, j, k, tmp_id1) 
                 !$OMP DO SIMD
-                do i = 1,upper_range
+                do i = 1,allstatescount
                     do j = 1,this%hamilt%norig
                         tmp_id1 = 0
                         do k = 1, this%hamilt%nterms
                             if (this%hamilt%origterms(k) .eq. j) &
-                                tmp_id1 = tmp_id1 + this%hamilt%stateprods(i + (k - 1) * upper_range)
+                                tmp_id1 = tmp_id1 + this%hamilt%stateprods(i + (k - 1) * allstatescount)
                         enddo
-                        this%hamilt%sumstateprodsorig(i + (j - 1) * upper_range) = tmp_id1
+                        this%hamilt%sumstateprodsorig(i + (j - 1) * allstatescount) = tmp_id1
                     enddo
                 enddo
                 !$OMP END DO SIMD
                 !$OMP END PARALLEL
             endif
             if (.not. allocated(this%hamilt%sumstateprodscorc)) then
-                allocate(this%hamilt%sumstateprodscorc(upper_range * this%hamilt%ncorc), source=0)
+                allocate(this%hamilt%sumstateprodscorc(allstatescount * this%hamilt%ncorc), source=0)
                 !$OMP PARALLEL PRIVATE(i, j, k, tmp_id1)
                 !$OMP DO SIMD
-                do i = 1,upper_range
+                do i = 1,allstatescount
                     do j = 1,this%hamilt%ncorc
                         tmp_id1 = 0
                         do k = 1, this%hamilt%nterms
                             if (this%hamilt%corcterms(k) .eq. j) &
-                                tmp_id1 = tmp_id1 + this%hamilt%stateprods(i + (k - 1) * upper_range)
+                                tmp_id1 = tmp_id1 + this%hamilt%stateprods(i + (k - 1) * allstatescount)
                         enddo
-                        this%hamilt%sumstateprodscorc(i + (j - 1) * upper_range) = tmp_id1
+                        this%hamilt%sumstateprodscorc(i + (j - 1) * allstatescount) = tmp_id1
                     enddo
                 enddo
                 !$OMP END DO SIMD
@@ -242,23 +242,23 @@ module meso_approx
     
         implicit none
         class (approximation) :: this
-        integer i, j, k, upper_range, tmp_int, tmp_int2, tmp_int3
+        integer i, j, k, allstatescount, tmp_int, tmp_int2, tmp_int3
         real(8) tmp_val
-        upper_range = 2**this%nsites
+        allstatescount = 2**this%nsites
         
         if ((this%hamilt%norig == 2) .and. (mod(this%hamilt%ncorc,2) == 0)) then
             !$OMP PARALLEL PRIVATE(i, j, tmp_val)
             !$OMP DO SIMD
-            do j = 1,upper_range
+            do j = 1,allstatescount
                 tmp_val = 0.d0
-                tmp_int = j - upper_range
+                tmp_int = j - allstatescount
                 tmp_val = tmp_val &
-                        + this%hamilt%sumstateprodsorig(tmp_int + upper_range) * this%hamilt%origpars(1) &
-                        + this%hamilt%sumstateprodsorig(tmp_int + 2 * upper_range) * this%hamilt%origpars(2)
+                        + this%hamilt%sumstateprodsorig(tmp_int + allstatescount) * this%hamilt%origpars(1) &
+                        + this%hamilt%sumstateprodsorig(tmp_int + 2 * allstatescount) * this%hamilt%origpars(2)
                 do i = 1,this%hamilt%ncorc
                     tmp_val = tmp_val &
-                            + this%hamilt%sumstateprodscorc(tmp_int + i * upper_range) * this%hamilt%corcpars(i) !&
-                            ! + this%hamilt%sumstateprodscorc(tmp_int + (i + 1) * upper_range) * this%hamilt%corcpars(i + 1)
+                            + this%hamilt%sumstateprodscorc(tmp_int + i * allstatescount) * this%hamilt%corcpars(i) !&
+                            ! + this%hamilt%sumstateprodscorc(tmp_int + (i + 1) * allstatescount) * this%hamilt%corcpars(i + 1)
                 enddo
                 this%allenergs(j) = this%hamilt%H0 + tmp_val
             enddo
@@ -266,14 +266,14 @@ module meso_approx
             !$OMP END PARALLEL
         else
             !$OMP PARALLEL DO PRIVATE(i, j, tmp_val) 
-            do j = 1,upper_range
+            do j = 1,allstatescount
                 tmp_val = 0.d0
-                tmp_int = j - upper_range
+                tmp_int = j - allstatescount
                 do i = 1,this%hamilt%norig
-                    tmp_val = tmp_val + this%hamilt%sumstateprodsorig(tmp_int + i * upper_range) * this%hamilt%origpars(i)
+                    tmp_val = tmp_val + this%hamilt%sumstateprodsorig(tmp_int + i * allstatescount) * this%hamilt%origpars(i)
                 enddo
                 do i = 1,this%hamilt%ncorc
-                    tmp_val = tmp_val + this%hamilt%sumstateprodscorc(tmp_int + i * upper_range) * this%hamilt%corcpars(i)
+                    tmp_val = tmp_val + this%hamilt%sumstateprodscorc(tmp_int + i * allstatescount) * this%hamilt%corcpars(i)
                 enddo
                 this%allenergs(j) = this%hamilt%H0 + tmp_val
             enddo
@@ -292,7 +292,7 @@ module meso_approx
         implicit none
         
         class (approximation) :: this
-        integer i, j, k, kk, upper_range
+        integer i, j, k, kk, allstatescount
         ! real(8) lhsderivativeterm, rhsderivativeterm
         real(8) derivativeterm_lhs, derivativeterm_rhs
         logical, intent(in), optional :: calcjac
@@ -301,7 +301,7 @@ module meso_approx
         real(8) tmp_var1, tmp_var2, tmp_var3
         real(8) kboltz_times_temp
 
-        upper_range = 2**this%nsites
+        allstatescount = 2**this%nsites
         kboltz_times_temp = kboltz*this%temp
         
         if (present(calcjac)) then
@@ -314,7 +314,7 @@ module meso_approx
         ! it would be unnecessary (and a waste of time) to compute the energies in the calling program unit
         !$OMP PARALLEL PRIVATE(i)
         !$OMP DO SIMD
-        do i = 1, upper_range
+        do i = 1, allstatescount
             this%expenergies(i) = exp(-(this%allenergs(i) - this%mu * this%nparticles(i)) / kboltz_times_temp)
         enddo
         !$OMP END DO SIMD
@@ -325,7 +325,7 @@ module meso_approx
         tmp_var1 = 0.d0
         !$OMP PARALLEL
         !$OMP DO SIMD REDUCTION(+:tmp_var1) 
-        do i = 1,upper_range
+        do i = 1,allstatescount
             tmp_var1 = tmp_var1 + this%expenergies(i)
         enddo
         !$OMP END DO SIMD
@@ -340,9 +340,9 @@ module meso_approx
             tmp_var1 = 0.d0
             !$OMP PARALLEL PRIVATE(k)
             !$OMP DO SIMD REDUCTION(+:tmp_var1)
-            do k = 1,upper_range,1
+            do k = 1,allstatescount,1
                 tmp_var1 = tmp_var1 &
-                                    + this%eqns%stateprods(k + (i - 1) * upper_range) &
+                                    + this%eqns%stateprods(k + (i - 1) * allstatescount) &
                                     * this%expenergies(k)
             enddo
             !$OMP END DO SIMD
@@ -370,16 +370,16 @@ module meso_approx
         do i = 1,this%eqns%neqns
             tmp_var1 = 1.d0 / this%eqns%corrlvalue(this%eqns%lhs(i))
             tmp_var2 = 1.d0 / this%eqns%corrlvalue(this%eqns%rhs(i))
-            tmp_id2 = (this%eqns%lhs(i) - 1) * upper_range
-            tmp_id3 = (this%eqns%rhs(i) - 1) * upper_range
+            tmp_id2 = (this%eqns%lhs(i) - 1) * allstatescount
+            tmp_id3 = (this%eqns%rhs(i) - 1) * allstatescount
             do j = 1,this%eqns%neqns
                 derivativeterm_lhs = 0.d0
                 derivativeterm_rhs = 0.d0
-                tmp_id1 = (j - 1) * upper_range
+                tmp_id1 = (j - 1) * allstatescount
 
                 !$OMP PARALLEL PRIVATE(k)
                 !$OMP DO SIMD REDUCTION(+:derivativeterm_lhs, derivativeterm_rhs)
-                do k = 1, upper_range
+                do k = 1, allstatescount
                     tmp_var3 = this%hamilt%sumstateprodscorc(k + tmp_id1) &
                                 * this%expenergies(k)
                     derivativeterm_lhs = derivativeterm_lhs &
